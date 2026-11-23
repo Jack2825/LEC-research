@@ -1,0 +1,42 @@
+{
+  "script_version": "08_6_dataset13_donor_LEC_minimum_reliability_2026_08_10",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\08_6_donor_LEC_minimum_reliability\\dataset13",
+  "donor_key": "donor_key",
+  "state_key": "LEC_state",
+  "group_key": "age_quartile_equal_LEC_donors",
+  "states": [
+    "state0",
+    "state1",
+    "state2",
+    "state3",
+    "state4",
+    "state5",
+    "state6",
+    "state7",
+    "state8",
+    "state9",
+    "state10"
+  ],
+  "reference_min_LECs": 25,
+  "observed_LEC_count_upper_quartile": 27.25,
+  "n_reference_donors": 13,
+  "n_values": [
+    3,
+    5,
+    8,
+    10,
+    12,
+    15,
+    20,
+    25
+  ],
+  "n_resamples_per_reference_donor_per_N": 2000,
+  "seed": 8052026,
+  "sampling": "without replacement independently within each reference donor",
+  "primary_error": "total variation distance on full state vector, percent",
+  "target_quantile": "p90",
+  "target_tv_error_pct": 20.0,
+  "candidate_minimum_N": 25,
+  "source_modified": false
+}

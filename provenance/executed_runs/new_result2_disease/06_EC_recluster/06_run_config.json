@@ -1,0 +1,82 @@
+{
+  "script_version": "06_selected_disease_exclude_dataset02_dataset06_dataset12_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "step03_root": "new_result2_disease/03",
+  "step05_root": "new_result2_disease/05_marker_celltypist",
+  "step05_summary": "new_result2_disease/05_marker_celltypist/05_all_cohorts_cluster_annotation_summary.csv",
+  "output_root": "new_result2_disease/06_EC_recluster",
+  "model": "resources/celltypist/Healthy_Adult_Heart.pkl",
+  "expected_cohorts": [
+    [
+      "dataset01",
+      "DCM"
+    ],
+    [
+      "dataset01",
+      "HCM"
+    ],
+    [
+      "dataset01",
+      "NF"
+    ],
+    [
+      "dataset08",
+      "DoxCM"
+    ],
+    [
+      "dataset08",
+      "NF"
+    ],
+    [
+      "dataset11",
+      "HFpEF"
+    ],
+    [
+      "dataset11",
+      "NF"
+    ]
+  ],
+  "selected_cohorts": [
+    "dataset01 | DCM",
+    "dataset01 | HCM",
+    "dataset01 | NF",
+    "dataset08 | DoxCM",
+    "dataset08 | NF",
+    "dataset11 | HFpEF",
+    "dataset11 | NF"
+  ],
+  "forbidden_datasets": [
+    "dataset02",
+    "dataset03",
+    "dataset06",
+    "dataset10",
+    "dataset12"
+  ],
+  "region_rule": "LV_AP_except_dataset11_septum_allowed",
+  "selection_rule": "step05_celltypist_label_is_endothelial_true",
+  "LEC_selection_rule": "fresh_EC_only_exact_majority_vote_EC8_ln_or_lymphatic",
+  "all_genes_retained_in_X": true,
+  "cohorts": "all",
+  "n_top_hvg": 1500,
+  "n_pcs": 30,
+  "n_pcs_neighbors": 30,
+  "n_neighbors": 15,
+  "neighbor_metric": "cosine",
+  "umap_min_dist": 0.2,
+  "resolution": 0.4,
+  "use_harmony": true,
+  "marker_method": "t-test_overestim_var",
+  "marker_n_genes": 500,
+  "top_n_markers": 25,
+  "celltypist_chunk_size": 10000,
+  "min_model_genes_present": 500,
+  "max_umap_cells": 30000,
+  "random_seed": 123,
+  "dpi": 220,
+  "skip_markers": false,
+  "skip_figures": false,
+  "resume": true,
+  "force": false,
+  "validate_only": false,
+  "model_resolved": "${REPOSITORY_ROOT}\\resources\\celltypist\\Healthy_Adult_Heart.pkl"
+}

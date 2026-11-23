@@ -1,0 +1,44 @@
+{
+  "script_version": "13_3_GSE271676_two_of_five_descriptive_DCM_programs_2026_08_28",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_2_disease_LEC_reference\\13_2_GSE271676_two_of_five_LEC_selected.h5ad",
+  "target_registry": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_DCM_target_registry.csv",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_3_prespecified_DCM_program_validation",
+  "expression_layer": "log2_primary_vessel_upper_quartile_CPM_plus1",
+  "normalization_inherited_from_step13_2": "log2(primary-cohort upper-quartile CPM + 1)",
+  "primary_unit": "PID equal-weight donor mean",
+  "minimum_donors_per_group": 3,
+  "bootstrap_iterations": 10000,
+  "seed": 20260828,
+  "primary_programs": {
+    "homeostatic_LEC": [
+      "MMRN1",
+      "CCL21"
+    ],
+    "disease_expanded_State0_like": [
+      "ITGA9",
+      "NRP2",
+      "NPNT",
+      "SEMA3D"
+    ],
+    "disease_expanded_State3_like": [
+      "PLSCR4",
+      "CRIM1",
+      "COLEC12",
+      "PDGFC"
+    ],
+    "activated_vascular_State5_like": [
+      "FLT1",
+      "ENG",
+      "EPAS1"
+    ]
+  },
+  "expected_directions": {
+    "homeostatic_LEC": "decrease_in_DCMP",
+    "disease_expanded_State0_like": "increase_in_DCMP",
+    "disease_expanded_State3_like": "increase_in_DCMP",
+    "activated_vascular_State5_like": "increase_in_DCMP"
+  },
+  "LEC_selection_rule_inherited_from_step13_2": "at least 2 of CCL21,LYVE1,PDPN,FLT4,PROX1 above AOI-specific LOQ",
+  "formal_inference": "not performed because only 2 selected Control donors; minimum is 3 per group",
+  "multiple_testing": "not applicable; no inferential P values were computed"
+}

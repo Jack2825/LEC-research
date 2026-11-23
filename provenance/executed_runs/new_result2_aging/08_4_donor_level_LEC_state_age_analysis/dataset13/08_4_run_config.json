@@ -1,0 +1,32 @@
+{
+  "script_version": "08_4_dataset13_donor_level_LEC_state_age_analysis_2026_08_09",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\08_4_donor_level_LEC_state_age_analysis\\dataset13",
+  "group_key": "age_quartile_equal_LEC_donors",
+  "state_key": "LEC_state",
+  "donor_key": "donor_key",
+  "age_key": "age_numeric_resolved",
+  "project_key": "Project",
+  "sex_key": "Sex",
+  "original_group_key": "age_quartile",
+  "group_order": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+  ],
+  "group_range_labels": {
+    "Q1": "Q1\n35-48 y\nn=12",
+    "Q2": "Q2\n48-54 y\nn=12",
+    "Q3": "Q3\n55-62.5 y\nn=12",
+    "Q4": "Q4\n62.5-75 y\nn=12"
+  },
+  "alpha": 0.05,
+  "primary_test": "Kruskal-Wallis",
+  "omnibus_adjustment": "Benjamini-Hochberg FDR across LEC states",
+  "posthoc": "Dunn pairwise with Holm correction; omnibus-FDR gated",
+  "min_donor_LECs_sensitivity": 5,
+  "figures_enabled": true,
+  "dpi": 220
+}

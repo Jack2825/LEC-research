@@ -1,0 +1,25 @@
+{
+    "script_version":  "10B_disease_combined_LEC_pySCENIC_balanced_network_2026_08_11",
+    "project_root":  "${REPOSITORY_ROOT}",
+    "network_expression":  "${REPOSITORY_ROOT}\\new_result2_disease\\10_SCENIC\\input\\10_expression_network_balanced_raw_counts.tsv",
+    "all_cell_expression":  "${REPOSITORY_ROOT}\\new_result2_disease\\10_SCENIC\\input\\10_expression_all_LECs_raw_counts.tsv",
+    "tf_list":  "${REPOSITORY_ROOT}\\resources\\scenic\\allTFs_hg38.txt",
+    "databases":  [
+                      "${REPOSITORY_ROOT}\\resources\\scenic\\hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather",
+                      "${REPOSITORY_ROOT}\\resources\\scenic\\hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather"
+                  ],
+    "motif_annotations":  "${REPOSITORY_ROOT}\\resources\\scenic\\motifs-v10-nr.hgnc-m0.00001-o0.0.tbl",
+    "output_root":  "${REPOSITORY_ROOT}\\new_result2_disease\\10_SCENIC\\pyscenic_output",
+    "grn_workers":  2,
+    "ctx_workers":  2,
+    "aucell_workers":  2,
+    "seed":  0,
+    "force_grn":  false,
+    "force_ctx":  false,
+    "force_aucell":  false,
+    "started_at":  "2026-08-11T15:05:42.0732826-04:00",
+    "completed_at":  "2026-08-11T15:47:46.8180987-04:00",
+    "adjacencies_bytes":  26050865,
+    "regulons_bytes":  2153736,
+    "aucell_bytes":  20119306
+}

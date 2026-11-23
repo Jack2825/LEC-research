@@ -1,0 +1,47 @@
+{
+  "script_version": "07_selected_disease_exclude_dataset02_dataset06_dataset12_fixed_colors_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "step03_root": "${REPOSITORY_ROOT}\\new_result2_disease\\03",
+  "step06_root": "${REPOSITORY_ROOT}\\new_result2_disease\\06_EC_recluster",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\07_LEC_description",
+  "cohorts": [
+    "dataset01 | DCM",
+    "dataset01 | HCM",
+    "dataset01 | NF",
+    "dataset08 | DoxCM",
+    "dataset08 | NF",
+    "dataset11 | HFpEF",
+    "dataset11 | NF"
+  ],
+  "LEC_definition": "fresh EC-only exact cluster majority vote EC8_ln_or_lymphatic",
+  "all_cell_denominator": "Step 03 QC-passed cells within cohort",
+  "EC_denominator": "Step 06 selected EC candidates within cohort",
+  "donor_policy": "retain_all_donors_including_zero_EC_and_zero_LEC",
+  "interpretation": "descriptive_not_cross_dataset_inference",
+  "color_policy": "same_semantic_name_same_color_plus_condition_hatches",
+  "condition_colors": {
+    "NF": "#0072B2",
+    "DCM": "#D55E00",
+    "HCM": "#CC79A7",
+    "DoxCM": "#56B4E9",
+    "HFpEF": "#E69F00"
+  },
+  "condition_hatches": {
+    "NF": "",
+    "DCM": "//",
+    "HCM": "\\\\",
+    "DoxCM": "++",
+    "HFpEF": ".."
+  },
+  "stage_colors": {
+    "All QC-passed cells": "#6A3D9A",
+    "EC candidates": "#4C78A8",
+    "LEC": "#D62728",
+    "other_EC_candidate": "#BDBDBD"
+  },
+  "dpi": 220,
+  "random_seed": 123,
+  "low_LEC_threshold": 25,
+  "low_LEC_flag_definition": "zero_or_1_through_threshold_absolute_LEC_cells_per_donor",
+  "figures_enabled": true
+}

@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "curated_source_scripts": 126,
+  "excluded_source_scripts": 279,
+  "root_functions_checked": 42,
+  "syntax_checked": 127,
+  "workflow_steps": 54,
+  "publication_input_groups": [
+    "figures",
+    "formatting",
+    "tables",
+    "data_s8",
+    "calibration",
+    "representative"
+  ],
+  "distinct_declared_publication_inputs": 364,
+  "pending_publication_metadata": [
+    "release_version",
+    "code_license",
+    "code_copyright_holder",
+    "manuscript_title",
+    "authors",
+    "study_data_repository_or_access_statement"
+  ],
+  "errors": [],
+  "scope": "Bundle syntax, checksums, root isolation and declared workflow; not a full scientific rerun"
+}

@@ -1,0 +1,25 @@
+{
+    "script_version":  "10B_dataset13_NF_combined_LEC_pySCENIC_2026_08_07",
+    "project_root":  "${REPOSITORY_ROOT}",
+    "expression":  "${REPOSITORY_ROOT}\\new_result2_aging\\10_SCENIC\\dataset13\\input\\10_expression_raw_counts_for_pyscenic.tsv",
+    "tf_list":  "${REPOSITORY_ROOT}\\resources\\scenic\\allTFs_hg38.txt",
+    "databases":  [
+                      "${REPOSITORY_ROOT}\\resources\\scenic\\hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather",
+                      "${REPOSITORY_ROOT}\\resources\\scenic\\hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather"
+                  ],
+    "motif_annotations":  "${REPOSITORY_ROOT}\\resources\\scenic\\motifs-v10-nr.hgnc-m0.00001-o0.0.tbl",
+    "output_root":  "${REPOSITORY_ROOT}\\new_result2_aging\\10_SCENIC\\dataset13\\pyscenic_output",
+    "grn_workers":  4,
+    "ctx_workers":  2,
+    "aucell_workers":  2,
+    "seed":  0,
+    "validate_only":  false,
+    "force_grn":  false,
+    "force_ctx":  false,
+    "force_aucell":  false,
+    "started_at":  "2026-08-07T11:53:17.7847379-04:00",
+    "completed_at":  "2026-08-07T12:03:46.1731626-04:00",
+    "adjacencies_bytes":  7991471,
+    "regulons_bytes":  735720,
+    "aucell_bytes":  1493744
+}

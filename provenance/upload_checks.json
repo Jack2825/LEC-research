@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-21",
+  "files_in_clean_upload_before_this_report": 233,
+  "total_bytes_before_this_report": 6270674,
+  "checked_code_and_asset_files": 139,
+  "all_code_and_asset_hashes_match_in_clean_copy": true,
+  "code_LF_line_endings_checked": true,
+  "external_input_paths_absent_from_upload": 360,
+  "all_input_groups_report_expected_missing_external_files_without_checksum_errors": true,
+  "package_validation_in_clean_copy": "PASS",
+  "git_staging_test": "Not executed: Git CLI unavailable in PATH and standard installation locations",
+  "remote_changes_made": false
+}

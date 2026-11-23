@@ -1,0 +1,66 @@
+{
+  "script_version": "05_selected_disease_exclude_dataset02_dataset06_dataset12_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "step03_root": "new_result2_disease/03",
+  "output_root": "new_result2_disease/05_marker_celltypist",
+  "model": "resources/celltypist/Healthy_Adult_Heart.pkl",
+  "expected_cohorts": [
+    [
+      "dataset01",
+      "DCM"
+    ],
+    [
+      "dataset01",
+      "HCM"
+    ],
+    [
+      "dataset01",
+      "NF"
+    ],
+    [
+      "dataset08",
+      "DoxCM"
+    ],
+    [
+      "dataset08",
+      "NF"
+    ],
+    [
+      "dataset11",
+      "HFpEF"
+    ],
+    [
+      "dataset11",
+      "NF"
+    ]
+  ],
+  "selected_cohorts": [
+    "dataset01 | DCM",
+    "dataset01 | HCM",
+    "dataset01 | NF",
+    "dataset08 | DoxCM",
+    "dataset08 | NF",
+    "dataset11 | HFpEF",
+    "dataset11 | NF"
+  ],
+  "celltypist_scope": "all_cells_chunked",
+  "majority_vote_scope": "all_cell_predictions_within_each_Leiden_cluster",
+  "marker_ranking_scope": "cluster_stratified_sample",
+  "cohorts": "all",
+  "top_n": 25,
+  "method": "wilcoxon",
+  "n_rank_genes": 0,
+  "positive_only": true,
+  "save_all_ranked": false,
+  "max_marker_cells": 50000,
+  "celltypist_chunk_size": 10000,
+  "max_umap_cells": 30000,
+  "min_model_genes_present": 500,
+  "skip_cell_predictions": false,
+  "random_seed": 123,
+  "dpi": 220,
+  "resume": true,
+  "force": false,
+  "validate_only": false,
+  "model_resolved": "${REPOSITORY_ROOT}\\resources\\celltypist\\Healthy_Adult_Heart.pkl"
+}

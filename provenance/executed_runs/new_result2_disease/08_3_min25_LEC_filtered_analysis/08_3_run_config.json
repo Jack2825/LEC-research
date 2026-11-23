@@ -1,0 +1,16 @@
+{
+  "script_version": "08_3_disease_min25_final_LEC_filtered_sensitivity_2026_08_12d",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad",
+  "threshold_summary": "${REPOSITORY_ROOT}\\new_result2_disease\\08_2_donor_state_reliability\\08_2_run_summary.csv",
+  "threshold_provenance_status": "validated_against_step08_2",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\08_3_min25_LEC_filtered_analysis",
+  "minimum_total_final_LECs_per_donor": 25,
+  "minimum_donors_per_condition_for_readiness": 2,
+  "cell_scope": "exact_current_Step08_final_LECs_only",
+  "filter_level": "donor_total_final_LECs",
+  "clustering_or_state_labels_changed": false,
+  "source_h5ad_modified": false,
+  "new_h5ad_written": false,
+  "inference_performed": false,
+  "cell_level_test_substituted": false
+}

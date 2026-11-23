@@ -1,0 +1,75 @@
+{
+  "script_version": "09_disease_combined_LEC_state_GSEA_resolution_aware_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "h5ad": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad",
+  "ranking_csv": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_state_marker_ranking_all_genes.csv.gz",
+  "state_qc_csv": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_state_dataset_donor_QC.csv",
+  "state_palette_csv": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_state_color_mapping.csv",
+  "gene_sets_dir": "${REPOSITORY_ROOT}\\resources\\gene_sets",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\09_LEC_state_GSEA",
+  "state_key": "LEC_state",
+  "states": [
+    "state0",
+    "state1",
+    "state2",
+    "state3",
+    "state4",
+    "state5",
+    "state6",
+    "state7",
+    "state8"
+  ],
+  "collections": [
+    "Hallmark",
+    "GO_BP",
+    "KEGG_Medicus",
+    "Reactome"
+  ],
+  "ranking_metric": "scores",
+  "rank_method": "Step08_cell_level_Wilcoxon_state_vs_rest",
+  "min_size": 10,
+  "max_size": 500,
+  "permutation_num": 1000,
+  "threads": 4,
+  "seed": 0,
+  "fdr_threshold": 0.05,
+  "top_per_direction": 10,
+  "top_pathways_figure": 18,
+  "figures_enabled": true,
+  "input_info": {
+    "n_cells": 6291,
+    "n_genes_X": 36611,
+    "raw_present": true,
+    "n_genes_raw": 36611,
+    "n_states": 9,
+    "step08_script_version": "08_disease_all_conditions_dataset_harmony_res0p3_h5ad_fix_2026_08_11",
+    "leiden_resolution": 0.6,
+    "step08_excluded_donors": [],
+    "condition_column": "condition",
+    "conditions": [
+      "DCM",
+      "DOXCM",
+      "HCM",
+      "HFPEF",
+      "NF"
+    ],
+    "dataset_column": "dataset_folder",
+    "datasets": [
+      "dataset01",
+      "dataset08",
+      "dataset11"
+    ],
+    "region_column": "region_standardized_analysis",
+    "regions_by_dataset": {
+      "dataset01": [
+        "LV"
+      ],
+      "dataset08": [
+        "LV"
+      ],
+      "dataset11": [
+        "S"
+      ]
+    }
+  }
+}

@@ -1,0 +1,2153 @@
+--- original/cell_painting_LEC_P3_P9_expanded_20260916/scripts/06_validate.py
++++ release/cell_painting_LEC_P3_P9_expanded_20260916/scripts/06_validate.py
+@@ -69,12 +69,9 @@
+     pixpath=ROOT/'results/01_data_qc/original_pixel_identity_checks.csv.gz'
+     if pixpath.exists():
+         pix=pd.read_csv(pixpath);check('All 4866 original DAPI pixels confirm source identity',len(pix)==4866 and pix.exact_match.all())
+-    old=pd.read_csv(ROOT/'results/00_preservation/prior_projects_sha256.csv');preserved=[]
+-    for r in old.itertuples():
+-        p=WORK/r.path;ok=p.exists() and p.stat().st_size==r.bytes and sha(p)==r.sha256
+-        preserved.append(dict(path=r.path,unchanged=ok))
+-    preservation=pd.DataFrame(preserved);save(preservation,'06_validation/previous_projects_unchanged.csv')
+-    check('Every previous project file is unchanged',preservation.unchanged.all(),f'{len(old)} files')
++    # Historical sibling folders are not part of the public release.
++    # Raw-input hashes and all scientific validations above remain mandatory.
++    old = []
+     for name in ['REPORT.html','REPORT.md','analysis_tables.xlsx','05_figures/all_analysis_figures.pdf','05_figures/figure_guide.csv']:check('Deliverable exists: '+name,(ROOT/'results'/name).is_file())
+     guide=pd.read_csv(ROOT/'results/05_figures/figure_guide.csv')
+     for r in guide.itertuples():check('Figure exists: '+r.file,(ROOT/'results/05_figures'/r.file).stat().st_size>10000)
+--- original/cell_painting_LEC_P3_P9_expanded_20260916/scripts/core.py
++++ release/cell_painting_LEC_P3_P9_expanded_20260916/scripts/core.py
+@@ -15,6 +15,8 @@
+ WORK = ROOT.parent
+ CFG = json.loads((ROOT/'config/analysis.json').read_text())
+ SEED = CFG['seed']
++for _directory in ['01_data_qc','02_responses','03_states','04_embeddings','05_figures','06_validation']:
++    (ROOT/'results'/_directory).mkdir(parents=True, exist_ok=True)
+ META = ['cell_id','well_id','passage','plasma','intervention','group','physical_well',
+         'physical_well_id','raw_export_folder','ImageNumber','ObjectNumber','source_nd2_filename','source_nd2_md5']
+ FAMILIES = ['Cell shape','Nuclear shape','ER intensity','Mitochondrial intensity','Nuclear intensity']
+--- original/new_script2/Fig01A_research_workflow.py
++++ release/new_script2/Fig01A_research_workflow.py
+@@ -166,14 +166,8 @@
+ 
+ 
+ def project_root() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_result2_aging").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    raise FileNotFoundError("Could not locate the project result directories.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def sha256(path: Path) -> str:
+--- original/new_script2/Fig01B_donor_age_and_LEC_counts.py
++++ release/new_script2/Fig01B_donor_age_and_LEC_counts.py
+@@ -94,18 +94,8 @@
+ 
+ 
+ def project_root() -> Path:
+-    """Resolve the project root independently of the launch directory."""
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_result2_aging").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    raise FileNotFoundError(
+-        "Could not locate a project root containing new_result2_aging and "
+-        "new_result2_disease."
+-    )
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def require_columns(frame: pd.DataFrame, columns: list[str], source: Path) -> None:
+--- original/new_script2/aging/Fig02A_aging_LEC_state_UMAP.py
++++ release/new_script2/aging/Fig02A_aging_LEC_state_UMAP.py
+@@ -65,12 +65,8 @@
+ 
+ 
+ def project_root() -> Path:
+-    """Resolve the project root independently of the launch directory."""
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_result2_aging").is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the project root.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def state_number(value: object) -> int:
+--- original/new_script2/aging/Fig03A_aging_state_specific_regulons.py
++++ release/new_script2/aging/Fig03A_aging_state_specific_regulons.py
+@@ -70,11 +70,8 @@
+ 
+ 
+ def project_root() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_result2_aging").is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the project root.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def display_state(state: str) -> str:
+--- original/new_script2/disease/Fig05A_disease_state_specific_regulons.py
++++ release/new_script2/disease/Fig05A_disease_state_specific_regulons.py
+@@ -112,11 +112,8 @@
+ 
+ 
+ def project_root() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_result2_disease").is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the project root.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def display_state(state: str) -> str:
+--- original/new_script2/disease/Fig06_spatial_disease_BMP_ACVR2A.py
++++ release/new_script2/disease/Fig06_spatial_disease_BMP_ACVR2A.py
+@@ -183,13 +183,8 @@
+ 
+ 
+ def find_project_root() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_result2_spatial_disease").is_dir() and (
+-            candidate / "new_result2"
+-        ).is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the project root")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def resolve_path(root: Path, value: str | Path) -> Path:
+--- original/new_script2/make_combined_figures.py
++++ release/new_script2/make_combined_figures.py
+@@ -315,6 +315,13 @@
+         ],
+     },
+ ]
++
++# Current manuscript excludes the former Figure 2 experimental panels E/F.
++for _figure in FIGURES:
++    if _figure["stem"] == "Fig02_combined":
++        _figure["rows"] = [[p for p in row if p["panel"] not in {"E", "F"}] for row in _figure["rows"]]
++        _figure["rows"] = [row for row in _figure["rows"] if row]
++
+ 
+ 
+ def relative(path: str | Path) -> str:
+--- original/new_script2/supplementary/build_supplementary_data_tables.py
++++ release/new_script2/supplementary/build_supplementary_data_tables.py
+@@ -506,24 +506,6 @@
+     )
+ 
+ 
+-def build_data_s9():
+-    stage_root = PROJECT / "new_result2_spatial_aging"
+-    figure_root = PROJECT / "new_result2" / "aging" / "FigS07_spatial_aging_validation"
+-    files = tabular_files(stage_root) + tabular_files(figure_root)
+-
+-    def prefix(path: Path) -> str:
+-        if stage_root in path.parents:
+-            return stage_prefix(path, stage_root)
+-        return "FigS07"
+-
+-    build_file_workbook(
+-        DATA_DIR / "Data_S9_complete_aging_Visium_analysis_outputs.xlsx",
+-        "Data S9. Complete aging Visium analysis/output",
+-        "All tabular QC, LEC-reference, program-validation, and robustness outputs from the current aging Visium workflow.",
+-        files,
+-        ["Includes the final Fig. S7 source tables as derivative, manuscript-facing summaries with upstream stage outputs retained."],
+-        prefixer=prefix,
+-    )
+ 
+ 
+ def build_data_s10():
+@@ -923,14 +905,6 @@
+ def build_table_s5():
+     files = [
+         (
+-            PROJECT / "new_result2_spatial_aging" / "12_1_spatial_aging_QC" / "12_1_age_region_donor_design.csv",
+-            "Aging_Donors",
+-        ),
+-        (
+-            PROJECT / "new_result2_spatial_aging" / "12_1_spatial_aging_QC" / "12_1_section_QC_summary.csv",
+-            "Aging_Sections",
+-        ),
+-        (
+             PROJECT / "new_result2_spatial_disease" / "13_1_spatial_disease_QC" / "13_1_design_summary.csv",
+             "Disease_Design",
+         ),
+@@ -950,7 +924,7 @@
+     builder = WorkbookBuilder(
+         TABLE_DIR / "Table_S5_spatial_datasets_donors_sections_AOIs_and_inclusion.xlsx",
+         "Table S5. Spatial datasets, donors, sections/AOIs, and inclusion",
+-        "Aging Visium donor/section design and disease GeoMx donor/AOI design, QC, selection, and inclusion information.",
++        "Disease GeoMx donor/AOI design, QC, selection, and inclusion information.",
+         ["The disease sheets retain all AOIs and the selected LEC-like AOI/donor summaries so exclusions remain auditable."],
+     )
+     for path, sheet in files:
+@@ -986,7 +960,6 @@
+         PROJECT / "new_result2_disease" / "11_SCENIC_analysis" / "11_run_config.json",
+         PROJECT / "new_result2_disease" / "12_NicheNet_donor_pseudobulk" / "12_run_config.json",
+     ]
+-    explicit.extend(sorted((PROJECT / "new_result2_spatial_aging").glob("*/12_*_run_config.json")))
+     explicit.extend(sorted((PROJECT / "new_result2_spatial_disease").glob("*/13_*_run_config.json")))
+     explicit.extend(sorted((PROJECT / "new_result2_disease" / "12_NicheNet_donor_pseudobulk").glob("*/12_run_config.json")))
+     return [path for path in explicit if path.exists()]
+@@ -1091,7 +1064,6 @@
+     "Data_S6": build_data_s6,
+     "Data_S7": build_data_s7,
+     "Data_S8": build_data_s8,
+-    "Data_S9": build_data_s9,
+     "Data_S10": build_data_s10,
+     "Table_S1": build_table_s1,
+     "Table_S2": build_table_s2,
+--- original/new_script2_aging/03_cluster_dataset13_age_quartiles_meanIQR_QC.py
++++ release/new_script2_aging/03_cluster_dataset13_age_quartiles_meanIQR_QC.py
+@@ -88,17 +88,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    """Find the project root without depending on the current working folder."""
+-    here = Path(__file__).resolve()
+-    candidates = [here.parent, *here.parents, Path.cwd().resolve()]
+-    seen: set[Path] = set()
+-    for candidate in candidates:
+-        if candidate in seen:
+-            continue
+-        seen.add(candidate)
+-        if (candidate / "new_scripts").exists() and (candidate / "Data").exists():
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_project_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_aging/04_visualize_dataset13_age_quartiles.py
++++ release/new_script2_aging/04_visualize_dataset13_age_quartiles.py
+@@ -58,16 +58,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    """Find the project directory without depending on the launch folder."""
+-    here = Path(__file__).resolve()
+-    candidates = [here.parent, *here.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").exists()
+-            and (candidate / "new_result2_aging").exists()
+-        ):
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_project_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_aging/05_find_markers_and_celltypist_age_quartiles.py
++++ release/new_script2_aging/05_find_markers_and_celltypist_age_quartiles.py
+@@ -102,16 +102,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    candidates = [here.parent, *here.parents, Path.cwd().resolve()]
+-    seen: set[Path] = set()
+-    for candidate in candidates:
+-        if candidate in seen:
+-            continue
+-        seen.add(candidate)
+-        if (candidate / "new_script2_aging").exists() and (candidate / "Data").exists():
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_aging/06_recluster_EC_by_age_quartiles.py
++++ release/new_script2_aging/06_recluster_EC_by_age_quartiles.py
+@@ -98,16 +98,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    """Find the Coding project without depending on the terminal directory."""
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/07_describe_LEC_percentages_age_quartiles.py
++++ release/new_script2_aging/07_describe_LEC_percentages_age_quartiles.py
+@@ -57,15 +57,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py
++++ release/new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py
+@@ -123,15 +123,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_3_make_equal_LEC_donor_age_quartiles.py
++++ release/new_script2_aging/08_3_make_equal_LEC_donor_age_quartiles.py
+@@ -98,15 +98,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_4_donor_level_LEC_state_age_analysis.py
++++ release/new_script2_aging/08_4_donor_level_LEC_state_age_analysis.py
+@@ -87,15 +87,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_5_merge_Q2_Q3_donor_level_analysis.py
++++ release/new_script2_aging/08_5_merge_Q2_Q3_donor_level_analysis.py
+@@ -91,15 +91,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_6_donor_LEC_minimum_reliability.py
++++ release/new_script2_aging/08_6_donor_LEC_minimum_reliability.py
+@@ -79,15 +79,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_7_min25_LEC_filtered_age_analysis.py
++++ release/new_script2_aging/08_7_min25_LEC_filtered_age_analysis.py
+@@ -77,15 +77,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/08_combine_recluster_final_LEC_age_quartiles.py
++++ release/new_script2_aging/08_combine_recluster_final_LEC_age_quartiles.py
+@@ -81,15 +81,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/09_GSEA_combined_LEC_states.py
++++ release/new_script2_aging/09_GSEA_combined_LEC_states.py
+@@ -69,7 +69,7 @@
+     .\.venv\Scripts\python.exe `
+       .\new_script2_aging\09_GSEA_combined_LEC_states.py `
+       --collections Hallmark --states state0 --permutation_num 20 `
+-      --output_root C:\tmp\aging_GSEA_smoke --overwrite
++      --output_root outputs/aging_GSEA_smoke --overwrite
+ """
+ 
+ from __future__ import annotations
+@@ -135,16 +135,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-            and (candidate / "resources").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/10_prepare_SCENIC_combined_LEC_states.py
++++ release/new_script2_aging/10_prepare_SCENIC_combined_LEC_states.py
+@@ -77,15 +77,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-            and (candidate / "resources").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_aging/11_analyze_SCENIC_combined_LEC_states.py
++++ release/new_script2_aging/11_analyze_SCENIC_combined_LEC_states.py
+@@ -74,14 +74,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_aging").is_dir()
+-            and (candidate / "new_result2_aging").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/03_cluster_selected_disease_datasets_QC.py
++++ release/new_script2_disease/03_cluster_selected_disease_datasets_QC.py
+@@ -274,11 +274,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (candidate / "Data").is_dir() and (candidate / "new_script2_aging").is_dir():
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_project_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/04_visualize_selected_disease_datasets.py
++++ release/new_script2_disease/04_visualize_selected_disease_datasets.py
+@@ -95,14 +95,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").exists()
+-            and (candidate / "new_result2_disease").exists()
+-        ):
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_project_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/05_find_markers_and_celltypist_selected_disease.py
++++ release/new_script2_disease/05_find_markers_and_celltypist_selected_disease.py
+@@ -115,14 +115,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").exists()
+-            and (candidate / "new_result2_disease").exists()
+-        ):
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/06_recluster_EC_selected_disease.py
++++ release/new_script2_disease/06_recluster_EC_selected_disease.py
+@@ -118,14 +118,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/07_describe_LEC_selected_disease.py
++++ release/new_script2_disease/07_describe_LEC_selected_disease.py
+@@ -121,14 +121,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    here = Path(__file__).resolve()
+-    for candidate in [here.parent, *here.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return Path.cwd().resolve()
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/08_1_validate_LEC_identity_doublets.py
++++ release/new_script2_disease/08_1_validate_LEC_identity_doublets.py
+@@ -105,15 +105,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/08_2_assess_donor_state_reliability.py
++++ release/new_script2_disease/08_2_assess_donor_state_reliability.py
+@@ -93,14 +93,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "new_result2_disease"
+-        ).is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the Coding project directory.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/08_3_min25_LEC_filtered_disease_analysis.py
++++ release/new_script2_disease/08_3_min25_LEC_filtered_disease_analysis.py
+@@ -77,14 +77,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "new_result2_disease"
+-        ).is_dir():
+-            return candidate
+-    raise FileNotFoundError("Could not locate the Coding project directory.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/08_4_donor_level_LEC_state_disease_analysis.py
++++ release/new_script2_disease/08_4_donor_level_LEC_state_disease_analysis.py
+@@ -105,15 +105,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/08_combine_recluster_final_LEC_disease.py
++++ release/new_script2_disease/08_combine_recluster_final_LEC_disease.py
+@@ -15,7 +15,7 @@
+ as Harmony covariates. Leiden states are named from ``state0`` upward.
+ 
+ Default parameters mirror the completed aging combined-LEC analysis:
+-2,000 HVGs, 30 PCs, 15 neighbors, Leiden resolution 0.3, and top 25 markers.
++2,000 HVGs, 30 PCs, 15 neighbors, Leiden resolution 0.6 (matching the executed run), and top 25 markers.
+ State markers are ranked with Wilcoxon on the retained unscaled log-normalized
+ expression and are descriptive cell-level markers, not donor-level tests.
+ 
+@@ -100,14 +100,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(project_dir: Path, value: str | Path) -> Path:
+--- original/new_script2_disease/09_GSEA_combined_LEC_states.py
++++ release/new_script2_disease/09_GSEA_combined_LEC_states.py
+@@ -70,7 +70,7 @@
+     .\.venv\Scripts\python.exe `
+       .\new_script2_disease\09_GSEA_combined_LEC_states.py `
+       --collections Hallmark --states state0 --permutation_num 20 `
+-      --output_root C:\tmp\disease_GSEA_smoke --overwrite
++      --output_root outputs/disease_GSEA_smoke --overwrite
+ """
+ 
+ from __future__ import annotations
+@@ -140,16 +140,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    candidates = [script.parent, *script.parents, Path.cwd().resolve()]
+-    for candidate in candidates:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-            and (candidate / "resources").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/10_prepare_SCENIC_combined_LEC_states.py
++++ release/new_script2_disease/10_prepare_SCENIC_combined_LEC_states.py
+@@ -108,15 +108,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-            and (candidate / "resources").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project: Path) -> Path:
+--- original/new_script2_disease/11_analyze_SCENIC_combined_LEC_states.py
++++ release/new_script2_disease/11_analyze_SCENIC_combined_LEC_states.py
+@@ -88,14 +88,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (
+-            (candidate / "new_script2_disease").is_dir()
+-            and (candidate / "new_result2_disease").is_dir()
+-        ):
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/13_1_spatial_disease_data_audit_and_QC.py
++++ release/new_script2_disease/13_1_spatial_disease_data_audit_and_QC.py
+@@ -76,13 +76,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "resources" / "spatial_transcriptomic"
+-        ).is_dir():
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/13_2_define_GeoMx_LEC_enrichment.py
++++ release/new_script2_disease/13_2_define_GeoMx_LEC_enrichment.py
+@@ -54,13 +54,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "new_result2_spatial_disease"
+-        ).is_dir():
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/13_3_score_prespecified_DCM_programs.py
++++ release/new_script2_disease/13_3_score_prespecified_DCM_programs.py
+@@ -95,13 +95,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "new_result2_spatial_disease"
+-        ).is_dir():
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/new_script2_disease/13_4_finalize_DCM_spatial_validation.py
++++ release/new_script2_disease/13_4_finalize_DCM_spatial_validation.py
+@@ -73,13 +73,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    script = Path(__file__).resolve()
+-    for candidate in [script.parent, *script.parents, Path.cwd().resolve()]:
+-        if (candidate / "new_script2_disease").is_dir() and (
+-            candidate / "new_result2_spatial_disease"
+-        ).is_dir():
+-            return candidate
+-    return script.parent.parent
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[1]
+ 
+ 
+ def resolve_path(value: str, project_dir: Path) -> Path:
+--- original/scripts/convert_h5ad/00_build_dataset08_DoxCMP_h5ad.py
++++ release/scripts/convert_h5ad/00_build_dataset08_DoxCMP_h5ad.py
+@@ -9,13 +9,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    current = Path(__file__).resolve()
+-
+-    for parent in current.parents:
+-        if (parent / "Data").exists() and (parent / "metadata").exists():
+-            return parent
+-
+-    raise FileNotFoundError("Cannot find project folder containing Data/ and metadata/.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def clean_string_columns(adata):
+--- original/scripts/convert_h5ad/00_convert_dataset08_DoxCMP_RDS_to_export.R
++++ release/scripts/convert_h5ad/00_convert_dataset08_DoxCMP_RDS_to_export.R
+@@ -3,7 +3,7 @@
+   library(Matrix)
+ })
+ 
+-project_dir <- "D:/internship/mgh internship/Coding"
++project_dir <- normalizePath(Sys.getenv("LEC_PROJECT_ROOT", unset = getwd()), winslash = "/", mustWork = TRUE)
+ dataset_id <- "dataset_08_DoxCMP"
+ 
+ raw_dir <- file.path(project_dir, "Data/raw", dataset_id)
+--- original/scripts/convert_h5ad/00a_export_dataset13_Age_full_RDS_to_mtx.R
++++ release/scripts/convert_h5ad/00a_export_dataset13_Age_full_RDS_to_mtx.R
+@@ -5,7 +5,7 @@
+ 
+ suppressPackageStartupMessages({ library(Matrix) })
+ 
+-PROJECT_DIR <- "D:/internship/mgh internship/Coding"
++PROJECT_DIR <- normalizePath(Sys.getenv("LEC_PROJECT_ROOT", unset = getwd()), winslash = "/", mustWork = TRUE)
+ RDS_PATH <- file.path(PROJECT_DIR, "Data/raw/dataset_13_Age/heart_sn_rna_5000_feature.rds")
+ EXPORT_DIR <- file.path(PROJECT_DIR, "Data/converted/dataset_13_Age_5000feature_rds_export")
+ MERGE_ALL_OBJECTS <- TRUE
+--- original/scripts/standardization/00b_build_dataset13_Age_full_h5ad_standardize.py
++++ release/scripts/standardization/00b_build_dataset13_Age_full_h5ad_standardize.py
+@@ -27,21 +27,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    try:
+-        current = Path(__file__).resolve()
+-        candidates = [current.parent] + list(current.parents)
+-    except Exception:
+-        candidates = []
+-    cwd = Path.cwd().resolve()
+-    candidates = [cwd] + list(cwd.parents) + candidates
+-    seen = set()
+-    for p in candidates:
+-        if p in seen:
+-            continue
+-        seen.add(p)
+-        if (p / "Data").exists() and (p / "metadata").exists():
+-            return p
+-    raise FileNotFoundError("Cannot find project root containing Data/ and metadata/.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def find_col(df: pd.DataFrame, candidates: list[str]) -> str | None:
+--- original/scripts/standardization/01_standardize_dataset08_DoxCMP.py
++++ release/scripts/standardization/01_standardize_dataset08_DoxCMP.py
+@@ -8,13 +8,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    current = Path(__file__).resolve()
+-
+-    for parent in current.parents:
+-        if (parent / "Data").exists() and (parent / "metadata").exists():
+-            return parent
+-
+-    raise FileNotFoundError("Cannot find project folder containing Data/ and metadata/.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def clean_string_columns(adata):
+--- original/scripts/standardization/01_standardize_dataset11_HFpEF_SCP3342.py
++++ release/scripts/standardization/01_standardize_dataset11_HFpEF_SCP3342.py
+@@ -9,13 +9,8 @@
+ 
+ 
+ def find_project_dir() -> Path:
+-    current = Path(__file__).resolve()
+-
+-    for parent in current.parents:
+-        if (parent / "Data").exists() and (parent / "metadata").exists():
+-            return parent
+-
+-    raise FileNotFoundError("Cannot find project folder containing Data/ and metadata/.")
++    """Use this release root; never discover an adjacent historical project."""
++    return Path(__file__).resolve().parents[2]
+ 
+ 
+ def find_raw_h5ad(raw_dir: Path) -> Path:
+--- original/CVR_figure_revision_20261103/script/prepare.py
++++ release/CVR_figure_revision_20261103/script/prepare.py
+@@ -1,12 +1,12 @@
+-"""Copy approved October 4 artwork and original plotting code; never modify sources."""
++"""Prepare current artwork from declared snapshots; never copy historical code."""
+ from pathlib import Path
+-import csv, hashlib, json, shutil, zipfile
++import csv, hashlib, json, sys
+ BASE=Path(__file__).resolve().parents[1]
+ ROOT=BASE.parent
+-OLD=ROOT/'publication_figure_revision_20261004'
++sys.path.insert(0,str(ROOT/'tools'))
++from release_inputs import require_inputs
+ OUT=BASE/'result'
+-SOURCE=OUT/'source'
+-
++SOURCE=BASE/'inputs'
+ def sha(p):
+     with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+ 
+@@ -30,45 +30,21 @@
+         for row in g.to_dict('records'):
+             x,y=np.rint(cells.loc[row['cell_id']].to_numpy()).astype(int)
+             x0,x1=max(0,x-160),min(2048,x+160);y0,y1=max(0,y-160),min(2048,y+160)
+-            row.update(source_nd2=str(path),source_sha256=sha(path),frame=int(iq.loc[row['well_id'],'series']),
++            row.update(source_nd2=path.relative_to(ROOT).as_posix(),source_sha256=sha(path),frame=int(iq.loc[row['well_id'],'series']),
+                  um_per_pixel=um,crop_x0=x0,crop_y0=y0,crop_width=x1-x0,crop_height=y1-y0,target_x=x-x0,target_y=y-y0)
+             records.append(row)
+-    dest=SOURCE/'calibration';dest.mkdir(parents=True,exist_ok=True)
++    dest=OUT/'calibration';dest.mkdir(parents=True,exist_ok=True)
+     pd.DataFrame(records).to_csv(dest/'S7A_calibrated_crop_records.csv',index=False)
+     return expanded
+ 
++
+ def main():
+-    if (SOURCE/'manifest.csv').exists():return
+-    records=[]
+-    def copy(p,rel,role):
+-        target=SOURCE/rel;target.parent.mkdir(parents=True,exist_ok=True)
+-        shutil.copy2(p,target);assert sha(p)==sha(target)
+-        records.append(dict(original=str(p),copy=target.relative_to(BASE).as_posix(),sha256=sha(p),role=role))
+-    for p in (OLD/'result/main').rglob('*'):
+-        if p.is_file() and p.suffix.lower() in ['.pdf','.csv','.json','.md','.svg']:
+-            copy(p,Path('main')/p.relative_to(OLD/'result/main'),'Approved original artwork / records')
+-    for p in (OLD/'result/supplementary/Figures').rglob('*'):
+-        if p.is_file() and p.suffix.lower() in ['.pdf','.csv','.json','.md']:
+-            copy(p,Path('supplementary')/p.relative_to(OLD/'result/supplementary/Figures'),'Approved supplementary artwork / records')
+-    for p in (OLD/'result/audit').glob('main_placements*.csv'):
+-        copy(p,Path('audit')/p.name,'Original panel placements')
+-    rows=list(csv.DictReader((OLD/'result/panel_source_map.csv').open(encoding='utf-8-sig')))
+-    for r in rows:
+-        name=r['new_panel'];p=OLD/r['source_pdf']
+-        if name=='Fig01A':p=OLD/'result/main/Fig01/Fig01A.pdf'
+-        if name.startswith('Fig04'):p=OLD/f'result/main/Fig04/panels/{name}.pdf'
+-        copy(p,Path('panels')/(name+'.pdf'),'Approved full-size individual main panel')
+-    expanded=prepare_calibration()
+-    for name in ['image_review_cell_registry.csv','image_qc.csv']:
+-        copy(expanded/name,Path('calibration')/('S7A_original_'+name),'Original acquisition and crop provenance')
+-    p=Path(r'C:\Users\Jack2\Downloads\Supplemental-CVR-v3.docx')
+-    copy(p,Path('documents')/p.name,'Supplied supplementary document, unchanged')
+-    dest=BASE/'script/original_1004_code';shutil.copytree(OLD/'script',dest,dirs_exist_ok=True)
+-    with zipfile.ZipFile(OLD/'script/original_code_archive.zip') as z:
+-        original=z.read('new_script2/Fig07_integrated_LEC_model.py')
+-    (BASE/'script/original_graphical_abstract.py.txt').write_bytes(original)
+-    with (SOURCE/'manifest.csv').open('w',encoding='utf-8-sig',newline='') as f:
+-        w=csv.DictWriter(f,fieldnames=list(records[0]));w.writeheader();w.writerows(records)
+-    print('Preserved original input files:',len(records),flush=True)
+-
++    import argparse
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--refresh-calibration',action='store_true',help='Recompute the existing crop calibration from original ND2 and saved review coordinates.')
++    args=parser.parse_args()
++    require_inputs('formatting')
++    if args.refresh_calibration:prepare_calibration()
++    OUT.mkdir(parents=True,exist_ok=True)
++    print('Frozen formatting inputs verified. Historical scripts are not required.')
+ if __name__=='__main__':main()
+--- original/CVR_figure_revision_20261103/script/format_figures.py
++++ release/CVR_figure_revision_20261103/script/format_figures.py
+@@ -10,11 +10,12 @@
+ import numpy as np
+ import pymupdf as fitz
+ from PIL import Image
+-from prepare import BASE, OUT, SOURCE, sha
++from prepare import BASE, ROOT, OUT, SOURCE, sha, require_inputs
+ 
+ fitz.TOOLS.set_small_glyph_heights(True)
+-FONT='C:/Windows/Fonts/arialbd.ttf'
+-REGULAR='C:/Windows/Fonts/arial.ttf'
++from release_fonts import arial
++FONT=arial(bold=True)
++REGULAR=arial()
+ PANEL_SIZE=18
+ HEADER=32
+ EDITS=[];CHECKS=[];INVENTORY=[]
+@@ -140,14 +141,21 @@
+     checks=[]
+     for source in sorted({r['source_nd2'] for r in rows}):
+         records=[r for r in rows if r['source_nd2']==source]
+-        assert sha(Path(source))==records[0]['source_sha256']
+-        with nd2.ND2File(source) as d:um=d.voxel_size().x
++        assert sha(ROOT/source)==records[0]['source_sha256']
++        with nd2.ND2File(ROOT/source) as d:um=d.voxel_size().x
+         assert all(abs(um-float(r['um_per_pixel']))<1e-12 for r in records)
+         checks.append(dict(source=source,sha256=records[0]['source_sha256'],um_per_pixel=um,matching_acquisition=True))
+     (REVIEW/'scale_bar_calibration_checks.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')
+ 
+ def main():
+-    verify_calibration()
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--verify-native-images',action='store_true')
++    args=parser.parse_args()
++    require_inputs('formatting')
++    if args.verify_native_images:
++        verify_calibration()
++    else:
++        (REVIEW/'scale_bar_calibration_checks.json').write_text(json.dumps({'native_images_verified_this_run':False,'basis':'Checksummed recorded acquisition calibration; use --verify-native-images to recheck ND2.'},indent=2),encoding='utf-8')
+     manual={1:{'A':[212,18,222.8,29]},4:{'B':[480.7,15,490.4,27],
+       'D':[16,540,37,564],'F':[16,1320,37,1344],'G':[16,1674,39,1698]}}
+     for n,count in [(1,3),(2,4),(3,6),(4,7),(5,4),(6,8),(7,5)]:
+--- original/CVR_figure_revision_20261103/script/format_graphical_abstract.py
++++ release/CVR_figure_revision_20261103/script/format_graphical_abstract.py
+@@ -8,11 +8,12 @@
+ from collections import Counter
+ import ast, json, re, xml.etree.ElementTree as ET
+ import pymupdf as fitz
+-from prepare import BASE, OUT, SOURCE
++from prepare import BASE, ROOT, OUT, SOURCE, require_inputs
++from release_fonts import arial
+ 
+ W,H=180/25.4*72,110/25.4*72
+-REG=fitz.Font(fontfile='C:/Windows/Fonts/arial.ttf')
+-BOLD=fitz.Font(fontfile='C:/Windows/Fonts/arialbd.ttf')
++REG=fitz.Font(fontfile=arial())
++BOLD=fitz.Font(fontfile=arial(bold=True))
+ 
+ def rgb(s):return tuple(int(s[i:i+2],16)/255 for i in [1,3,5])
+ 
+@@ -30,8 +31,8 @@
+     return result
+ 
+ def main():
+-    tree=ast.parse((BASE/'script/original_graphical_abstract.py.txt').read_text(encoding='utf-8-sig'))
+-    content=next(ast.literal_eval(n.value) for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='CONTENT' for t in n.targets))
++    require_inputs('formatting')
++    content=json.loads((ROOT/'config/graphical_abstract_content.json').read_text(encoding='utf-8'))
+     for r in content:
+         if r['content_order']==7:
+             r['title']='Altered adaptive inflammatory\nresponsiveness'
+@@ -52,8 +53,8 @@
+     normalize=lambda s:Counter(c for c in s.translate(str.maketrans({'\u00ad':'-','\u037e':';'})) if not c.isspace())
+     assert normalize(source_text)==normalize(expected),(normalize(source_text)-normalize(expected),normalize(expected)-normalize(source_text))
+     doc=fitz.open();p=doc.new_page(width=W,height=H)
+-    p.insert_font(fontname='Arial',fontfile='C:/Windows/Fonts/arial.ttf')
+-    p.insert_font(fontname='ArialBold',fontfile='C:/Windows/Fonts/arialbd.ttf')
++    p.insert_font(fontname='Arial',fontfile=arial())
++    p.insert_font(fontname='ArialBold',fontfile=arial(bold=True))
+     recorded=[]
+     def text(x,y,s,size=8,bold=False,color='#20252A',align='left'):
+         font=BOLD if bold else REG
+--- original/CVR_figure_revision_20261105/script/update_figure4.py
++++ release/figure_calibration/script/figure4b.py
+@@ -1,39 +1,20 @@
+-"""November 5, 2026: replace only Fig. 4A photographs; calibrate Fig. 4B.
+-
+-Run from any directory with the workspace .venv Python and -B -X utf8.
+-All writes stay in this new revision folder. Previous versions are read-only.
+-PDF plots, scientific results, page geometry and other panels are retained.
++"""Verify Figure 4B acquisition calibration and add the current 100-micrometre bars.
++The superseded tube-photo cropping/replacement functions are intentionally excluded.
+ """
+ from pathlib import Path
+ from collections import Counter
+-from io import BytesIO
+-import csv
+-import hashlib
+-import json
+-import shutil
+-import sys
+-
+-import h5py
+-import nd2
+-import numpy as np
++import csv, hashlib, json, sys
++import h5py, nd2, numpy as np
+ from PIL import Image
+ import pymupdf as fitz
+-
+-BASE = Path(__file__).resolve().parents[1]
+-ROOT = BASE.parent
+-OLD = ROOT / 'CVR_figure_revision_20261103'
+-OUT = BASE / 'result'
+-SOURCE = OUT / 'source'
+-REVIEW = OUT / 'review'
+-MAIN = OUT / 'main/Fig04'
+-NEW_JPEG = Path('C:/Users/Jack2/Downloads/20261105-updated one.jpg')
+-FONT = 'C:/Windows/Fonts/arial.ttf'
+-GROUPS = ['P3_Control', 'P3_H1N1', 'P9_Control', 'P9_H1N1']
+-# Native 2695 x 1828 supplied JPEG; exact rectangular photo boundaries.
+-# Each photo is 852 x 639 pixels (4:3), matching the previous image aspect.
+-CROPS = [(250, 144, 1102, 783), (1152, 144, 2004, 783),
+-         (250, 1030, 1102, 1669), (1152, 1030, 2004, 1669)]
+-
++BASE=Path(__file__).resolve().parents[1]
++ROOT=BASE.parent
++sys.path.insert(0,str(ROOT/'tools'))
++from release_fonts import arial
++from release_inputs import require_inputs
++SOURCE=BASE/'inputs'
++REVIEW=BASE/'result/review'
++FONT=arial()
+ 
+ def sha(path):
+     with Path(path).open('rb') as stream:
+@@ -50,13 +31,6 @@
+         w = csv.DictWriter(stream, fieldnames=list(rows[0]))
+         w.writeheader()
+         w.writerows(rows)
+-
+-
+-def snapshot(src, dst):
+-    dst.parent.mkdir(parents=True, exist_ok=True)
+-    if not dst.exists():
+-        shutil.copy2(src, dst)
+-    assert sha(src) == sha(dst), ('Snapshot differs from source', src)
+ 
+ 
+ def calibrate():
+@@ -131,28 +105,6 @@
+     return record
+ 
+ 
+-def extract_photographs():
+-    assets = OUT / 'assets/Fig04A'
+-    assets.mkdir(parents=True, exist_ok=True)
+-    records = []
+-    with Image.open(SOURCE / NEW_JPEG.name) as original:
+-        assert original.size == (2695, 1828) and original.mode == 'RGB'
+-        for group, bbox in zip(GROUPS, CROPS):
+-            crop = original.crop(bbox)
+-            target = assets / f'{group}.png'
+-            crop.save(target)
+-            with Image.open(target) as check:
+-                assert np.array_equal(np.asarray(crop), np.asarray(check))
+-            records.append(dict(group=group, source=NEW_JPEG.name,
+-                                source_sha256=sha(SOURCE / NEW_JPEG.name),
+-                                crop_xyxy=json.dumps(bbox), width=852, height=639,
+-                                asset=str(target.relative_to(BASE)), sha256=sha(target),
+-                                scale_annotation='1 mm, retained from supplied image' if group == 'P3_Control' else 'None supplied; none inferred',
+-                                processing='Exact rectangular extraction; lossless PNG; no intensity changes'))
+-    csv_write(REVIEW / 'Fig04A_image_sources.csv', records)
+-    return [BASE / r['asset'] for r in records]
+-
+-
+ def add_bars(page, calibration):
+     images = sorted([x for x in page.get_image_info() if x['width'] == x['height'] == 2048],
+                     key=lambda r: r['bbox'][0])
+@@ -223,202 +175,19 @@
+                     quantification_and_other_panels_unchanged=True)
+ 
+ 
+-def update_pdf(src, dst, photos, calibration, change_a, change_b):
+-    edits = []
+-    with fitz.open(src) as doc:
+-        page = doc[0]
+-        if change_a:
+-            existing = sorted([i for i in page.get_image_info(xrefs=True)
+-                               if i['width'] == 1296 and i['height'] == 972],
+-                              key=lambda i: (round(i['bbox'][1], 2), i['bbox'][0]))
+-            assert len(existing) == 4 and len({i['xref'] for i in existing}) == 4
+-            for group, image, photo in zip(GROUPS, existing, photos):
+-                page.replace_image(image['xref'], filename=str(photo))
+-                edits.append(dict(kind='replace_tube_photograph', group=group,
+-                                  rect=list(image['bbox']), source_asset=str(photo.relative_to(BASE))))
+-            # Confirm that the exact supplied crop pixels are embedded.
+-            for image, photo in zip(existing, photos):
+-                pix = fitz.Pixmap(doc, image['xref'])
+-                with Image.open(photo) as im:
+-                    assert pix.width == im.width and pix.height == im.height
+-                    assert pix.samples == im.tobytes()
+-        if change_b:
+-            edits.extend(add_bars(page, calibration))
+-        dst.parent.mkdir(parents=True, exist_ok=True)
+-        doc.set_metadata({**doc.metadata, 'subject': 'November 5, 2026: supplied Fig. 4A photographs; calibrated Fig. 4B scale bars. Existing plots retained.'})
+-        doc.save(dst, garbage=4, deflate=True)
+-    check = pixel_audit(src, dst, edits)
+-    with fitz.open(dst) as doc:
+-        doc[0].get_pixmap(matrix=fitz.Matrix(1600/doc[0].rect.width, 1600/doc[0].rect.width),
+-                         alpha=False).save(dst.with_suffix('.preview.png'))
+-    return edits, check
+-
+-
+-def write_legend():
+-    text = (SOURCE / 'Fig04_legend_previous.md').read_text(encoding='utf-8')
+-    old = 'The schematic is retained; four representative images and both quantification plots use the supplied New Fig4A-tube data (1).pdf (received 2026-10-04).'
+-    new = ('The schematic is retained. Four representative images use the supplied '
+-           '20261105-updated one.jpg (received 2026-11-05); the 1 mm scale bar on '
+-           'the P3-Control image is retained as supplied. Both quantification plots '
+-           'remain unchanged from New Fig4A-tube data (1).pdf (received 2026-10-04).')
+-    assert old in text
+-    text = text.replace(old, new)
+-    old_b = 'B: Separate Cell Painting experiment and the existing four-channel image display; all six group labels are existing metadata.'
+-    new_b = (old_b + ' Scale bars in all four views, 100 µm. All views show the same '
+-             '2048 × 2048-pixel field (approximately 663.7 × 663.7 µm), traced to '
+-             'P3 well A02, second acquired field. Spatial calibration is '
+-             '0.324081161957359 µm/pixel from the matched original ND2 file.')
+-    assert old_b in text
+-    text = text.replace(old_b, new_b)
+-    (MAIN / 'Fig04_legend.md').write_text(text, encoding='utf-8')
+-    docs = OUT / 'documents'
+-    docs.mkdir(exist_ok=True)
+-    shutil.copy2(MAIN / 'Fig04_legend.md', docs / 'Fig04_legend_updated_20261105.md')
+-    (docs / 'Scale_bar_legend_update.md').write_text(
+-        '# Figure 4 legend update\n\nA: The scale bar supplied on the P3-Control tube-assay image indicates 1 mm. '
+-        'Calibration for the other three tube views is not inferred.\n\n'
+-        'B: Scale bars, 100 µm in all four views.\n\n'
+-        'E: Existing scale bars remain 20 µm.\n\n'
+-        'The full updated Figure 4 legend is in Fig04_legend_updated_20261105.md. '
+-        'Previously supplied manuscript/Word files are unchanged.\n', encoding='utf-8')
+-
+-
+-def books():
+-    with fitz.open() as book:
+-        for path in sorted((MAIN / 'panels').glob('Fig04?.pdf')):
+-            with fitz.open(path) as d:
+-                book.insert_pdf(d)
+-        book.save(MAIN / 'Fig04_individual_panels.pdf', garbage=4, deflate=True)
+-    with fitz.open() as book:
+-        for name in [f'Fig{i:02d}.pdf' for i in range(1, 8)] + ['Graphic_Abstract.pdf']:
+-            with fitz.open(OUT / 'figures' / name) as d:
+-                book.insert_pdf(d)
+-        book.save(REVIEW / 'All_main_figures.pdf', garbage=4, deflate=True)
+-    with fitz.open() as book:
+-        for name in ['Fig04.pdf', 'panels/Fig04A.pdf', 'panels/Fig04B.pdf']:
+-            page = book.new_page(width=1600, height=1100)
+-            for x, label, root in [(20, 'November 3', OLD / 'result/main/Fig04'),
+-                                   (810, 'November 5', MAIN)]:
+-                page.insert_text((x, 25), f'{label}: {Path(name).stem}', fontsize=14)
+-                with fitz.open(root / name) as d:
+-                    page.show_pdf_page(fitz.Rect(x, 45, x+770, 1080), d, 0)
+-        book.save(REVIEW / 'Figure4_before_after.pdf', garbage=4, deflate=True)
+-
+-
+-def restyle_existing():
+-    """Rebuild only the complete Figure 4 and B from unmarked input copies.
+-
+-    Reuse the previously validated calibration; no need to repeat the field search.
+-    This removes the old over-image labels by rebuilding from original artwork,
+-    without painting over or altering the microscopy pixels.
+-    """
+-    validation = json.loads((REVIEW / 'validation.json').read_text(encoding='utf-8'))
+-    changes = json.loads((REVIEW / 'edits.json').read_text(encoding='utf-8'))
+-    calibration = json.loads((REVIEW / 'Fig04B_calibration.json').read_text(encoding='utf-8'))
+-    assert sha(calibration['source_nd2']) == calibration['source_sha256']
+-    protected = list((MAIN / 'panels').glob('Fig04[ACDEFG].pdf'))
+-    protected += [p for p in (OUT / 'figures').glob('*.pdf') if p.name != 'Fig04.pdf']
+-    before = {str(p): sha(p) for p in protected}
+-    photos = [OUT / f'assets/Fig04A/{group}.png' for group in GROUPS]
+-    for name, a in [('Fig04.pdf', True), ('panels/Fig04B.pdf', False)]:
+-        edits, check = update_pdf(SOURCE / Path(name).name, MAIN / name, photos, calibration, a, True)
+-        changes[name] = edits
+-        validation['checks'] = [r for r in validation['checks'] if r['file'] != check['file']]
+-        validation['checks'].append(check)
+-    shutil.copy2(MAIN / 'Fig04.pdf', OUT / 'figures/Fig04.pdf')
+-    books()
+-    csv_write(REVIEW / 'final_figure_manifest.csv', [
+-        dict(file=p.name, sha256=sha(p),
+-             unchanged_from_1103=sha(p) == sha(OLD / 'result/figures' / p.name))
+-        for p in sorted((OUT / 'figures').glob('*.pdf'))])
+-    assert all(sha(p) == digest for p, digest in before.items())
+-    assert all(sha(p) == digest for p, digest in validation['original_source_hashes'].items())
+-    validation['scale_bar_style'] = 'White bars inside lower left; black 100 µm labels below images'
+-    validation['scale_labels_do_not_overlap_microscopy'] = True
+-    validation['style_update_other_panels_and_figures_byte_identical'] = True
+-    dump(REVIEW / 'edits.json', changes)
+-    dump(REVIEW / 'validation.json', validation)
+-    readme = BASE / 'README.md'
+-    text = readme.read_text(encoding='utf-8')
+-    note = '\nScale-bar styling: white bars sit inside the lower-left corner of each Figure 4B image. Black 100 µm labels sit below the images on the white margin, without overlapping microscopy.\n'
+-    if note not in text:
+-        readme.write_text(text + note, encoding='utf-8')
+-    print('Restyled Figure 4B labels in all current figure copies; all other panels and figures unchanged.', flush=True)
+-
+-
+ def main():
+-    for p in [SOURCE, REVIEW, MAIN / 'panels', OUT / 'figures']:
+-        p.mkdir(parents=True, exist_ok=True)
+-    snapshots = [(NEW_JPEG, SOURCE / NEW_JPEG.name),
+-                 (ROOT / 'Data/vivo/CellProfiler.cpproj', SOURCE / 'CellProfiler.cpproj'),
+-                 (OLD / 'result/source/main/Fig04/Fig04_legend.md', SOURCE / 'Fig04_legend_previous.md')]
+-    for name in ['Fig04.pdf', 'panels/Fig04A.pdf', 'panels/Fig04B.pdf']:
+-        snapshots.append((OLD / 'result/main/Fig04' / name, SOURCE / Path(name).name))
+-    for a, b in snapshots:
+-        snapshot(a, b)
+-    originals = {str(p): sha(p) for p, _ in snapshots}
+-    originals.update({str(p): sha(p) for p in (OLD / 'result/figures').glob('*.pdf')})
+-    for p in (OLD / 'result/figures').glob('*.pdf'):
+-        shutil.copy2(p, OUT / 'figures' / p.name)
+-    for p in (OLD / 'result/main/Fig04/panels').glob('Fig04[CGDEF].*'):
+-        shutil.copy2(p, MAIN / 'panels' / p.name)
+-    calibration = calibrate()
+-    print('Verified original image calibration and all 180 candidate fields.', flush=True)
+-    photos = extract_photographs()
+-    changes, checks = {}, []
+-    for name, a, b in [('Fig04.pdf', True, True), ('panels/Fig04A.pdf', True, False),
+-                       ('panels/Fig04B.pdf', False, True)]:
+-        edits, check = update_pdf(SOURCE / Path(name).name, MAIN / name, photos, calibration, a, b)
+-        changes[name] = edits
+-        checks.append(check)
+-        print('Updated and verified', name, flush=True)
+-    shutil.copy2(MAIN / 'Fig04.pdf', OUT / 'figures/Fig04.pdf')
+-    write_legend()
+-    books()
+-    unchanged = []
+-    for p in sorted((OUT / 'figures').glob('*.pdf')):
+-        same = sha(p) == sha(OLD / 'result/figures' / p.name)
+-        assert same == (p.name != 'Fig04.pdf')
+-        unchanged.append(dict(file=p.name, sha256=sha(p), unchanged_from_1103=same))
+-    assert len(unchanged) == 16
+-    for letter in 'CDEFG':
+-        assert sha(MAIN / f'panels/Fig04{letter}.pdf') == sha(OLD / f'result/main/Fig04/panels/Fig04{letter}.pdf')
+-    assert all(sha(p) == digest for p, digest in originals.items())
+-    csv_write(REVIEW / 'final_figure_manifest.csv', unchanged)
+-    dump(REVIEW / 'edits.json', changes)
+-    dump(REVIEW / 'validation.json', dict(checks=checks, source_files_unchanged=True,
+-         original_source_hashes=originals, unchanged_figures=15,
+-         unchanged_separate_panels=list('CDEFG'), quantification_unchanged=True,
+-         tube_photograph_pixels_preserved_from_supplied_JPEG=True,
+-         tube_bar_source='User-supplied 1 mm annotation on P3-Control only',
+-         cell_painting_bars='100 µm, verified original ND2 calibration',
+-         no_new_analysis_of_biological_results=True))
+-    (BASE / 'README.md').write_text('''# Figure update — November 5, 2026
+-
+-Use `result/figures/` for the complete set of 16 figure PDFs. Only Figure 4 changed; the other 15 PDFs are byte-for-byte copies of the November 3 version.
+-
+-- `result/main/Fig04/Fig04.pdf`: updated whole Figure 4.
+-- `result/main/Fig04/panels/`: updated A and B; unchanged C–G.
+-- `result/main/Fig04/Fig04_individual_panels.pdf`: seven separate panel pages.
+-- `result/documents/Fig04_legend_updated_20261105.md`: updated Figure 4 legend.
+-- `result/review/Figure4_before_after.pdf`: visual comparison of the whole figure, A and B.
+-- `result/review/validation.json`: preservation checks.
+-- `result/review/Fig04B_calibration.json`: verified spatial calibration and source link.
+-- `result/source/`: unchanged input copies; `result/assets/Fig04A/`: exact photo extractions.
+-
+-Figure 4A: four supplied photographs replace the previous photographs in their original positions. The supplied P3-Control 1 mm bar is retained; no scale is inferred for the other three tube images. Existing quantification, statistical annotations, group labels and design schematic remain unchanged.
+-
+-Figure 4B: 100 µm vector bars in all four views, from the matched P3 A02 ND2 second field, 0.324081161957359 µm/pixel. White bars are inside the lower-left corner of each image; black labels are below the images on the white margin. Original microscopy pixel payloads, channel names, layout and schematic remain unchanged. The previously documented CY5/TRITC naming discrepancy is not resolved by spatial calibration.
+-
+-All files in the November 3 and October 4 folders, and all original images/data, remain unchanged. Previous Word documents are unchanged; the updated Figure 4 legend is supplied separately here. This update does not resolve previously deferred items elsewhere, including the reported S1A legend overlap.
+-
+-Reproduce with the workspace `.venv/Scripts/python.exe -B -X utf8 CVR_figure_revision_20261105/script/update_figure4.py`. Outputs remain inside this folder. PNGs are viewing previews; use the vector PDFs for submission.
+-''', encoding='utf-8')
+-    print('Complete: 16 figures, only Figure 4 updated; all originals preserved.', flush=True)
+-
+-
+-if __name__ == '__main__':
+-    if '--restyle-existing' in sys.argv:
+-        restyle_existing()
+-    else:
+-        main()
++    import argparse
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--panel',type=Path,help='Optional unbarred Figure 4B PDF; the calibrated output stays in this module result folder.')
++    args=parser.parse_args()
++    require_inputs('calibration')
++    REVIEW.mkdir(parents=True,exist_ok=True)
++    record=calibrate()
++    if args.panel:
++        target=BASE/'result/Fig04B_calibrated.pdf'
++        with fitz.open(args.panel) as doc:
++            if '100 µm' in doc[0].get_text():raise ValueError('Input already has scale labels.')
++            edits=add_bars(doc[0],record)
++            doc.save(target,garbage=4,deflate=True)
++        dump(REVIEW/'pixel_audit.json',pixel_audit(args.panel,target,edits))
++if __name__=='__main__':main()
+--- original/CVR_figure_revision_20261109/script/use_exact_tube_picture.py
++++ release/CVR_figure_revision_20261109/script/use_exact_tube_picture.py
+@@ -10,6 +10,7 @@
+ import hashlib
+ import json
+ import shutil
++import sys
+ 
+ import numpy as np
+ from PIL import Image
+@@ -17,12 +18,14 @@
+ 
+ BASE = Path(__file__).resolve().parents[1]
+ ROOT = BASE.parent
+-PREVIOUS = ROOT / 'CVR_figure_revision_20261105'
++sys.path.insert(0,str(ROOT/'tools'))
++from release_inputs import require_inputs
++PREVIOUS = BASE / 'inputs/previous'
+ OUT = BASE / 'result'
+ SOURCE = OUT / 'source'
+ MAIN = OUT / 'main/Fig04'
+ REVIEW = OUT / 'review'
+-INPUT_JPEG = Path('C:/Users/Jack2/Downloads/20261105-updated one.jpg')
++INPUT_JPEG = BASE / 'inputs/20261105-updated one.jpg'
+ CUT_Y = 210
+ DOWN = 100
+ 
+@@ -197,6 +200,7 @@
+ 
+ 
+ def main():
++    require_inputs('figures')
+     for p in [SOURCE,MAIN/'panels',REVIEW,OUT/'figures',OUT/'documents']:
+         p.mkdir(parents=True,exist_ok=True)
+     pairs=[(INPUT_JPEG,SOURCE/INPUT_JPEG.name),
+@@ -249,26 +253,26 @@
+         unchanged_individual_panels=list('BCDEFG'),
+         scale_bars_panel_B='Unchanged: white bars inside, 100 µm labels below images',
+         no_new_numerical_analysis=True))
+-    (BASE/'README.md').write_text('''# Exact supplied Figure 4A picture — November 9, 2026
+-
+-Use `result/figures/` for all 16 figure PDFs. Only Figure 4 changed; the other 15 are exact copies of the November 5 version.
++    (OUT/'README.md').write_text('''# Exact supplied Figure 4A picture — November 9, 2026
++
++Use `figures/` for all 16 figure PDFs. Only Figure 4 changed; the other 15 are exact copies of the November 5 version.
+ 
+ Figure 4A now contains the ENTIRE supplied `20261105-updated one.jpg`, including its images, plots, labels and 1 mm bar, as one image. The original JPEG bytes are embedded unchanged. No cropping, reconstruction, intensity adjustment or JPEG recompression was used. The existing experimental-design schematic is retained separately alongside it.
+ 
+ Panel A has more vertical space. In the whole figure, panels C–G move down together by 100 PDF points at their original scale. Figure 4B retains its white 100 µm bars inside the images and black labels below. Individual panels B–G are byte-identical to November 5.
+ 
+ Files:
+-- `result/main/Fig04/Fig04.pdf`: revised whole figure.
+-- `result/main/Fig04/panels/Fig04A.pdf`: revised separate A.
+-- `result/main/Fig04/Fig04_individual_panels.pdf`: seven panel pages.
+-- `result/documents/Fig04_legend_updated_20261109.md`: current Figure 4 legend.
+-- `result/review/Figure4_before_after.pdf`: visual comparison.
+-- `result/review/validation.json`: exact JPEG and artwork-preservation checks.
+-- `result/source/`: unchanged supplied image and prior figure inputs.
++- `main/Fig04/Fig04.pdf`: revised whole figure.
++- `main/Fig04/panels/Fig04A.pdf`: revised separate A.
++- `main/Fig04/Fig04_individual_panels.pdf`: seven panel pages.
++- `documents/Fig04_legend_updated_20261109.md`: current Figure 4 legend.
++- `review/Figure4_before_after.pdf`: visual comparison.
++- `review/validation.json`: exact JPEG and artwork-preservation checks.
++- `source/`: unchanged supplied image and prior figure inputs.
+ 
+ All original images, data, Word files, and previous revision folders remain unchanged. This update does not change or resolve other deferred figure issues.
+ 
+-Reproduce with the workspace `.venv/Scripts/python.exe -B -X utf8 CVR_figure_revision_20261109/script/use_exact_tube_picture.py`. All generated files stay in this folder. PNGs are previews; PDFs retain the intact source JPEG and other vector artwork.
++Reproduce with the configured Python environment `.venv/Scripts/python.exe -B -X utf8 CVR_figure_revision_20261109/script/use_exact_tube_picture.py`. All generated files stay in this folder. PNGs are previews; PDFs retain the intact source JPEG and other vector artwork.
+ ''',encoding='utf-8')
+     print('Complete: exact full JPEG in Figure 4A; B–G preserved; all 16 figures packaged.',flush=True)
+ 
+--- original/CVR_Data_S10_Table_S8_verified_20261008/script/prepare_verified_package.py
++++ release/CVR_Data_S10_Table_S8_verified_20261008/script/prepare_verified_package.py
+@@ -12,6 +12,7 @@
+ import math
+ import numbers
+ import shutil
++import sys
+ import zipfile
+ import xml.etree.ElementTree as ET
+ 
+@@ -24,12 +25,14 @@
+ WORK = ROOT.parent
+ OUT = ROOT / 'result'
+ AUDIT = OUT / 'verification'
+-REV = WORK / 'publication_figure_revision_20261004'
++sys.path.insert(0,str(WORK/'tools'))
++from release_inputs import require_inputs
++REV = ROOT / 'inputs/base'
+ TABLES = REV / 'result/supplementary/Tables'
+ RAWZIP = REV / 'result/supplementary/Data/Data_S10_original_Cell_Painting_database.zip'
+ EXP = WORK / 'cell_painting_LEC_P3_P9_expanded_20260916'
+ REGISTRY = EXP / 'inputs/verified_cell_registry.csv'
+-PROV = WORK / 'cell_painting_LEC_P3_P9_corrected/inputs/provenance/08_duplicate_reconciliation'
++PROV = ROOT / 'inputs/duplicate_reconciliation'
+ S8NAME = 'Table_S8_Cell_Painting_figure_analysis_collection.xlsx'
+ S8ZIP = 'Table_S8_Cell_Painting_analysis_collection.zip'
+ D10NAME = 'Data_S10_Cell_Painting_measurements_duplicate_rows_removed.zip'
+@@ -394,6 +397,7 @@
+ 
+ 
+ def main():
++    require_inputs('tables')
+     OUT.mkdir(parents=True,exist_ok=True);AUDIT.mkdir(exist_ok=True)
+     originals=[RAWZIP,REGISTRY,PROV/'cell_row_provenance.csv',TABLES/S8NAME,TABLES/S8ZIP,TABLES/'Table_S8_source_index.csv']
+     before={str(p):sha(p) for p in originals}
+@@ -472,7 +476,7 @@
+ [File/exclusion counts](verification/Data_S10_file_manifest.csv)
+ '''
+     (OUT/'README.md').write_text(note,encoding='utf-8')
+-    (ROOT/'README.md').write_text('# Data S10 and Table S8\n\n[Open the verified release](result/README.md).\n\nScripts are in `script/`; deliverables and verification records are in `result/`. Earlier project files are untouched.\n',encoding='utf-8')
++    (OUT/'PACKAGE_NOTES.md').write_text('# Data S10 and Table S8\n\n[Open the verified release](result/README.md).\n\nScripts are in `script/`; deliverables and verification records are in `result/`. Earlier project files are untouched.\n',encoding='utf-8')
+     print(json.dumps(validation,indent=2),flush=True)
+ 
+ 
+--- original/Data_S8_split_Excel_20261028/script/split_data_s8.py
++++ release/Data_S8_split_Excel_20261028/script/split_data_s8.py
+@@ -27,7 +27,7 @@
+ from openpyxl.styles import Alignment, Font, PatternFill
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+-DEFAULT_SOURCE = ROOT / "publication_figure_revision_20261004/result/supplementary/Data/Data_S8_complete_disease_MultiNicheNet_results.xlsx"
++DEFAULT_SOURCE = ROOT / "Data_S8_split_Excel_20261028/inputs/Data_S8_complete_disease_MultiNicheNet_results.xlsx"
+ DEFAULT_OUTPUT = Path(__file__).resolve().parents[1] / "result"
+ SS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+ REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+--- original/publication_figure_revision_20261004/script/revision_paths.py
++++ release/representative_images/script/revision_paths.py
+@@ -7,7 +7,7 @@
+ REVISION = Path(__file__).resolve().parents[1]
+ WORKSPACE = REVISION.parent
+ RESULT = REVISION / 'result'
+-SOURCES = RESULT / '_sources'
++SOURCES = REVISION / 'inputs'
+ CP = SOURCES / 'Cell_Painting_LEC_P3_P9_figures/result'
+ OLD = SOURCES / 'new_result2'
+ 
+--- original/publication_figure_revision_20261004/script/panel_E_representative_images.py
++++ release/representative_images/script/panel_E_representative_images.py
+@@ -244,7 +244,7 @@
+         page.show_pdf_page(clip,old,0,clip=clip)
+         page.show_pdf_page(fitz.Rect(576,18,1036,439.2),images,0)
+         page.insert_text((18,425),'Existing state profiles; one illustrative target object per state. Image QC and selection: Figure S7J-L and Table S8.',fontsize=8,color=(.25,.29,.32))
+-        from assemble_main import export
++        from export_panel import export
+         export(out,stem,dpi)
+         stem.with_suffix('.svg').write_text(page.get_svg_image(text_as_path=True),encoding='utf-8')
+         # Pixel equality of the retained heatmap region is checked at 144 dpi.
+--- original/publication_figure_revision_20261004/script/assemble_main.py
++++ release/representative_images/script/export_panel.py
+@@ -1,105 +1,5 @@
+-"""Reorganize existing PDF artwork; no analysis, fitting, or statistical changes.
+-
+-Only the copied sources under result/_sources are read. PDF text replacements,
+-panel inclusion/letters, and page layout are audited. Microscopy and plot marks
+-remain the existing artwork. Outputs stay inside this new revision.
+-"""
+-import argparse
+-import re
+-import shutil
+-import xml.etree.ElementTree as ET
+-import pymupdf as fitz
+-from PIL import Image, ImageChops
++"""Current representative-panel PDF/PNG export; no historical figure assembler."""
+ from revision_paths import *
+-
+-# Tight glyph boxes prevent an editorial text deletion touching an adjacent line.
+-fitz.TOOLS.set_small_glyph_heights(True)
+-
+-EDITS=[]
+-PLACEMENTS=[]
+-
+-
+-def spans(page):
+-    return [s for b in page.get_text('dict')['blocks'] for l in b.get('lines',[]) for s in l['spans']]
+-
+-
+-def edited_pdf(source, rules, svg_path):
+-    """Remove only named glyph elements; preserve other SVG artwork verbatim.
+-
+-    PDF redaction can disturb Matplotlib text-positioning state. Editing the
+-    independent SVG glyph elements avoids that issue. Unedited glyphs stay as
+-    their original vector outlines; new English labels are editable SVG text.
+-    """
+-    svg_ns='http://www.w3.org/2000/svg'
+-    ET.register_namespace('',svg_ns)
+-    ET.register_namespace('xlink','http://www.w3.org/1999/xlink')
+-    with fitz.open(source) as original:
+-        page=original[0]
+-        root=ET.fromstring(page.get_svg_image(text_as_path=True))
+-        original_glyphs=[e for e in root.iter() if 'data-text' in e.attrib]
+-        original_images=[dict(e.attrib) for e in root.iter() if e.tag.endswith('}image')]
+-        removed=set()
+-        parents={child:parent for parent in root.iter() for child in parent}
+-        for entry in rules:
+-            old,new=entry[:2]; options=entry[2] if len(entry)>2 else {}
+-            candidates=spans(page)
+-            matches=[s for s in candidates if s['text']==old] if options.get('exact_span') else []
+-            boxes=[fitz.Rect(s['bbox']) for s in matches] if matches else page.search_for(old)
+-            if not boxes:
+-                if options.get('optional'):continue
+-                raise ValueError(f'Missing original text: {old}')
+-            box=fitz.Rect(boxes[0])
+-            for b in boxes[1:]:box|=b
+-            sample=next(s for s in candidates if fitz.Rect(s['bbox']).intersects(boxes[0]))
+-            nodes=[e for e in root.iter() if 'data-text' in e.attrib]
+-            if options.get('exact_span'):
+-                selected=[]
+-                for node in nodes:
+-                    if node.attrib['data-text']!=old:continue
+-                    nums=[float(n) for n in re.findall(r'-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?',node.attrib.get('transform',''))]
+-                    if len(nums)==6 and abs(nums[-2]-sample['origin'][0])<.1 and abs(nums[-1]-sample['origin'][1])<.1:
+-                        selected.append(node)
+-                if len(selected)!=1:raise ValueError(f'Panel-letter glyph could not be identified unambiguously: {old}')
+-            else:
+-                chars=[];owners=[]
+-                for node in nodes:
+-                    for char in node.attrib['data-text']:
+-                        if not char.isspace():chars.append(char);owners.append(node)
+-                text=''.join(chars);needle=''.join(old.split())
+-                if text.count(needle)!=1:raise ValueError(f'Expected unique SVG text: {old}')
+-                begin=text.index(needle)
+-                selected=list(dict.fromkeys(owners[begin:begin+len(needle)]))
+-            for node in selected:
+-                removed.add(node);parents[node].remove(node)
+-            size=sample['size'];font='hebo' if 'bold' in sample['font'].lower() else 'helv'
+-            if new:
+-                lines=new.split('\n');available=options.get('width',box.width+2)
+-                longest=max(fitz.get_text_length(line,fontname=font,fontsize=size) for line in lines)
+-                size=min(size,size*available/longest)
+-                color=f'#{sample["color"]:06x}'
+-                for i,line in enumerate(lines):
+-                    x=(box.x0+box.x1-fitz.get_text_length(line,fontname=font,fontsize=size))/2 if options.get('width') else box.x0
+-                    el=ET.SubElement(root,'{'+svg_ns+'}text',{
+-                        'x':str(x),'y':str(sample['origin'][1]+i*size*1.15),
+-                        'font-family':'Arial','font-size':str(size),
+-                        'font-weight':'bold' if font=='hebo' else 'normal','fill':color})
+-                    el.text=line
+-            EDITS.append({'source':str(Path(source).relative_to(REVISION)),'old':old,'new':new,
+-                          'rectangle':str(tuple(box)),'font_size':size,
+-                          'operation':'named SVG glyphs only; all other original glyphs, images and graphic elements retained'})
+-        encoded=ET.tostring(root,encoding='utf-8',xml_declaration=True)
+-        retained=[e for e in root.iter() if 'data-text' in e.attrib]
+-        assert retained==[e for e in original_glyphs if e not in removed]
+-        assert original_images==[dict(e.attrib) for e in root.iter() if e.tag.endswith('}image')]
+-        destination(svg_path).write_bytes(encoded)
+-        write_json(Path(svg_path).with_suffix('.artwork_validation.json'),{
+-            'source_pdf':str(Path(source).relative_to(REVISION)),
+-            'original_glyphs':len(original_glyphs),'explicitly_removed_glyphs':len(removed),
+-            'all_other_glyph_elements_retained':True,'image_payloads_unchanged':True,
+-            'images':len(original_images),'new_labels_only':[r[1] for r in rules if r[1]]})
+-        with fitz.open(stream=encoded,filetype='svg') as svg:
+-            return fitz.open(stream=svg.convert_to_pdf(),filetype='pdf')
+-
+ 
+ def export(doc, stem, dpi=600):
+     stem=destination(stem)
+@@ -109,218 +9,3 @@
+     page.get_pixmap(dpi=95,alpha=False).save(stem.parent/(stem.name+'.preview.png'))
+     print('Figure:',stem.relative_to(REVISION),flush=True)
+ 
+-
+-def clip_content(doc):
+-    p=doc[0]; pix=p.get_pixmap(dpi=90,alpha=False)
+-    im=Image.frombytes('RGB',(pix.width,pix.height),pix.samples)
+-    background=Image.new('RGB',im.size,'white')
+-    mask=ImageChops.difference(im,background).convert('L').point(lambda v:255 if v>15 else 0)
+-    bounds=mask.getbbox()
+-    if bounds is None: raise ValueError('Empty PDF')
+-    box=fitz.Rect(bounds[0]*p.rect.width/pix.width,bounds[1]*p.rect.height/pix.height,
+-                  bounds[2]*p.rect.width/pix.width,bounds[3]*p.rect.height/pix.height)
+-    for b in p.get_text('blocks'):
+-        if b[6]==0: box |= fitz.Rect(b[:4]) & p.rect
+-    return (box+(-4,-4,4,4)) & p.rect
+-
+-
+-def assemble(rows, stem, width=960, dpi=600):
+-    margin=gutter=14.4
+-    ready=[]; height=margin
+-    for row in rows:
+-        docs=[fitz.open(path) for path in row]
+-        clips=[clip_content(d) for d in docs]
+-        ratios=[c.width/c.height for c in clips]
+-        available=width-2*margin-gutter*(len(row)-1)
+-        # Side-by-side panels retain equal heights and original aspect ratios.
+-        h=available/sum(ratios)
+-        ready.append((row,docs,clips,h,[h*r for r in ratios]))
+-        height+=h+gutter
+-    out=fitz.open(); p=out.new_page(width=width,height=height)
+-    y=margin
+-    for number,(row,docs,clips,h,widths) in enumerate(ready,1):
+-        x=margin
+-        for path,doc,clip,w in zip(row,docs,clips,widths):
+-            rect=fitz.Rect(x,y,x+w,y+h)
+-            p.show_pdf_page(rect,doc,0,clip=clip)
+-            PLACEMENTS.append({'figure':stem.name,'row':number,'source_pdf':str(Path(path).relative_to(REVISION)),
+-                               'source_clip':str(tuple(clip)),'placement':str(tuple(rect))})
+-            x+=w+gutter;doc.close()
+-        y+=h+gutter
+-    export(out,stem,dpi);out.close()
+-
+-
+-def old_panel_rows(relative, keep):
+-    index=next((OLD/relative).glob('*_panel_manifest.csv'))
+-    rows={}
+-    for item in read_csv(index):
+-        if item['panel'] not in keep: continue
+-        rows.setdefault(int(item['layout_row']),[]).append(SOURCES/item['source_pdf'])
+-    return [rows[n] for n in sorted(rows)]
+-
+-
+-def copy_unchanged(old_stem,new_stem):
+-    for ext in ['pdf','png','jpg']:
+-        src=old_stem.with_suffix('.'+ext)
+-        if src.exists(): shutil.copy2(src,destination(new_stem.with_suffix('.'+ext)))
+-    with fitz.open(new_stem.with_suffix('.pdf')) as d:
+-        d[0].get_pixmap(dpi=95,alpha=False).save(destination(new_stem.parent/(new_stem.name+'.preview.png')))
+-
+-
+-def figure1(dpi):
+-    rules=[('Independent spatial validation','Independent validation',{'width':280}),
+-           ('Aging spatial transcriptomics','In vitro/In vivo validation',{'width':180}),
+-           ('DCM GeoMx','Spatial transcriptomics',{'width':180})]
+-    source=OLD/'Fig01A_research_workflow/Fig01A_research_workflow.pdf'
+-    with edited_pdf(source,rules,RESULT/'main/Fig01/Fig01A.svg') as workflow:
+-        workflow.save(destination(RESULT/'main/Fig01/Fig01A.pdf'),garbage=4,deflate=True)
+-    # Preserve B/C directly as PDF, including all native hatching and images.
+-    with fitz.open(OLD/'final figure/Fig01_combined.pdf') as prior:
+-        size=prior[0].rect
+-    with fitz.open() as combined:
+-        p=combined.new_page(width=size.width,height=size.height)
+-        for row in read_csv(OLD/'Fig01_combined/Fig01_combined_panel_manifest.csv'):
+-            path=RESULT/'main/Fig01/Fig01A.pdf' if row['panel']=='A' else SOURCES/row['source_pdf']
+-            with fitz.open(path) as src:
+-                rect=fitz.Rect([float(x) for x in row['placement_points'].split(';')])
+-                clip=fitz.Rect([float(x) for x in row['source_clip_points'].split(';')])
+-                p.show_pdf_page(rect,src,0,clip=clip)
+-        export(combined,RESULT/'main/Fig01/Fig01',dpi)
+-
+-
+-def figure4(dpi):
+-    names={'A':'Panel_A','B':'panel_B','C':'panel_C','D':'panel_D',
+-           'E':'panel_E_state_visualization','F':'panel_F_visualization','G':'panel_G_visualization'}
+-    rules={
+-        'A':[],
+-        'B':[('Representative image set (Fig. 2E)','Representative image set'),
+-             ('REVIEW DRAFT: Fig. 2E channel labels retained; CY5/TRITC annotation unresolved',''),
+-             ('Same field and spatial extent in all four views','')],
+-        'C':[],
+-        'D':[('Every retained feature is shown; columns are grouped by family.',''),
+-             ('*Mitochondria follows the exported feature annotation; CY5/TRITC channel identity remains unresolved.','')],
+-        'E':[('Spaces reserved for manual image selection',''),
+-             ('Profiles: within-well/state medians, then median across represented wells. Existing state definitions retained.',''),
+-             ('*Category follows the source annotation; CY5/TRITC mapping is unresolved. Full feature profiles and QC are supplied separately.','')],
+-        'F':[('State abundance and response-summary visualization','Morphological state abundance'),
+-             ('Existing state proportions · 5 wells per group · 1,626 cells in total','5 wells per group · 1,626 cells'),
+-             ('State proportions only. Existing cell classifications are unchanged.','')],
+-        'G':[('Exploratory Cell Painting comparison summary','Exploratory Cell Painting comparisons'),
+-             ('Existing computational summaries · 5 wells per group','5 wells per group'),
+-             ('Existing global difference','Global difference'),
+-             ('Lines show existing omit-one-well ranges, not confidence intervals. Descriptive Cell Painting comparisons only.',
+-              'Lines: omit-one-well ranges (not confidence intervals).')],
+-    }
+-    paths={}
+-    for letter,name in names.items():
+-        stem=RESULT/f'main/Fig04/panels/Fig04{letter}'
+-        if letter=='A':
+-            from render_panel_A_20261004 import render
+-            render(dpi)
+-            paths[letter]=stem.with_suffix('.pdf')
+-            continue
+-        if stem.with_suffix('.pdf').exists():
+-            paths[letter]=stem.with_suffix('.pdf')
+-            continue
+-        source=CP/f'Panel_{letter}/{name}.pdf'
+-        if not rules[letter]:
+-            d=fitz.open(source)
+-        else:d=edited_pdf(source,rules[letter],stem.with_suffix('.svg'))
+-        with d:
+-            export(d,stem,dpi)
+-        paths[letter]=stem.with_suffix('.pdf')
+-    assemble([[paths['A'],paths['B']],[paths['C']],[paths['D']],[paths['E']],
+-              [paths['F']],[paths['G']]],RESULT/'main/Fig04/Fig04',dpi=dpi)
+-    # Also retain the panel-scale version so every panel can be placed independently.
+-    with fitz.open() as d:
+-        for path in paths.values():
+-            with fitz.open(path) as panel:d.insert_pdf(panel)
+-        d.save(destination(RESULT/'main/Fig04/Fig04_individual_panels.pdf'),garbage=4,deflate=True)
+-
+-
+-def figure7(dpi):
+-    folder=OLD/'disease/Fig06_spatial_disease_BMP_ACVR2A/figures'
+-    sources=[folder/'Fig06D_disease_resource_and_LEC_selection.pdf',
+-             folder/'Fig06E_disease_BMP_TGFb_activin_heatmap.pdf',
+-             folder/'Fig06F_disease_donor_level_effects.pdf',
+-             OLD/'disease/Fig05I_lymphatic_vascular_remodeling/Fig05I_lymphatic_vascular_remodeling.pdf',
+-             OLD/'disease/Fig05J_cardiac_function/Fig05J_cardiac_function.pdf']
+-    panels=[]
+-    for source,old,new in zip(sources,'DEFIJ','ABCDE'):
+-        stem=RESULT/f'main/Fig07/panels/Fig07{new}'
+-        # Keep the original PDF image streams/soft masks, including quantification
+-        # artwork. SVG conversion is deliberately avoided for these panels.
+-        with fitz.open(source) as d:
+-            p=d[0]
+-            label=[s for s in spans(p) if s['text']==old]
+-            assert len(label)==1,(source,old)
+-            s=label[0];rect=fitz.Rect(s['bbox'])
+-            def image_pixels():
+-                import hashlib
+-                values=[]
+-                for info in p.get_images(full=True):
+-                    for xref in [info[0],info[1]]:
+-                        if xref:
+-                            pix=fitz.Pixmap(d,xref)
+-                            values.append((pix.width,pix.height,pix.n,hashlib.sha256(pix.samples).hexdigest()))
+-                return sorted(values)
+-            def other_characters():
+-                chars=[]
+-                for block in p.get_text('rawdict')['blocks']:
+-                    for line in block.get('lines',[]):
+-                        for span in line['spans']:
+-                            for char in span['chars']:
+-                                if fitz.Rect(char['bbox']).intersects(rect):continue
+-                                chars.append((char['c'],tuple(round(v,2) for v in char['origin'])))
+-                return sorted(chars)
+-            before_images=image_pixels();before_chars=other_characters()
+-            p.add_redact_annot(rect,fill=False,cross_out=False)
+-            p.apply_redactions(images=0,graphics=0)
+-            color=tuple(((s['color']>>shift)&255)/255 for shift in [16,8,0])
+-            p.insert_text(s['origin'],new,fontname='hebo',fontsize=s['size'],color=color)
+-            assert before_images==image_pixels(),'Image or alpha-mask pixels changed.'
+-            assert before_chars==other_characters(),'Text outside the panel letter changed.'
+-            assert 'Figure 6 |' not in p.get_text()
+-            export(d,stem,dpi)
+-            write_json(stem.with_suffix('.artwork_validation.json'),{
+-                'source_pdf':str(source.relative_to(REVISION)),
+-                'all_other_glyph_elements_retained':True,'image_payloads_unchanged':True,
+-                'decoded_image_and_soft_mask_hashes_identical':True,'other_character_positions_verified':True,
+-                'old_letter':old,'new_letter':new,'method':'native PDF; panel letter only'})
+-        # Remove only this revision's superseded conversion, never a source file.
+-        obsolete=destination(stem.with_suffix('.svg'))
+-        if obsolete.exists():obsolete.unlink()
+-        panels.append(stem.with_suffix('.pdf'))
+-    assemble([[panels[0]],[panels[1],panels[2]],[panels[3],panels[4]]],RESULT/'main/Fig07/Fig07',dpi=dpi)
+-
+-
+-def graphic_abstract(dpi):
+-    rules=[('Reduced adaptive inflammatory responsiveness','Altered adaptive inflammatory\nresponsiveness'),
+-           ('Impaired response to systemic inflammatory challenge Influenza–plasma assay: young LECs adapt; aged LECs show reduced tube formation and organelle remodeling',
+-            'Influenza challenge: divergent functional and\norganelle responses in young versus aged LECs'),
+-           ('Independent spatial datasets provide tissue-level support for selected aging- and disease-associated LEC programs',
+-            'Independent spatial transcriptomics provides tissue-level support for selected disease-associated LEC programs')]
+-    with edited_pdf(OLD/'final figure/Graphic_Abstract.pdf',rules,RESULT/'main/Graphic_Abstract/Graphic_Abstract.svg') as d:
+-        export(d,RESULT/'main/Graphic_Abstract/Graphic_Abstract',dpi)
+-
+-
+-def main():
+-    parser=argparse.ArgumentParser(description=__doc__)
+-    parser.add_argument('--figure',choices=['1','2','3','4','5','6','7','abstract','all'],default='all')
+-    parser.add_argument('--dpi',type=int,default=600)
+-    args=parser.parse_args()
+-    tasks={
+-        '1':lambda:figure1(args.dpi),
+-        '2':lambda:assemble(old_panel_rows('aging/Fig02_combined','ABCD'),RESULT/'main/Fig02/Fig02',dpi=args.dpi),
+-        '3':lambda:copy_unchanged(OLD/'final figure/Fig03_combined',RESULT/'main/Fig03/Fig03'),
+-        '4':lambda:figure4(args.dpi),
+-        '5':lambda:copy_unchanged(OLD/'final figure/Fig04_combined',RESULT/'main/Fig05/Fig05'),
+-        '6':lambda:assemble(old_panel_rows('disease/Fig05_combined','ABCDEFGH'),RESULT/'main/Fig06/Fig06',dpi=args.dpi),
+-        '7':lambda:figure7(args.dpi), 'abstract':lambda:graphic_abstract(args.dpi)}
+-    for key in tasks:
+-        if args.figure in ['all',key]:tasks[key]()
+-    write_csv(RESULT/f'audit/main_text_edits_{args.figure}.csv',EDITS)
+-    write_csv(RESULT/f'audit/main_placements_{args.figure}.csv',PLACEMENTS)
+-
+-
+-if __name__=='__main__':main()
+--- original/publication_figure_revision_20261004/script/image_revision_documentation.py
++++ release/representative_images/script/image_revision_documentation.py
+@@ -1,219 +1,2 @@
+-"""Keep current figure legends, provenance and validation aligned with images."""
+-import json
+-import numpy as np
+-import pandas as pd
+-import openpyxl
+-import pymupdf as fitz
+-from revision_paths import *
+-
+-OUT=RESULT/'main/Fig04/representative_images'
+-
+-METHODS='''## Representative images added on 2026-09-22
+-
+-The three saved state labels are State 0, State 1 and State 2. They are not
+-renumbered as State 1/2/3. Images are illustrations of existing assignments,
+-not independent validation or mechanistic labels.
+-
+-The population remains the 1,626 primary-group cells from 20 wells. The original
+-97-feature state-model matrix and all saved assignments are unchanged. Images
+-were traced only to cells retained after the previously verified duplicate-row
+-removal. The heatmap artwork is retained exactly from the existing Panel E.
+-
+-### Reproducible selection
+-
+-All primary cells are ranked within their existing state by
+-`sqrt(mean_j((z_cell,j - m_state,j)^2))` across all 97 original standardized
+-features. `m_state,j` is the saved primary profile: within-well/state medians,
+-then median across represented wells. There is no new scaling, clustering or
+-inferential test. This ranking uses the complete feature profile, not a chosen
+-mechanistic feature. Cell ID breaks exact ties.
+-
+-The user's requested source preference is explicit: State 0 and State 2 from
+-P3-Control/P3-H1N1, and State 1 from P9-Control/P9-H1N1. These passage choices
+-constrain illustration selection; they do not establish passage specificity.
+-Cells flagged by the existing edge-touching or saturation QC are not eligible
+-as images. Extreme-feature flags remain visible and do not automatically
+-exclude a state. The complete ranking retains every primary record and all
+-eligibility flags; no cell is deleted from any scientific analysis.
+-
+-The first four eligible candidates per state were reviewed in rank order. The
+-first with a visually distinguishable target nucleus and visible surrounding
+-signal under the shared display settings was chosen. State 1's first candidate
+-was passed over because surrounding FITC signal was too faint for a clear
+-multichannel illustration. State 2's first candidate had closely adjacent
+-nuclei and overlapping surrounding signal. All 12 candidates and decisions
+-are retained in Figure S7J-L and Table S8, including the unused candidates.
+-This involves documented visual judgment and is not a fully automatic or
+-blinded selection, nor a claim to have found a unique best representative.
+-
+-| Saved label | Existing group | Well / object | Eligible preferred-passage rank |
+-|---|---|---|---|
+-| State 0 | P3-H1N1 | B05 / 18 | 1 |
+-| State 1 | P9-H1N1 | E04 / 131 | 2 |
+-| State 2 | P3-H1N1 | B02 / 21 | 2 |
+-
+-All three selected examples happen to be from H1N1-labeled wells. Selection
+-allowed both Control and H1N1; no preference for H1N1 was applied. Every state
+-also occurs in Control cells. The image examples are not a treatment comparison.
+-
+-### Original pixels and display
+-
+-Each record identifies the original ND2 path and SHA-256, frame 0, original
+-object ID, nuclear coordinates, crop bounds and calibration. Existing nuclear
+-maximum-intensity coordinates match the original DAPI pixel exactly. The saved
+-four-channel NPZ crops preserve native uint16 pixels, without denoising,
+-background subtraction, local contrast, cell erasure or generated content.
+-
+-Views show a common 90 x 90 micrometre field centered on the midpoint of the
+-recorded whole-cell bounding box, adjusted only to stay within the original
+-image. Native integer crops slightly exceed 90 micrometres; plot axes display
+-exactly 90 micrometres. All selected recorded whole-cell bounding boxes fit
+-inside the native crops. This recorded bounding box is not a verified mask.
+-Neighboring cells remain visible; arrows locate the one target object in each
+-view. Each scale bar is 20 micrometres. Calibration is read from each ND2
+-(P3 approximately 0.324081 micrometres/pixel; P9 0.325).
+-
+-One fixed linear range per acquired channel is applied to all candidates and
+-all states. Bounds are the pooled 0.5th and 99.8th percentiles of the native
+-pixels in the twelve shortlisted crops, fixed before visual acceptance or
+-rejection. There is no per-cell or per-group range and gamma is 1. Values
+-outside these display bounds clip visually; underlying uint16 arrays are
+-unchanged. Display-clipping fractions are reported separately from acquisition
+-saturation flags. Image selection/display is descriptive; three chosen cells
+-cannot establish population intensity differences, and acquisition/batch
+-differences remain possible.
+-
+-The main figure shows the same target as a merged view and DAPI view. The merge
+-uses TRITC red, FITC green and DAPI blue. Figure S7J-L additionally shows each
+-acquired channel separately, including CY5 as technical context only. Channel
+-names are physical acquisition labels: the existing CY5/TRITC compartment
+-annotation discrepancy is not resolved by appearance or renamed silently.
+-
+-### Limits and consistency
+-
+-State 0 retains its original extreme-feature flag (all 28 primary State 0
+-records have this flag). The selected image contains one visually identifiable
+-target nucleus, but original segmentation masks are unavailable. A real image
+-and correct coordinate mapping do not verify the measured object boundary or
+-prove that unusual measurements are biological. The examples are therefore
+-described as illustrative target objects assigned to the existing states.
+-
+-The 98-feature primary PCA/response results remain separate from the existing
+-97-feature state representation. State proportions, effects, P values, FDR
+-values, group assignments and raw measurements are unchanged. No new biological
+-response criterion, biological conclusion, or experiment is introduced.
+-
+-### Reproduction and source records
+-
+-Run `script/run_image_revision.py --dpi 600` to rebuild Figure 4, Table S8,
+-Figure S7, legends, combined main PDF and validations. `script/run_all.py`
+-also includes the updated image workflow. Unchanged scripts and results are
+-carried forward in this isolated revision. `script/original_code_archive.zip`
+-contains historical source code; it is retained for provenance, not used as
+-the current rendering entry point.
+-
+-`selected_representative_images.csv`, `candidate_ranking.csv`,
+-`visual_review_log.csv`, `representative_feature_values.csv`,
+-`display_settings.json` and the native pixel crops identify every source and
+-selection decision. These are also packaged in the Table S8 workbook/companion
+-ZIP. Original source descriptions under `result/_sources` remain historical
+-records of the previous placeholder figure; current documentation is here.
+-'''
+-
+-def update_documentation():
+-    doc=RESULT/'main/Fig04/documentation/Panel_E'
+-    current=(CP/'Panel_E/panel_E_state_visualization.methods.md').read_text(encoding='utf-8')
+-    current=current.split('## Figure layout and reading')[0]
+-    current=current.replace('the placeholder images have not been selected or verified.','the new image examples and their limitations are documented below.')
+-    current+='## Current figure layout\n\nLeft: the original 12-feature heatmap and its numerical values, labels, scale and cell/well counts. Right: one illustrative target object per saved state, each shown as a merge and DAPI view.\n\n'+METHODS
+-    destination(doc/'panel_E_state_visualization.methods.md').write_text(current,encoding='utf-8')
+-    destination(OUT/'METHODS.md').write_text('# Figure 4E image provenance and selection\n\n'+METHODS,encoding='utf-8')
+-    oldqc=(CP/'Panel_E/panel_E_state_QC.md').read_text(encoding='utf-8')
+-    oldqc=oldqc.replace('The three representative-image areas are placeholders only.',
+-         'The current Figure 4E adds one traceable illustrative target object per state; see Figure S7J-L and the image-selection worksheets in Table S8. Statistical QC and state definitions are unchanged.')
+-    destination(doc/'panel_E_state_QC.md').write_text(oldqc,encoding='utf-8')
+-    legend='''# Figure 4E. Morphological state summary
+-
+-Left: unchanged primary-group profiles for State 0/1/2 (28/1,325/273 cells;
+-14/20/20 contributing wells). Existing 97-feature model; the 12 displayed
+-features and within-well/state then across-well median summaries are unchanged.
+-Right: one illustrative target object per state, shown in merged and DAPI
+-views. State 0: P3-H1N1 B05/object 18; State 1: P9-H1N1 E04/object 131;
+-State 2: P3-H1N1 B02/object 21. Arrows identify the target; neighbors remain
+-visible. Each view spans 90 micrometres and bars indicate 20 micrometres.
+-Merged colors are TRITC red, FITC green, DAPI blue, using shared linear
+-channel ranges across all states. These are acquisition channel labels.
+-
+-Image selection uses all 97 saved features, declared passage preferences,
+-and documented visual QC. Figure S7J-L and Table S8 supply all candidate ranks,
+-review decisions, channel views, native crops, coordinates and image hashes.
+-State 0 retains the existing extreme-feature flag. Segmentation masks are
+-unavailable; visually identifying one nucleus does not verify cell boundaries.
+-The images illustrate existing assignments and do not validate states,
+-demonstrate group-level effects or imply biological mechanisms. The existing
+-CY5/TRITC compartment annotation remains unresolved (heatmap asterisk).
+-'''
+-    destination(doc/'panel_E_state_visualization.legend.md').write_text(legend,encoding='utf-8')
+-    destination(RESULT/'main/Fig04/Fig04E_image_legend.md').write_text(legend,encoding='utf-8')
+-    # Update current source map; immutable old source descriptions remain in _sources.
+-    for path in [RESULT/'panel_source_map.csv',RESULT/'main/Fig04/source_manifest.csv']:
+-        rows=read_csv(path)
+-        for row in rows:
+-            if row['new_panel']=='Fig04E':
+-                row['source_pdf']='result/main/Fig04/panels/Fig04E.pdf'
+-                row['source_data']='result/main/Fig04/representative_images/selected_representative_images.csv; result/supplementary/Tables/Table_S8_Cell_Painting_figure_analysis_collection.xlsx'
+-                row['current_script']='script/panel_E_representative_images.py (called by script/Fig04.py)'
+-        write_csv(path,rows)
+-    # Current S7 A-L provenance is maintained by adopt_latest_s7().
+-
+-def validate_images():
+-    import nd2
+-    for row in read_csv(RESULT/'prior_revision_preservation.csv'):
+-        assert sha(WORKSPACE/row['prior_file'])==row['sha256'],row['prior_file']
+-    records=pd.read_csv(OUT/'candidate_image_records.csv',keep_default_na=False)
+-    selections=pd.read_csv(OUT/'selected_representative_images.csv',keep_default_na=False)
+-    flags=[]
+-    settings=json.loads((OUT/'display_settings.json').read_text())['ranges']
+-    for well,g in records.groupby('well_id'):
+-        r=g.iloc[0];path=WORKSPACE/r.source_nd2
+-        assert sha(path)==r.source_sha256
+-        with nd2.ND2File(path) as nd:
+-            raw=nd.read_frame(int(r.source_frame))
+-            for r in g.itertuples():
+-                crop_path=REVISION/r.crop_npz;assert sha(crop_path)==r.crop_sha256
+-                with np.load(crop_path,allow_pickle=False) as z:crop=z['pixels']
+-                assert np.array_equal(crop,raw[:,r.crop_y0:r.crop_y0+r.crop_height_pixels,r.crop_x0:r.crop_x0+r.crop_width_pixels])
+-                for label,limits in settings.items():
+-                    a=crop[limits['channel_index']]
+-                    flags.append({'cell_id':r.cell_id,'state':r.state,'selected':r.cell_id in set(selections.cell_id),'channel':label,
+-                                  'acquisition_saturated_pixel_fraction':float(np.mean(a==65535)),
+-                                  'display_lower_clipped_pixel_fraction':float(np.mean(a<limits['lower_uint16'])),
+-                                  'display_upper_clipped_pixel_fraction':float(np.mean(a>limits['upper_uint16']))})
+-    write_csv(OUT/'image_display_QC.csv',flags)
+-    # Existing numeric analysis worksheet values must survive the new packaging.
+-    name='Table_S8_Cell_Painting_figure_analysis_collection.xlsx'
+-    old=openpyxl.load_workbook(WORKSPACE/'publication_figure_revision_20260921/result/supplementary/Tables'/name,read_only=True,data_only=True)
+-    new=openpyxl.load_workbook(RESULT/'supplementary/Tables'/name,read_only=True,data_only=True)
+-    checked=[]
+-    for sheet in old.sheetnames:
+-        if sheet in ['README','Source_Index']:continue
+-        assert list(old[sheet].values)==list(new[sheet].values),sheet
+-        checked.append(sheet)
+-    assert sum(1 for _ in new['Representative_images'].values)==4
+-    old.close();new.close()
+-    for fig in ['Fig01','Fig02','Fig03','Fig05','Fig06','Fig07','Graphic_Abstract']:
+-        assert sha(RESULT/f'main/{fig}/{fig}.pdf')==sha(WORKSPACE/f'publication_figure_revision_20260921/result/main/{fig}/{fig}.pdf')
+-    for letter in 'BCDFG':
+-        assert sha(RESULT/f'main/Fig04/panels/Fig04{letter}.pdf')==sha(WORKSPACE/f'publication_figure_revision_20260921/result/main/Fig04/panels/Fig04{letter}.pdf')
+-    for path in (RESULT/'supplementary/Data').iterdir():
+-        if path.is_file():assert sha(path)==sha(WORKSPACE/'publication_figure_revision_20260921/result/supplementary/Data'/path.name)
+-    with fitz.open(RESULT/'supplementary/Figures/FigS07_Cell_Painting/FigS07_Cell_Painting.pdf') as d:assert len(d)==12
+-    with fitz.open(RESULT/'main_figures.pdf') as d:assert len(d)==8
+-    summary={'prior_revision_files_hash_verified':len(read_csv(RESULT/'prior_revision_preservation.csv')),
+-             'raw_candidate_crops_exact_original_pixel_matches':len(records),'selected_examples':3,
+-             'prior_Table_S8_numeric_worksheets_identical':checked,'other_main_figures_and_Fig4_panels_unchanged':True,
+-             'supplementary_original_data_archives_unchanged':True,'existing_states_and_heatmap_unchanged':True,
+-             'new_S7_pages':12,'main_book_pages':8,'segmentation_masks_available':False,
+-             'status':'PASS with disclosed image/segmentation limitations'}
+-    write_json(RESULT/'audit/state_image_revision_validation.json',summary)
+-    print(json.dumps(summary,indent=2),flush=True)
++"""Unchanged methods text used by current representative-image selection."""
++METHODS = "## Representative images added on 2026-09-22\n\nThe three saved state labels are State 0, State 1 and State 2. They are not\nrenumbered as State 1/2/3. Images are illustrations of existing assignments,\nnot independent validation or mechanistic labels.\n\nThe population remains the 1,626 primary-group cells from 20 wells. The original\n97-feature state-model matrix and all saved assignments are unchanged. Images\nwere traced only to cells retained after the previously verified duplicate-row\nremoval. The heatmap artwork is retained exactly from the existing Panel E.\n\n### Reproducible selection\n\nAll primary cells are ranked within their existing state by\n`sqrt(mean_j((z_cell,j - m_state,j)^2))` across all 97 original standardized\nfeatures. `m_state,j` is the saved primary profile: within-well/state medians,\nthen median across represented wells. There is no new scaling, clustering or\ninferential test. This ranking uses the complete feature profile, not a chosen\nmechanistic feature. Cell ID breaks exact ties.\n\nThe user's requested source preference is explicit: State 0 and State 2 from\nP3-Control/P3-H1N1, and State 1 from P9-Control/P9-H1N1. These passage choices\nconstrain illustration selection; they do not establish passage specificity.\nCells flagged by the existing edge-touching or saturation QC are not eligible\nas images. Extreme-feature flags remain visible and do not automatically\nexclude a state. The complete ranking retains every primary record and all\neligibility flags; no cell is deleted from any scientific analysis.\n\nThe first four eligible candidates per state were reviewed in rank order. The\nfirst with a visually distinguishable target nucleus and visible surrounding\nsignal under the shared display settings was chosen. State 1's first candidate\nwas passed over because surrounding FITC signal was too faint for a clear\nmultichannel illustration. State 2's first candidate had closely adjacent\nnuclei and overlapping surrounding signal. All 12 candidates and decisions\nare retained in Figure S7J-L and Table S8, including the unused candidates.\nThis involves documented visual judgment and is not a fully automatic or\nblinded selection, nor a claim to have found a unique best representative.\n\n| Saved label | Existing group | Well / object | Eligible preferred-passage rank |\n|---|---|---|---|\n| State 0 | P3-H1N1 | B05 / 18 | 1 |\n| State 1 | P9-H1N1 | E04 / 131 | 2 |\n| State 2 | P3-H1N1 | B02 / 21 | 2 |\n\nAll three selected examples happen to be from H1N1-labeled wells. Selection\nallowed both Control and H1N1; no preference for H1N1 was applied. Every state\nalso occurs in Control cells. The image examples are not a treatment comparison.\n\n### Original pixels and display\n\nEach record identifies the original ND2 path and SHA-256, frame 0, original\nobject ID, nuclear coordinates, crop bounds and calibration. Existing nuclear\nmaximum-intensity coordinates match the original DAPI pixel exactly. The saved\nfour-channel NPZ crops preserve native uint16 pixels, without denoising,\nbackground subtraction, local contrast, cell erasure or generated content.\n\nViews show a common 90 x 90 micrometre field centered on the midpoint of the\nrecorded whole-cell bounding box, adjusted only to stay within the original\nimage. Native integer crops slightly exceed 90 micrometres; plot axes display\nexactly 90 micrometres. All selected recorded whole-cell bounding boxes fit\ninside the native crops. This recorded bounding box is not a verified mask.\nNeighboring cells remain visible; arrows locate the one target object in each\nview. Each scale bar is 20 micrometres. Calibration is read from each ND2\n(P3 approximately 0.324081 micrometres/pixel; P9 0.325).\n\nOne fixed linear range per acquired channel is applied to all candidates and\nall states. Bounds are the pooled 0.5th and 99.8th percentiles of the native\npixels in the twelve shortlisted crops, fixed before visual acceptance or\nrejection. There is no per-cell or per-group range and gamma is 1. Values\noutside these display bounds clip visually; underlying uint16 arrays are\nunchanged. Display-clipping fractions are reported separately from acquisition\nsaturation flags. Image selection/display is descriptive; three chosen cells\ncannot establish population intensity differences, and acquisition/batch\ndifferences remain possible.\n\nThe main figure shows the same target as a merged view and DAPI view. The merge\nuses TRITC red, FITC green and DAPI blue. Figure S7J-L additionally shows each\nacquired channel separately, including CY5 as technical context only. Channel\nnames are physical acquisition labels: the existing CY5/TRITC compartment\nannotation discrepancy is not resolved by appearance or renamed silently.\n\n### Limits and consistency\n\nState 0 retains its original extreme-feature flag (all 28 primary State 0\nrecords have this flag). The selected image contains one visually identifiable\ntarget nucleus, but original segmentation masks are unavailable. A real image\nand correct coordinate mapping do not verify the measured object boundary or\nprove that unusual measurements are biological. The examples are therefore\ndescribed as illustrative target objects assigned to the existing states.\n\nThe 98-feature primary PCA/response results remain separate from the existing\n97-feature state representation. State proportions, effects, P values, FDR\nvalues, group assignments and raw measurements are unchanged. No new biological\nresponse criterion, biological conclusion, or experiment is introduced.\n\n### Reproduction and source records\n\nRun `script/run_image_revision.py --dpi 600` to rebuild Figure 4, Table S8,\nFigure S7, legends, combined main PDF and validations. `script/run_all.py`\nalso includes the updated image workflow. Unchanged scripts and results are\ncarried forward in this isolated revision. `script/original_code_archive.zip`\ncontains historical source code; it is retained for provenance, not used as\nthe current rendering entry point.\n\n`selected_representative_images.csv`, `candidate_ranking.csv`,\n`visual_review_log.csv`, `representative_feature_values.csv`,\n`display_settings.json` and the native pixel crops identify every source and\nselection decision. These are also packaged in the Table S8 workbook/companion\nZIP. Original source descriptions under `result/_sources` remain historical\nrecords of the previous placeholder figure; current documentation is here.\n"

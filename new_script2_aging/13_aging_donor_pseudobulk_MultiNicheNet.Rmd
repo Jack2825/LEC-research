@@ -1,0 +1,2690 @@
+---
+title: "Aging LEC donor-pseudobulk edgeR and MultiNicheNet"
+author: "MGH internship analysis"
+date: "2026-08-19"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+params:
+  project_root: null
+  output_dir: "new_result2_aging/13_NicheNet_donor_pseudobulk/dataset13"
+  install_missing_packages: true
+  run_multinichenet: true
+  allow_network_download: true
+  n_cores: 2
+  min_receiver_cells_per_donor: 25
+  min_sender_cells_per_donor: 10
+  min_donors_per_group: 4
+  expressed_cell_fraction: 0.05
+  expressed_sample_fraction: 0.50
+  min_abs_logfc: 0.25
+  fdr_threshold: 0.05
+  mnn_p_value_threshold: 0.05
+  mnn_use_adjusted_p: true
+  top_n_targets: 250
+  sydney_visual_fdr: 0.25
+  sydney_visual_top_genes: 50
+  sydney_visual_top_ligands: 10
+---
+
+This report performs an extreme-age comparison of the final Q4 and Q1 donor
+groups. The biological replicate is the donor. Individual cells are never used
+as independent age replicates.
+
+The normalization follows the established aging-pipeline logic where the same
+quantity has the same purpose:
+
+- original integer counts are recovered by exact cell barcode;
+- counts are summed separately within each namespaced donor;
+- `log1p(CPM)` donor profiles are exported for descriptive plots and
+  donor-equal group summaries, matching Step 12.2;
+- edgeR receives the untransformed donor count sums and estimates TMM factors
+  inside its count model. TMM is not substituted for the established
+  descriptive `log1p(CPM)` scale.
+
+Sydney's original `Agingv2 by Sydney.Rmd` is not modified. This report records
+all methodological differences in the document and in
+`13_changes_vs_Agingv2_by_Sydney.csv`.
+
+## Running this report in RStudio
+
+1. Open `new_script2_aging/13_aging_donor_pseudobulk_MultiNicheNet.Rmd` in
+   RStudio.
+2. In the Console, run `R.version.string`. Use the project R 4.5.3 installation
+   (or a compatible recent R) if RStudio offers more than one R version.
+3. Leave the YAML parameters at their defaults for the complete analysis.
+4. Click **Knit**. Knitting is preferred to **Run All** because it starts a
+   clean, reproducible R session and uses the YAML parameters.
+5. If RStudio explicitly asks for an R restart after first-time package
+   installation, restart R and click **Knit** once more.
+
+A successful full run ends with `13_run_summary.csv`, `13_run_config.json`,
+`13_sessionInfo.txt`, and `13_MultiNicheNet_output.rds` under
+`new_result2_aging/13_NicheNet_donor_pseudobulk/dataset13`. Tables and figures
+are placed in its `tables` and `figures` subdirectories.
+
+On the first run, the setup chunk installs only missing CRAN, Bioconductor,
+NicheNet, and MultiNicheNet packages. Later runs reuse the installed packages.
+Internet access is required for the first run and for the initial download of
+the NicheNet v2 networks. Set `install_missing_packages: false` in the YAML
+parameters only if the required packages have already been installed.
+
+The setup checks whether each package namespace can actually load. This matters
+for interrupted installations: a package folder can exist even when one of its
+dependencies is absent. In particular, the Bioconductor dependencies used by
+MultiNicheNet (`bluster`, `scran`, `scater`, `muscat`, `IHW`, and `sva`) are
+installed and verified before the GitHub package is installed.
+
+On Windows with R 4.5.x, first install Rtools 4.5 from
+<https://cran.r-project.org/bin/windows/Rtools/rtools45/rtools.html> using its
+default `C:\\rtools45` location. This is a one-time system prerequisite because
+`bluster` and `zellkonverter` may be supplied as source packages. The setup now
+stops early with this instruction when a compatible Rtools is unavailable.
+
+H5AD files are read with zellkonverter's native R reader and HDF5-backed assays.
+The report therefore does not create a Python/pyenv environment and does not
+require Git for H5AD input.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  error = FALSE,
+  fig.width = 8,
+  fig.height = 6
+)
+
+options(stringsAsFactors = FALSE, timeout = 600)
+set.seed(130819)
+
+if (!is.numeric(params$n_cores) || length(params$n_cores) != 1L ||
+    !is.finite(params$n_cores) || params$n_cores < 1) {
+  stop("n_cores must be one positive number.")
+}
+if (params$expressed_cell_fraction <= 0 || params$expressed_cell_fraction > 1 ||
+    params$expressed_sample_fraction <= 0 || params$expressed_sample_fraction > 1) {
+  stop("Expression fractions must be greater than 0 and at most 1.")
+}
+if (params$sydney_visual_fdr <= 0 || params$sydney_visual_fdr > 1) {
+  stop("sydney_visual_fdr must be greater than 0 and at most 1.")
+}
+if (params$sydney_visual_top_genes < 1 || params$sydney_visual_top_ligands < 1) {
+  stop("Sydney-equivalent top-gene and top-ligand settings must be positive.")
+}
+
+find_project_root <- function(start = getwd()) {
+  current <- normalizePath(start, winslash = "/", mustWork = TRUE)
+  repeat {
+    expected <- c(
+      file.path(current, "Data"),
+      file.path(current, "new_result2_aging"),
+      file.path(current, "new_script2_aging")
+    )
+    if (all(file.exists(expected))) {
+      return(current)
+    }
+    parent <- dirname(current)
+    if (identical(parent, current)) {
+      stop("Could not locate the project root from: ", start)
+    }
+    current <- parent
+  }
+}
+
+project_root <- if (is.null(params$project_root) || !nzchar(params$project_root)) {
+  find_project_root()
+} else {
+  normalizePath(params$project_root, winslash = "/", mustWork = TRUE)
+}
+
+output_dir <- if (grepl("^[A-Za-z]:|^/", params$output_dir)) {
+  normalizePath(params$output_dir, winslash = "/", mustWork = FALSE)
+} else {
+  file.path(project_root, params$output_dir)
+}
+
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+tables_dir <- file.path(output_dir, "tables")
+figures_dir <- file.path(output_dir, "figures")
+sydney_figures_dir <- file.path(figures_dir, "Sydney_equivalent")
+resources_dir <- file.path(output_dir, "resources")
+dir.create(tables_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(figures_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(sydney_figures_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(resources_dir, recursive = TRUE, showWarnings = FALSE)
+
+cran_packages <- c(
+  "Matrix", "dplyr", "tidyr", "tibble", "ggplot2", "jsonlite",
+  "knitr", "rmarkdown", "pkgbuild"
+)
+core_bioconductor_packages <- c(
+  "SingleCellExperiment", "SummarizedExperiment", "S4Vectors",
+  "zellkonverter", "rhdf5", "HDF5Array", "DelayedArray", "edgeR", "limma"
+)
+multinichenet_bioconductor_packages <- if (isTRUE(params$run_multinichenet)) {
+  # These are direct MultiNicheNet imports, plus bluster, which scran imports.
+  # Listing them explicitly prevents a partially installed scran namespace from
+  # being mistaken for a complete MultiNicheNet installation.
+  c("bluster", "ComplexHeatmap", "IHW", "muscat", "scater", "scran", "sva")
+} else {
+  character()
+}
+bioconductor_packages <- unique(c(
+  core_bioconductor_packages,
+  multinichenet_bioconductor_packages
+))
+github_packages <- if (isTRUE(params$run_multinichenet)) {
+  c("nichenetr", "multinichenetr")
+} else {
+  character()
+}
+required_packages <- c(cran_packages, bioconductor_packages, github_packages)
+
+namespace_problem <- function(package) {
+  tryCatch(
+    {
+      suppressWarnings(suppressPackageStartupMessages(loadNamespace(package)))
+      NA_character_
+    },
+    error = function(e) conditionMessage(e)
+  )
+}
+
+namespace_is_loadable <- function(package) {
+  is.na(namespace_problem(package))
+}
+
+format_namespace_problems <- function(packages) {
+  if (!length(packages)) {
+    return(character())
+  }
+  vapply(
+    packages,
+    function(package) {
+      problem <- namespace_problem(package)
+      if (is.na(problem)) problem <- "unknown namespace-loading error"
+      paste0("  - ", package, ": ", problem)
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+install_missing_dependencies <- function() {
+  options(repos = c(CRAN = "https://cloud.r-project.org"), timeout = 1200)
+
+  bootstrap_packages <- c("BiocManager", "remotes")
+  missing_bootstrap <- bootstrap_packages[
+    !vapply(bootstrap_packages, namespace_is_loadable, logical(1))
+  ]
+  if (length(missing_bootstrap)) {
+    message(
+      "Installing package-management dependencies: ",
+      paste(missing_bootstrap, collapse = ", ")
+    )
+    install.packages(missing_bootstrap, dependencies = NA)
+  }
+
+  missing_cran <- cran_packages[
+    !vapply(cran_packages, namespace_is_loadable, logical(1))
+  ]
+  if (length(missing_cran)) {
+    message("Installing missing CRAN packages: ", paste(missing_cran, collapse = ", "))
+    install.packages(missing_cran, dependencies = NA)
+  }
+
+  missing_bioc <- bioconductor_packages[
+    !vapply(bioconductor_packages, namespace_is_loadable, logical(1))
+  ]
+  source_tool_packages <- intersect(c("bluster", "zellkonverter"), missing_bioc)
+  if (.Platform$OS.type == "windows" && length(source_tool_packages)) {
+    rtools_ready <- suppressWarnings(pkgbuild::has_rtools(debug = FALSE))
+    if (!isTRUE(rtools_ready)) {
+      stop(
+        "Rtools 4.5 is required to install the source package(s) ",
+        paste(source_tool_packages, collapse = ", "),
+        " with R ", as.character(getRversion()), ".\n",
+        "Install Rtools 4.5 using its default location (C:\\rtools45):\n",
+        "https://cran.r-project.org/bin/windows/Rtools/rtools45/rtools.html\n",
+        "Then fully close and reopen RStudio and click Knit again."
+      )
+    }
+    message(
+      "Installing Windows source packages with Rtools: ",
+      paste(source_tool_packages, collapse = ", ")
+    )
+    BiocManager::install(
+      source_tool_packages,
+      ask = FALSE,
+      update = FALSE,
+      dependencies = NA,
+      type = "source"
+    )
+    # Recalculate after the source-only packages repair namespaces such as scran.
+    missing_bioc <- bioconductor_packages[
+      !vapply(bioconductor_packages, namespace_is_loadable, logical(1))
+    ]
+  }
+  if (length(missing_bioc)) {
+    message(
+      "Installing missing Bioconductor packages: ",
+      paste(missing_bioc, collapse = ", ")
+    )
+    BiocManager::install(
+      missing_bioc,
+      ask = FALSE,
+      update = FALSE,
+      dependencies = NA
+    )
+  }
+
+  broken_bioc <- bioconductor_packages[
+    !vapply(bioconductor_packages, namespace_is_loadable, logical(1))
+  ]
+  if (length(broken_bioc)) {
+    stop(
+      "Bioconductor installation left packages unavailable:\n",
+      paste(format_namespace_problems(broken_bioc), collapse = "\n")
+    )
+  }
+
+  if (isTRUE(params$run_multinichenet)) {
+    # Make both Bioconductor and CRAN dependency repositories visible to the
+    # GitHub package installer.
+    options(repos = BiocManager::repositories())
+
+    nichenetr_ready <-
+      namespace_is_loadable("nichenetr") &&
+      packageVersion("nichenetr") >= "2.0.5"
+    if (!nichenetr_ready) {
+      message("Installing nichenetr >= 2.0.5 from GitHub")
+      remotes::install_github(
+        "saeyslab/nichenetr",
+        dependencies = NA,
+        upgrade = "never",
+        build_vignettes = FALSE
+      )
+    }
+    if (!namespace_is_loadable("nichenetr")) {
+      stop(
+        "nichenetr was installed but its namespace cannot load: ",
+        namespace_problem("nichenetr")
+      )
+    }
+
+    multinichenetr_ready <-
+      namespace_is_loadable("multinichenetr") &&
+      packageVersion("multinichenetr") >= "2.0.0"
+    if (!multinichenetr_ready) {
+      message("Installing multinichenetr >= 2.0.0 from GitHub")
+      remotes::install_github(
+        "saeyslab/multinichenetr",
+        dependencies = NA,
+        upgrade = "never",
+        build_vignettes = FALSE
+      )
+    }
+    if (!namespace_is_loadable("multinichenetr")) {
+      stop(
+        "multinichenetr was installed but its namespace cannot load: ",
+        namespace_problem("multinichenetr")
+      )
+    }
+  }
+}
+
+missing_before_install <- required_packages[
+  !vapply(required_packages, namespace_is_loadable, logical(1))
+]
+github_versions_ready <- !isTRUE(params$run_multinichenet) || (
+  namespace_is_loadable("nichenetr") &&
+  packageVersion("nichenetr") >= "2.0.5" &&
+  namespace_is_loadable("multinichenetr") &&
+  packageVersion("multinichenetr") >= "2.0.0"
+)
+setup_needed <- length(missing_before_install) > 0L || !github_versions_ready
+
+if (setup_needed && isTRUE(params$install_missing_packages)) {
+  message(
+    "First-run setup: installing missing or below-minimum packages. This can take several minutes."
+  )
+  tryCatch(
+    install_missing_dependencies(),
+    error = function(e) {
+      stop(
+        "Automatic package installation failed: ", conditionMessage(e),
+        "\nOn Windows, a source-package error may require Rtools matching your R version."
+      )
+    }
+  )
+}
+
+missing_packages <- required_packages[
+  !vapply(required_packages, namespace_is_loadable, logical(1))
+]
+if (length(missing_packages)) {
+  stop(
+    "These required packages are still unavailable:\n",
+    paste(format_namespace_problems(missing_packages), collapse = "\n"),
+    "\nKeep install_missing_packages: true and Knit again after resolving the installation message."
+  )
+}
+
+suppressPackageStartupMessages({
+  library(SingleCellExperiment)
+  library(SummarizedExperiment)
+  library(Matrix)
+  library(edgeR)
+  library(limma)
+  library(dplyr)
+  library(tidyr)
+  library(tibble)
+  library(ggplot2)
+})
+
+if (isTRUE(params$run_multinichenet)) {
+  if (packageVersion("multinichenetr") < "2.0.0") {
+    stop("multinichenetr >= 2.0.0 is required.")
+  }
+  if (packageVersion("nichenetr") < "2.0.5") {
+    stop("nichenetr >= 2.0.5 is required.")
+  }
+  suppressPackageStartupMessages({
+    library(nichenetr)
+    library(multinichenetr)
+  })
+}
+
+stop_if_missing <- function(paths, labels = basename(paths)) {
+  missing <- !file.exists(paths)
+  if (any(missing)) {
+    stop(
+      "Missing required input(s):\n",
+      paste0("- ", labels[missing], ": ", paths[missing], collapse = "\n")
+    )
+  }
+}
+
+first_present <- function(frame, candidates, label) {
+  found <- candidates[candidates %in% colnames(frame)]
+  if (!length(found)) {
+    stop(label, " was not found. Checked: ", paste(candidates, collapse = ", "))
+  }
+  found[[1]]
+}
+
+write_csv_safe <- function(x, path) {
+  write.csv(as.data.frame(x), path, row.names = FALSE, na = "")
+}
+
+write_csv_gz_safe <- function(x, path) {
+  connection <- gzfile(path, open = "wt")
+  on.exit(close(connection), add = TRUE)
+  write.csv(as.data.frame(x), connection, row.names = FALSE, na = "")
+}
+
+write_if_data_frame <- function(x, path) {
+  if (is.data.frame(x) || inherits(x, "DataFrame")) {
+    write_csv_safe(x, path)
+    return(TRUE)
+  }
+  FALSE
+}
+```
+
+# What was changed and what this report now does
+
+This is the revision/work record for the current self-contained Rmd. Here,
+`implemented` means the logic is present and validated in the script; biological
+results are created only after the user Knits the report. The table is written
+to the result folder every time the report runs.
+
+```{r revision-and-work-log}
+revision_log <- tribble(
+  ~status, ~area, ~implemented, ~reason_or_output,
+  "implemented", "Project discovery",
+  "Locate the project from Data, new_result2_aging, and new_script2_aging; Sydney's Rmd is an optional comparison reference, not a runtime dependency",
+  "The new analysis can run independently from the coworker's file",
+  "implemented", "Cohort and donor identity",
+  "Read the final min25 Q1/Q4 manifest and use Project::donor_id as the unique sample ID",
+  "Four Q1 and five Q4 donors are retained; no donor is discarded merely to force 4-versus-4",
+  "implemented", "Receiver definition",
+  "Use only exact final fresh EC-only CellTypist majority-vote EC8_ln barcodes; exclude non-final LEC candidates from author or all-cell EC8_ln labels and reassign final-only EC8_ln cells",
+  "The receiver matches the established final LEC analysis",
+  "implemented", "Raw-count tracing",
+  "Match every selected Step03 cell barcode to the original dataset13 H5AD and require finite, nonnegative, integer-like X values",
+  "Normalized, scaled, PCA, and Harmony values are never treated as counts",
+  "implemented", "Existing descriptive normalization",
+  "Sum raw counts within donor, calculate donor log1p(CPM), and compute unweighted Q1/Q4 donor means",
+  "Matches the donor-profile normalization and equal-donor summary used in aging Step 12.2",
+  "implemented", "edgeR inference",
+  "Use raw donor pseudobulks, design-aware filterByExpr, TMM effective-library-size offsets, robust dispersion, and quasi-likelihood tests",
+  "Keeps descriptive log1p(CPM) separate from count-model inference",
+  "implemented", "edgeR diagnostic compatibility",
+  "Call the exported limma::plotMDS generic, which dispatches to edgeR's DGEList method; retain edgeR::plotBCV and edgeR::plotQLDisp",
+  "Produces the donor MDS diagnostic with the installed edgeR/limma versions without changing the fitted model",
+  "implemented", "Donor-balance audit",
+  "Keep all nine donors, export group/Project/Sex balance and donor-by-cell-type abundance, and require adequate donors in both age groups",
+  "Donor-aware analysis is required; exact 4-versus-4 balance is not imposed",
+  "implemented", "MultiNicheNet input safety",
+  "Use one donor sample ID, raw counts, Step05 all-cell CellTypist majority-vote sender labels, exact final EC8_ln receiver eligibility, and collision-checked syntactic cell-type names",
+  "Prevents accidental pooling, Unknown senders, or silent cell-type-name merging",
+  "implemented", "MultiNicheNet 2.1 argument types",
+  "Pass all threshold and core-count arguments that MultiNicheNet validates with is.double() as explicit R doubles",
+  "Prevents valid whole-number YAML settings such as min_cells=10 from being rejected as integer storage types; numerical values and filtering rules are unchanged",
+  "implemented", "Sydney-equivalent figures",
+  "Recreate the ten ligand-activity, ligand-target, ligand-receptor, and chord-diagram figure types found in Sydney's Rmd using the final LEC receiver and donor-level edgeR results",
+  "Provides direct visual comparability; Sydney's FDR 0.25/top-50 rule is isolated as an exploratory visualization layer and does not replace the FDR 0.05 primary analysis",
+  "implemented", "Dependency setup",
+  "Preflight Rtools on Windows, then install and namespace-test the Bioconductor dependency layer, including the scran dependency bluster, before installing MultiNicheNet from GitHub",
+  "Prevents an incompatible build-tool failure or interrupted package folder from being treated as a usable installation",
+  "implemented", "H5AD reader",
+  "Use zellkonverter's native R reader with HDF5-backed assays and explicitly require rhdf5 and HDF5Array",
+  "Avoids creating a Python/pyenv environment, so Git is not required just to read the existing H5AD inputs",
+  "implemented", "Provenance",
+  "Export input/configuration manifests, normalization guide, change tables, diagnostics, package session information, and the full MultiNicheNet RDS",
+  "The completed run can be audited without relying on the knitted narrative alone"
+)
+
+write_csv_safe(
+  revision_log,
+  file.path(output_dir, "13_revision_and_work_log.csv")
+)
+knitr::kable(revision_log)
+```
+
+# Differences from Sydney's original Rmd
+
+```{r changes-vs-sydney}
+changes_vs_sydney <- tribble(
+  ~area, ~sydney_original, ~new_pipeline, ~reason,
+  "Input paths",
+  "Hardcoded CVRC2026/Aging2 paths that are absent from this workspace",
+  "Project-root discovery and paths to the existing new_result2_aging outputs; Sydney's Rmd is not required to run",
+  "Use the actual reproducible aging pipeline inputs independently",
+  "Donor selection",
+  "Nine raw donor labels hardcoded inside the Rmd",
+  "Q1/Q4 donors read from the final min25 donor manifest",
+  "The final equal-LEC-donor quartile assignment remains the source of truth",
+  "Donor identifier",
+  "donor_id",
+  "Project::donor_id donor_key",
+  "Raw donor labels are reused across source projects",
+  "Age-48 donor",
+  "TWCM-13-104 manually pulled from the Step03 Q2 file into Q1",
+  "Its final Q1 assignment is read from the manifest",
+  "Avoid a special-case donor rule in the analysis code",
+  "QC",
+  "Implicitly inherited from Step03 but not validated",
+  "Step03 QC-passed cell IDs are used and every raw-count barcode is validated",
+  "Prevent silent cohort drift or failed barcode tracing",
+  "LEC receiver",
+  "Author cell.type == Lymphatic ECs",
+  "Exact final CellTypist majority-vote EC8_ln cell IDs",
+  "Match the established final LEC definition",
+  "Discordant author LECs",
+  "Included as receiver",
+  "Non-final LEC candidates from either the author label or all-cell CellTypist EC8_ln are excluded; final EC-only EC8_ln cells are reassigned to the receiver",
+  "Avoid mixing two LEC definitions",
+  "Counts",
+  "Raw X recovered after loading all source objects",
+  "Only selected QC-passed cells are materialized from the HDF5-backed raw X assay",
+  "Retain integer counts with lower memory risk",
+  "Statistical unit",
+  "Pseudobulk by raw donor_id",
+  "One raw-count pseudobulk per namespaced donor",
+  "Each person/source donor is one biological replicate",
+  "Low-expression filtering",
+  "No edgeR filterByExpr step",
+  "Design-aware filterByExpr before TMM and each model fit",
+  "Remove genes without enough information using the actual primary or sensitivity design",
+  "Pseudobulk normalization",
+  "calcNormFactors with its default TMM method",
+  "calcNormFactors(method = 'TMM') after filtering and resetting library sizes",
+  "Use TMM only for edgeR inference; descriptive donor profiles separately follow the established aging log1p(CPM) logic",
+  "edgeR fitting",
+  "Unadjusted group-only QL fit",
+  "Robust QL primary fit plus Project/Sex-adjusted and shared-project sensitivities",
+  "Expose outliers and age/project/sex confounding",
+  "DE threshold",
+  "FDR <= 0.25, abs(logFC) >= 0.25, then top 50 per direction",
+  "FDR <= 0.05 and abs(logFC) >= 0.25; no arbitrary top-50 gene cap",
+  "Keep the primary evidence threshold consistent and auditable",
+  "Diagnostics",
+  "No donor MDS, BCV, QL-dispersion, or library-size exports",
+  "All are exported for every edgeR model",
+  "Check donor separation, library depth, and dispersion before interpretation",
+  "NicheNet background",
+  "background_expressed_genes is used before it is defined",
+  "MultiNicheNet constructs expressed genes before ligand activity",
+  "The new report runs in a clean session",
+  "Communication method",
+  "Basic NicheNet with pooled sender expression",
+  "MultiNicheNet with donor-by-cell-type pseudobulk evidence",
+  "Directly address a multi-donor Q4-versus-Q1 communication question",
+  "Donor balance",
+  "No explicit donor-by-cell-type balance audit",
+  "Retain all 4 Q1 and 5 Q4 donors, audit every donor-cell-type count, require adequate donors in each group, and do not downsample or discard a donor solely for numerical equality",
+  "Preserve information while preventing cell-rich donors from becoming extra biological replicates",
+  "Ligand direction",
+  "Separate up/down target runs despite an unsigned prior",
+  "Two directional contrasts with ligand_activity_down = FALSE",
+  "Avoid claiming that the prior proves activation versus repression",
+  "Cell-type column",
+  "Mixes cell.type and celltype",
+  "One validated analysis_celltype: Step05 all-cell CellTypist majority vote for senders and the stricter final EC-only EC8_ln definition for the receiver; Unknown senders and syntactic-name collisions are rejected",
+  "Prevent annotation drift or accidental merging of different cell types",
+  "Feature space",
+  "The 5,000-gene limitation is not highlighted",
+  "Feature-space and network-overlap QC are exported and stated as a limitation",
+  "NicheNet rankings can be incomplete with a restricted gene universe",
+  "Figure suite",
+  "Ten up/down figures: ligand activity, ligand-target and ligand-receptor heatmaps, plus ligand-target and ligand-receptor chord diagrams",
+  "The same ten visual types generated from final CellTypist LECs and donor-level edgeR; saved under figures/Sydney_equivalent with an explicit exploratory-threshold manifest",
+  "Preserve direct visual comparability without changing the primary statistical threshold",
+  "Reproducibility",
+  "Duplicate chunk label and limited output provenance",
+  "One self-contained Rmd with first-run dependency installation, unique chunk labels, parameter/config export, sessionInfo, cached networks, and explicit tables",
+  "Make reruns and review possible"
+)
+
+write_csv_safe(
+  changes_vs_sydney,
+  file.path(output_dir, "13_changes_vs_Agingv2_by_Sydney.csv")
+)
+knitr::kable(changes_vs_sydney)
+```
+
+# Consistency with the established aging pipeline
+
+This table compares the new analysis with the normalization and donor logic in
+the existing aging scripts, rather than treating Sydney's Rmd as the reference
+method.
+
+```{r consistency-with-existing-aging-logic}
+consistency_with_existing_aging <- tribble(
+  ~analysis_stage, ~existing_aging_logic, ~this_report, ~status_and_purpose,
+  "Cell identity and counts",
+  "Steps 10 and 12.2 recover original dataset13 integer counts using source cell IDs; normalized/Harmony values are not treated as counts",
+  "Recover original dataset13 integer counts for exact QC-passed barcodes and exact final EC8_ln LEC IDs",
+  "Consistent: raw count recovery is the source of expression values",
+  "Cell-type annotation",
+  "Step 05 provides complete all-cell CellTypist majority-vote labels; Step 06 then performs a fresh EC-only majority vote to define final EC8_ln LECs",
+  "Use Step05 majority votes for sender identities and override/exclusively define the receiver with the stricter final EC-only EC8_ln cell IDs",
+  "Exact reuse of the established two-stage CellTypist logic",
+  "Donor identity",
+  "Use Project::donor_id where source-project donor labels can overlap",
+  "Use Project::donor_id for every sample and pseudobulk column",
+  "Exact match",
+  "Pseudobulk construction",
+  "Step 12.2 sums integer counts within each observed donor-by-LEC-state profile",
+  "Sum integer counts within each donor across all exact final LEC receiver cells; MultiNicheNet separately forms donor-by-cell-type profiles",
+  "Same donor-first logic; grouping cell set differs according to the question",
+  "Descriptive normalization",
+  "Step 12.2 computes log1p(raw donor pseudobulk / donor library size * 1e6)",
+  "Export the identical log1p(CPM) calculation for each final-LEC donor pseudobulk",
+  "Exact normalization match",
+  "Group descriptive summary",
+  "Step 12.2 averages normalized donor profiles, giving each donor equal weight",
+  "Average Q1 and Q4 log1p(CPM) profiles across donors and export Q4-minus-Q1 descriptive differences",
+  "Exact donor-weighting match; descriptive only",
+  "Donor balance for inference",
+  "Step 11 summarizes SCENIC activity within donor and uses donor-level resampling; Step 08 composition summaries also give donors equal weight",
+  "Use one pseudobulk replicate per donor, retain all 4 Q1 and 5 Q4 donors, and export donor/group/cell-type balance diagnostics",
+  "Consistent biological unit; exact group-size equality is not required and no donor is discarded from the primary analysis",
+  "Clustering and annotation",
+  "Steps 03/06 use per-cell normalize_total(target_sum = 1e4), log1p, and optionally Harmony for clustering/annotation",
+  "Reuse the resulting QC and cell labels, but do not feed per-cell log values or Harmony coordinates into edgeR",
+  "Consistent separation of clustering values from count inference",
+  "Differential-expression inference",
+  "Existing descriptive log1p(CPM) profiles were not a donor count-model test",
+  "Use raw donor sums with filterByExpr, TMM offsets, robust dispersion, and edgeR quasi-likelihood testing",
+  "Analysis-specific addition: TMM accounts for effective library size in the count model; it does not rewrite the descriptive scale"
+)
+
+write_csv_safe(
+  consistency_with_existing_aging,
+  file.path(output_dir, "13_consistency_with_existing_aging_pipeline.csv")
+)
+knitr::kable(consistency_with_existing_aging)
+```
+
+# Inputs and analysis parameters
+
+```{r define-inputs}
+input_paths <- list(
+  donor_manifest = file.path(
+    project_root,
+    "new_result2_aging", "08_7_min25_LEC_filtered_age_analysis", "dataset13",
+    "08_7_final_LEC_donors_min25_for_NicheNet.csv"
+  ),
+  final_lec_metadata = file.path(
+    project_root,
+    "new_result2_aging", "08_combined_LEC_recluster", "dataset13",
+    "08_combined_LEC_cell_metadata.csv.gz"
+  ),
+  step03_q1 = file.path(
+    project_root, "new_result2_aging", "03", "dataset13", "Q1",
+    "dataset13_Q1_clustered.h5ad"
+  ),
+  step03_q2 = file.path(
+    project_root, "new_result2_aging", "03", "dataset13", "Q2",
+    "dataset13_Q2_clustered.h5ad"
+  ),
+  step03_q4 = file.path(
+    project_root, "new_result2_aging", "03", "dataset13", "Q4",
+    "dataset13_Q4_clustered.h5ad"
+  ),
+  step05_q1_celltypist = file.path(
+    project_root, "new_result2_aging", "05_marker_celltypist", "dataset13", "Q1",
+    "dataset13_Q1_celltypist_cell_predictions.csv.gz"
+  ),
+  step05_q2_celltypist = file.path(
+    project_root, "new_result2_aging", "05_marker_celltypist", "dataset13", "Q2",
+    "dataset13_Q2_celltypist_cell_predictions.csv.gz"
+  ),
+  step05_q4_celltypist = file.path(
+    project_root, "new_result2_aging", "05_marker_celltypist", "dataset13", "Q4",
+    "dataset13_Q4_celltypist_cell_predictions.csv.gz"
+  ),
+  raw_counts = file.path(
+    project_root, "Data", "converted",
+    "dataset_13_Age_full_30plus_age10yr_standardized.h5ad"
+  )
+)
+reference_paths <- list(
+  sydney_rmd = file.path(project_root, "Agingv2 by Sydney.Rmd")
+)
+
+stop_if_missing(unlist(input_paths), names(input_paths))
+
+analysis_parameters <- tibble(
+  parameter = c(
+    "comparison", "receiver", "minimum receiver cells per donor",
+    "MultiNicheNet min_cells cutoff (qualifies when n_cells > cutoff)",
+    "minimum qualifying donors per group",
+    "edgeR FDR threshold", "minimum absolute log2 fold-change",
+    "MultiNicheNet expressed-cell fraction",
+    "MultiNicheNet expressed-sample fraction",
+    "MultiNicheNet adjusted p-value used", "random seed"
+  ),
+  value = as.character(c(
+    "Q4 versus Q1", "LEC_EC8_ln",
+    params$min_receiver_cells_per_donor,
+    params$min_sender_cells_per_donor,
+    params$min_donors_per_group,
+    params$fdr_threshold,
+    params$min_abs_logfc,
+    params$expressed_cell_fraction,
+    params$expressed_sample_fraction,
+    params$mnn_use_adjusted_p,
+    130819
+  ))
+)
+
+write_csv_safe(analysis_parameters, file.path(output_dir, "13_analysis_parameters.csv"))
+write_csv_safe(
+  bind_rows(
+    tibble(
+      input = names(input_paths), path = unlist(input_paths),
+      required_to_run = TRUE, exists_at_run = file.exists(unlist(input_paths))
+    ),
+    tibble(
+      input = names(reference_paths), path = unlist(reference_paths),
+      required_to_run = FALSE, exists_at_run = file.exists(unlist(reference_paths))
+    )
+  ),
+  file.path(output_dir, "13_input_manifest.csv")
+)
+knitr::kable(analysis_parameters)
+```
+
+# Select the final Q1 and Q4 donors
+
+```{r select-final-donors}
+donor_manifest_all <- read.csv(input_paths$donor_manifest, check.names = FALSE)
+required_manifest_columns <- c(
+  "donor_key", "Project", "donor_id", "age_numeric", "Sex",
+  "final_four_group", "original_step03_age_quartile",
+  "n_final_LEC_cells"
+)
+missing_manifest_columns <- setdiff(required_manifest_columns, colnames(donor_manifest_all))
+if (length(missing_manifest_columns)) {
+  stop("Donor manifest is missing: ", paste(missing_manifest_columns, collapse = ", "))
+}
+
+donor_manifest <- donor_manifest_all %>%
+  filter(final_four_group %in% c("Q1", "Q4")) %>%
+  mutate(
+    final_four_group = factor(final_four_group, levels = c("Q1", "Q4")),
+    Project = factor(Project),
+    Sex = factor(Sex)
+  ) %>%
+  arrange(final_four_group, age_numeric, donor_key)
+
+if (nrow(donor_manifest) != 9L) {
+  stop("Expected 9 final Q1/Q4 donors; found ", nrow(donor_manifest), ".")
+}
+if (!identical(as.integer(table(donor_manifest$final_four_group)), c(4L, 5L))) {
+  stop("Expected 4 Q1 and 5 Q4 donors.")
+}
+if (anyDuplicated(donor_manifest$donor_key)) {
+  stop("The final donor manifest contains duplicated donor_key values.")
+}
+if (anyNA(donor_manifest[, c("donor_key", "Project", "donor_id", "age_numeric", "Sex")])) {
+  stop("The selected donor manifest contains missing donor, project, age, or sex metadata.")
+}
+if (any(donor_manifest$n_final_LEC_cells < params$min_receiver_cells_per_donor)) {
+  stop("At least one selected donor does not meet the final LEC minimum.")
+}
+if (params$min_donors_per_group > min(table(donor_manifest$final_four_group))) {
+  stop("min_donors_per_group exceeds the number of available donors in a group.")
+}
+
+donor_group_balance <- donor_manifest %>%
+  group_by(age_group = final_four_group) %>%
+  summarise(
+    n_donors = n(),
+    minimum_final_LEC_cells = min(n_final_LEC_cells),
+    median_final_LEC_cells = median(n_final_LEC_cells),
+    maximum_final_LEC_cells = max(n_final_LEC_cells),
+    projects = paste(
+      names(table(as.character(Project))),
+      as.integer(table(as.character(Project))),
+      sep = ":", collapse = "; "
+    ),
+    sexes = paste(
+      names(table(as.character(Sex))),
+      as.integer(table(as.character(Sex))),
+      sep = ":", collapse = "; "
+    ),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    primary_balance_strategy =
+      "retain all donors; one donor is one replicate; no forced downsampling"
+  )
+
+donor_project_sex_cross_tab <- donor_manifest %>%
+  count(
+    age_group = final_four_group,
+    Project,
+    Sex,
+    name = "n_donors",
+    .drop = FALSE
+  )
+
+write_csv_safe(donor_manifest, file.path(tables_dir, "13_selected_Q1_Q4_donors.csv"))
+write_csv_safe(
+  donor_group_balance,
+  file.path(tables_dir, "13_donor_group_balance_summary.csv")
+)
+write_csv_safe(
+  donor_project_sex_cross_tab,
+  file.path(tables_dir, "13_donor_Project_Sex_cross_tab.csv")
+)
+knitr::kable(donor_group_balance)
+```
+
+# Recover selected Step03 cells and metadata
+
+The Step03 H5AD files already contain the established NF-only, LV/AP, age-at-
+least-30, hard-QC-passed cohort. Q2 is read only because the final donor
+quartiles assign the age-48 donor `GSE183852::TWCM-13-104` to Q1.
+
+```{r recover-step03-cell-metadata}
+step03_files <- c(
+  Q1 = input_paths$step03_q1,
+  Q2 = input_paths$step03_q2,
+  Q4 = input_paths$step03_q4
+)
+step05_prediction_files <- c(
+  Q1 = input_paths$step05_q1_celltypist,
+  Q2 = input_paths$step05_q2_celltypist,
+  Q4 = input_paths$step05_q4_celltypist
+)
+
+selected_cell_metadata <- vector("list", length(step03_files))
+names(selected_cell_metadata) <- names(step03_files)
+
+for (quartile_name in names(step03_files)) {
+  message("Reading Step03 metadata: ", quartile_name)
+  step_sce <- zellkonverter::readH5AD(
+    step03_files[[quartile_name]],
+    use_hdf5 = TRUE,
+    reader = "R"
+  )
+  step_cd <- as.data.frame(SummarizedExperiment::colData(step_sce))
+  step_cd$cell_id <- colnames(step_sce)
+
+  project_col <- first_present(step_cd, c("Project", "project"), "Project column")
+  donor_col <- first_present(step_cd, c("donor_id", "Donor"), "donor column")
+  author_celltype_col <- first_present(
+    step_cd,
+    c("cell.type", "cell_type_leiden0.6"),
+    "author cell-type column"
+  )
+
+  step05_predictions <- read.csv(
+    gzfile(step05_prediction_files[[quartile_name]]),
+    check.names = FALSE
+  )
+  required_prediction_columns <- c(
+    "cell_id", "celltypist_raw_label", "celltypist_majority_vote",
+    "celltypist_max_probability"
+  )
+  missing_prediction_columns <- setdiff(
+    required_prediction_columns,
+    colnames(step05_predictions)
+  )
+  if (length(missing_prediction_columns)) {
+    stop(
+      "Step05 ", quartile_name, " predictions are missing: ",
+      paste(missing_prediction_columns, collapse = ", ")
+    )
+  }
+  if (anyDuplicated(step05_predictions$cell_id)) {
+    stop("Step05 ", quartile_name, " predictions contain duplicated cell IDs.")
+  }
+  prediction_index <- match(step_cd$cell_id, step05_predictions$cell_id)
+  if (anyNA(prediction_index) || nrow(step05_predictions) != nrow(step_cd)) {
+    stop(
+      "Step05 ", quartile_name,
+      " predictions do not provide exactly one annotation for every Step03 cell."
+    )
+  }
+  if (anyNA(step05_predictions$celltypist_majority_vote[prediction_index]) ||
+      any(!nzchar(step05_predictions$celltypist_majority_vote[prediction_index]))) {
+    stop("Step05 ", quartile_name, " contains a missing CellTypist majority vote.")
+  }
+
+  step_cd$donor_key_rebuilt <- paste(
+    as.character(step_cd[[project_col]]),
+    as.character(step_cd[[donor_col]]),
+    sep = "::"
+  )
+  keep <- step_cd$donor_key_rebuilt %in% donor_manifest$donor_key
+
+  selected_cell_metadata[[quartile_name]] <- tibble(
+    cell_id = as.character(step_cd$cell_id[keep]),
+    donor_key = as.character(step_cd$donor_key_rebuilt[keep]),
+    source_step03_quartile = quartile_name,
+    author_celltype = as.character(step_cd[[author_celltype_col]][keep]),
+    allcell_celltypist_raw_label = as.character(
+      step05_predictions$celltypist_raw_label[prediction_index][keep]
+    ),
+    allcell_celltypist_majority_vote = as.character(
+      step05_predictions$celltypist_majority_vote[prediction_index][keep]
+    ),
+    allcell_celltypist_max_probability = as.numeric(
+      step05_predictions$celltypist_max_probability[prediction_index][keep]
+    )
+  )
+
+  rm(step_sce, step_cd, step05_predictions, prediction_index)
+  invisible(gc())
+}
+
+cell_metadata <- bind_rows(selected_cell_metadata)
+if (!nrow(cell_metadata)) {
+  stop("No Step03 cells matched the final Q1/Q4 donor manifest.")
+}
+if (anyDuplicated(cell_metadata$cell_id)) {
+  stop("Selected Step03 cell IDs are not unique.")
+}
+
+cell_metadata <- cell_metadata %>%
+  left_join(
+    donor_manifest %>%
+      transmute(
+        donor_key,
+        age_group = as.character(final_four_group),
+        Project = as.character(Project),
+        donor_id,
+        Sex = as.character(Sex),
+        age_numeric
+      ),
+    by = "donor_key"
+  )
+
+if (anyNA(cell_metadata$age_group)) {
+  stop("At least one selected cell failed donor-manifest annotation.")
+}
+
+step03_donor_qc <- cell_metadata %>%
+  count(donor_key, age_group, source_step03_quartile, name = "n_step03_QC_cells") %>%
+  arrange(age_group, donor_key)
+write_csv_safe(step03_donor_qc, file.path(tables_dir, "13_step03_selected_cell_counts.csv"))
+write_csv_safe(
+  cell_metadata %>%
+    count(
+      source_step03_quartile,
+      allcell_celltypist_majority_vote,
+      name = "n_cells"
+    ),
+  file.path(tables_dir, "13_selected_allcell_CellTypist_majority_vote_counts.csv")
+)
+knitr::kable(step03_donor_qc)
+```
+
+# Apply the exact final CellTypist LEC definition
+
+```{r define-final-celltypist-receiver}
+final_lec_metadata <- read.csv(
+  gzfile(input_paths$final_lec_metadata),
+  check.names = FALSE
+)
+required_lec_columns <- c(
+  "source_cell_id", "donor_key", "celltypist_majority_vote",
+  "final_LEC_by_majority_vote"
+)
+missing_lec_columns <- setdiff(required_lec_columns, colnames(final_lec_metadata))
+if (length(missing_lec_columns)) {
+  stop("Final LEC metadata is missing: ", paste(missing_lec_columns, collapse = ", "))
+}
+
+final_lec_selected <- final_lec_metadata %>%
+  filter(
+    donor_key %in% donor_manifest$donor_key,
+    final_LEC_by_majority_vote == "LEC",
+    celltypist_majority_vote == "EC8_ln"
+  ) %>%
+  distinct(source_cell_id, donor_key, .keep_all = TRUE)
+
+if (anyDuplicated(final_lec_selected$source_cell_id)) {
+  stop("Final CellTypist LEC source_cell_id values are duplicated.")
+}
+
+missing_final_lecs <- setdiff(final_lec_selected$source_cell_id, cell_metadata$cell_id)
+if (length(missing_final_lecs)) {
+  stop(
+    length(missing_final_lecs),
+    " final CellTypist LEC barcodes are absent from the selected Step03 cells."
+  )
+}
+
+cell_metadata$is_final_celltypist_lec <-
+  cell_metadata$cell_id %in% final_lec_selected$source_cell_id
+cell_metadata$is_author_lec <-
+  !is.na(cell_metadata$author_celltype) &
+  cell_metadata$author_celltype == "Lymphatic ECs"
+cell_metadata$is_allcell_celltypist_lec <-
+  !is.na(cell_metadata$allcell_celltypist_majority_vote) &
+  cell_metadata$allcell_celltypist_majority_vote == "EC8_ln"
+cell_metadata$excluded_author_only_lec <-
+  cell_metadata$is_author_lec & !cell_metadata$is_final_celltypist_lec
+cell_metadata$excluded_nonfinal_lec_candidate <-
+  !cell_metadata$is_final_celltypist_lec &
+  (cell_metadata$is_author_lec | cell_metadata$is_allcell_celltypist_lec)
+cell_metadata$analysis_celltype <- ifelse(
+  cell_metadata$is_final_celltypist_lec,
+  "LEC_EC8_ln",
+  cell_metadata$allcell_celltypist_majority_vote
+)
+cell_metadata$analysis_celltype_source <- ifelse(
+  cell_metadata$is_final_celltypist_lec,
+  "final_EC_only_CellTypist_majority_vote_EC8_ln",
+  "Step05_allcell_CellTypist_majority_vote"
+)
+
+receiver_count_qc <- cell_metadata %>%
+  group_by(donor_key, age_group) %>%
+  summarise(
+    final_celltypist_LECs = sum(is_final_celltypist_lec),
+    author_LECs = sum(is_author_lec),
+    allcell_celltypist_EC8_ln = sum(is_allcell_celltypist_lec),
+    overlap = sum(is_final_celltypist_lec & is_author_lec),
+    author_only_excluded = sum(excluded_author_only_lec),
+    nonfinal_LEC_candidates_excluded = sum(excluded_nonfinal_lec_candidate),
+    final_only_reassigned = sum(is_final_celltypist_lec & !is_author_lec),
+    .groups = "drop"
+  ) %>%
+  left_join(
+    donor_manifest %>%
+      transmute(donor_key, manifest_final_LECs = n_final_LEC_cells),
+    by = "donor_key"
+  )
+
+if (any(receiver_count_qc$final_celltypist_LECs != receiver_count_qc$manifest_final_LECs)) {
+  stop("Recovered CellTypist LEC counts do not match the final donor manifest.")
+}
+if (any(receiver_count_qc$final_celltypist_LECs < params$min_receiver_cells_per_donor)) {
+  stop("At least one selected donor has insufficient final CellTypist LECs.")
+}
+
+write_csv_safe(receiver_count_qc, file.path(tables_dir, "13_receiver_definition_QC.csv"))
+write_csv_gz_safe(
+  cell_metadata,
+  file.path(tables_dir, "13_selected_cells_CellTypist_and_receiver_labels.csv.gz")
+)
+knitr::kable(receiver_count_qc)
+```
+
+# Trace every selected barcode to raw counts
+
+```{r trace-raw-counts}
+message("Opening HDF5-backed standardized raw-count H5AD")
+raw_sce <- zellkonverter::readH5AD(
+  input_paths$raw_counts,
+  use_hdf5 = TRUE,
+  reader = "R"
+)
+
+if (!("X" %in% SummarizedExperiment::assayNames(raw_sce))) {
+  stop("The standardized raw-count H5AD does not contain the expected X assay.")
+}
+if (anyDuplicated(colnames(raw_sce))) {
+  stop("Raw-count H5AD contains duplicated cell barcodes.")
+}
+if (anyDuplicated(rownames(raw_sce))) {
+  stop("Raw-count H5AD contains duplicated gene names; aggregate them before analysis.")
+}
+
+raw_index <- match(cell_metadata$cell_id, colnames(raw_sce))
+if (anyNA(raw_index)) {
+  missing_ids <- cell_metadata$cell_id[is.na(raw_index)]
+  stop(
+    length(missing_ids), " selected Step03 barcodes are missing from raw counts. Examples: ",
+    paste(head(missing_ids, 5), collapse = ", ")
+  )
+}
+
+selected_raw_sce <- raw_sce[, raw_index]
+raw_counts_delayed <- SummarizedExperiment::assay(selected_raw_sce, "X")
+counts_matrix <- as(raw_counts_delayed, "dgCMatrix")
+rownames(counts_matrix) <- rownames(selected_raw_sce)
+colnames(counts_matrix) <- cell_metadata$cell_id
+
+if (any(!is.finite(counts_matrix@x)) || any(counts_matrix@x < 0)) {
+  stop("Raw-count matrix contains non-finite or negative values.")
+}
+if (length(counts_matrix@x) && any(abs(counts_matrix@x - round(counts_matrix@x)) > 1e-8)) {
+  stop("The X assay is not integer-like and cannot be used as raw counts.")
+}
+counts_matrix@x <- round(counts_matrix@x)
+
+raw_count_qc <- tibble(
+  metric = c(
+    "raw_h5ad_cells", "raw_h5ad_genes", "selected_cells",
+    "selected_genes", "selected_nonzero_counts", "all_barcodes_matched",
+    "integer_like", "feature_space_warning"
+  ),
+  value = as.character(c(
+    ncol(raw_sce), nrow(raw_sce), ncol(counts_matrix), nrow(counts_matrix),
+    length(counts_matrix@x), TRUE, TRUE,
+    ifelse(
+      nrow(counts_matrix) <= 5000,
+      "Restricted <=5000-gene source; prefer full-transcriptome raw counts when available",
+      "No <=5000-gene warning"
+    )
+  ))
+)
+write_csv_safe(raw_count_qc, file.path(tables_dir, "13_raw_count_barcode_QC.csv"))
+knitr::kable(raw_count_qc)
+
+rm(raw_sce, selected_raw_sce, raw_counts_delayed)
+invisible(gc())
+```
+
+# Build exact LEC donor pseudobulks and existing-pipeline descriptive scale
+
+Pseudobulk means summing raw counts across the final LEC cells separately for
+each donor. Donors are never merged before normalization. Following Step 12.2,
+the report also calculates `log1p(CPM)` independently for every donor and then
+uses an unweighted mean of those donor profiles for descriptive Q1 and Q4
+summaries. These descriptive values are not input to edgeR.
+
+```{r build-lec-pseudobulk}
+lec_columns <- which(cell_metadata$is_final_celltypist_lec)
+lec_counts <- counts_matrix[, lec_columns, drop = FALSE]
+lec_donor <- factor(
+  cell_metadata$donor_key[lec_columns],
+  levels = donor_manifest$donor_key
+)
+
+donor_design <- Matrix::sparse.model.matrix(~ 0 + lec_donor)
+colnames(donor_design) <- levels(lec_donor)
+lec_pseudobulk_counts <- lec_counts %*% donor_design
+lec_pseudobulk_counts <- as(lec_pseudobulk_counts, "dgCMatrix")
+
+if (!identical(colnames(lec_pseudobulk_counts), donor_manifest$donor_key)) {
+  stop("LEC pseudobulk donor columns are not aligned to the donor manifest.")
+}
+
+pseudobulk_qc <- donor_manifest %>%
+  transmute(
+    donor_key,
+    age_group = as.character(final_four_group),
+    Project = as.character(Project),
+    Sex = as.character(Sex),
+    age_numeric,
+    n_final_LEC_cells
+  ) %>%
+  mutate(
+    pseudobulk_library_size = as.numeric(Matrix::colSums(lec_pseudobulk_counts)),
+    detected_genes = as.numeric(Matrix::colSums(lec_pseudobulk_counts > 0))
+  )
+
+# Exact descriptive normalization used in aging Step 12.2:
+# raw donor pseudobulk / that donor's raw library size * 1e6, followed by log1p.
+pseudobulk_library_sizes <- as.numeric(Matrix::colSums(lec_pseudobulk_counts))
+if (any(!is.finite(pseudobulk_library_sizes)) || any(pseudobulk_library_sizes <= 0)) {
+  stop("At least one final-LEC donor pseudobulk has a non-positive library size.")
+}
+
+lec_pseudobulk_raw_dense <- as.matrix(lec_pseudobulk_counts)
+lec_pseudobulk_cpm <- sweep(
+  lec_pseudobulk_raw_dense,
+  MARGIN = 2,
+  STATS = pseudobulk_library_sizes,
+  FUN = "/"
+) * 1e6
+lec_pseudobulk_log1p_cpm <- log1p(lec_pseudobulk_cpm)
+
+q1_donors <- donor_manifest$donor_key[donor_manifest$final_four_group == "Q1"]
+q4_donors <- donor_manifest$donor_key[donor_manifest$final_four_group == "Q4"]
+if (!length(q1_donors) || !length(q4_donors)) {
+  stop("Both Q1 and Q4 donor sets are required for donor-equal summaries.")
+}
+
+raw_pseudobulk_export <- tibble(gene = rownames(lec_pseudobulk_raw_dense)) %>%
+  bind_cols(as.data.frame(lec_pseudobulk_raw_dense, check.names = FALSE))
+log1p_cpm_export <- tibble(gene = rownames(lec_pseudobulk_log1p_cpm)) %>%
+  bind_cols(as.data.frame(lec_pseudobulk_log1p_cpm, check.names = FALSE))
+donor_equal_group_summary <- tibble(
+  gene = rownames(lec_pseudobulk_log1p_cpm),
+  Q1_mean_log1p_CPM_equal_donor = rowMeans(
+    lec_pseudobulk_log1p_cpm[, q1_donors, drop = FALSE]
+  ),
+  Q4_mean_log1p_CPM_equal_donor = rowMeans(
+    lec_pseudobulk_log1p_cpm[, q4_donors, drop = FALSE]
+  )
+) %>%
+  mutate(
+    Q4_minus_Q1_mean_log1p_CPM =
+      Q4_mean_log1p_CPM_equal_donor - Q1_mean_log1p_CPM_equal_donor
+  )
+
+write_csv_safe(pseudobulk_qc, file.path(tables_dir, "13_LEC_pseudobulk_sample_QC.csv"))
+write_csv_gz_safe(
+  raw_pseudobulk_export,
+  file.path(tables_dir, "13_LEC_pseudobulk_raw_counts_by_donor.csv.gz")
+)
+write_csv_gz_safe(
+  log1p_cpm_export,
+  file.path(tables_dir, "13_LEC_pseudobulk_log1p_CPM_by_donor.csv.gz")
+)
+write_csv_gz_safe(
+  donor_equal_group_summary,
+  file.path(tables_dir, "13_LEC_donor_equal_Q1_Q4_mean_log1p_CPM.csv.gz")
+)
+saveRDS(
+  lec_pseudobulk_counts,
+  file.path(tables_dir, "13_LEC_raw_count_pseudobulk_gene_by_donor.rds")
+)
+saveRDS(
+  lec_pseudobulk_log1p_cpm,
+  file.path(tables_dir, "13_LEC_log1p_CPM_pseudobulk_gene_by_donor.rds")
+)
+
+normalization_output_manifest <- tribble(
+  ~file, ~scale, ~use,
+  "13_LEC_pseudobulk_raw_counts_by_donor.csv.gz",
+  "integer count sum per gene and donor",
+  "Human-readable raw pseudobulk; valid input scale for count models",
+  "13_LEC_raw_count_pseudobulk_gene_by_donor.rds",
+  "sparse integer count sum per gene and donor",
+  "R-native raw pseudobulk used by edgeR",
+  "13_LEC_pseudobulk_log1p_CPM_by_donor.csv.gz",
+  "log1p(count / donor library size * 1e6)",
+  "Descriptive donor profiles matching aging Step 12.2; do not use as edgeR counts",
+  "13_LEC_log1p_CPM_pseudobulk_gene_by_donor.rds",
+  "log1p(count / donor library size * 1e6)",
+  "R-native descriptive donor profiles",
+  "13_LEC_donor_equal_Q1_Q4_mean_log1p_CPM.csv.gz",
+  "unweighted mean of donor log1p(CPM) profiles",
+  "Descriptive Q1/Q4 comparison with equal donor weight; not a hypothesis test",
+  "13_edgeR_primary_LEC_Q4_vs_Q1_sample_QC.csv",
+  "raw post-filter library size plus TMM factor/effective library size",
+  "Audit the edgeR model-specific normalization offsets"
+)
+write_csv_safe(
+  normalization_output_manifest,
+  file.path(tables_dir, "13_normalization_output_manifest.csv")
+)
+knitr::kable(pseudobulk_qc)
+```
+
+# Donor-level edgeR differential expression
+
+The primary contrast is Q4 minus Q1. Positive logFC therefore means higher
+expression in final LECs from Q4 donors.
+
+```{r define-edger-runner}
+run_edger_model <- function(
+    count_matrix,
+    sample_metadata,
+    formula,
+    contrast_expression,
+    model_name,
+    output_prefix) {
+  sample_metadata <- as.data.frame(sample_metadata)
+  if (anyDuplicated(sample_metadata$donor_key)) {
+    stop(model_name, " sample metadata contains duplicated donor_key values.")
+  }
+  missing_count_samples <- setdiff(sample_metadata$donor_key, colnames(count_matrix))
+  if (length(missing_count_samples)) {
+    stop(
+      model_name, " count matrix is missing donor(s): ",
+      paste(missing_count_samples, collapse = ", ")
+    )
+  }
+  rownames(sample_metadata) <- sample_metadata$donor_key
+  sample_metadata$group <- factor(sample_metadata$age_group, levels = c("Q1", "Q4"))
+  sample_metadata$Project <- factor(sample_metadata$Project)
+  sample_metadata$Sex <- factor(sample_metadata$Sex)
+
+  count_matrix <- count_matrix[, sample_metadata$donor_key, drop = FALSE]
+  design <- model.matrix(formula, data = sample_metadata)
+  colnames(design) <- make.names(colnames(design))
+  if (qr(design)$rank < ncol(design)) {
+    stop(model_name, " design matrix is not full rank: ", paste(colnames(design), collapse = ", "))
+  }
+
+  y <- edgeR::DGEList(counts = count_matrix, samples = sample_metadata)
+  keep <- edgeR::filterByExpr(y, design = design)
+  if (!any(keep)) {
+    stop(model_name, " retained no genes after filterByExpr.")
+  }
+  y <- y[keep, , keep.lib.sizes = FALSE]
+  # TMM is used only inside the edgeR count model. It is not a replacement for
+  # the established aging-pipeline log1p(CPM) descriptive export above, and
+  # log1p(CPM) values must never be supplied to DGEList as if they were counts.
+  y <- edgeR::calcNormFactors(y, method = "TMM")
+
+  contrast <- limma::makeContrasts(contrasts = contrast_expression, levels = design)
+  y <- edgeR::estimateDisp(y, design, robust = TRUE)
+  fit <- edgeR::glmQLFit(y, design, robust = TRUE)
+  qlf <- edgeR::glmQLFTest(fit, contrast = contrast)
+
+  result <- edgeR::topTags(qlf, n = Inf, sort.by = "none")$table %>%
+    rownames_to_column("gene") %>%
+    mutate(
+      contrast = "Q4_minus_Q1",
+      model = model_name,
+      significant_primary =
+        FDR <= params$fdr_threshold & abs(logFC) >= params$min_abs_logfc,
+      direction = case_when(
+        significant_primary & logFC > 0 ~ "higher_in_Q4",
+        significant_primary & logFC < 0 ~ "lower_in_Q4",
+        TRUE ~ "not_primary_significant"
+      )
+    ) %>%
+    arrange(FDR, desc(abs(logFC)))
+
+  sample_qc <- tibble(
+    donor_key = colnames(y),
+    age_group = as.character(sample_metadata[colnames(y), "group"]),
+    library_size_after_filter = y$samples$lib.size,
+    TMM_norm_factor = y$samples$norm.factors,
+    effective_library_size = y$samples$lib.size * y$samples$norm.factors
+  )
+
+  write_csv_safe(result, paste0(output_prefix, "_all_genes.csv"))
+  write_csv_safe(
+    result %>% filter(significant_primary),
+    paste0(output_prefix, "_significant_by_configured_threshold.csv")
+  )
+  write_csv_safe(sample_qc, paste0(output_prefix, "_sample_QC.csv"))
+  write.csv(
+    design,
+    paste0(output_prefix, "_design_matrix.csv"),
+    row.names = TRUE
+  )
+
+  png(paste0(output_prefix, "_MDS.png"), width = 1800, height = 1400, res = 220)
+  # plotMDS is exported by limma; edgeR registers the DGEList method used here.
+  limma::plotMDS(y, labels = sample_metadata$donor_id, col = c("#2C7BB6", "#D7191C")[sample_metadata$group])
+  title(main = paste(model_name, "MDS"))
+  dev.off()
+
+  png(paste0(output_prefix, "_BCV.png"), width = 1800, height = 1400, res = 220)
+  edgeR::plotBCV(y)
+  title(main = paste(model_name, "biological coefficient of variation"))
+  dev.off()
+
+  png(paste0(output_prefix, "_QL_dispersion.png"), width = 1800, height = 1400, res = 220)
+  edgeR::plotQLDisp(fit)
+  title(main = paste(model_name, "QL dispersion"))
+  dev.off()
+
+  list(
+    result = result,
+    y = y,
+    design = design,
+    fit = fit,
+    test = qlf,
+    n_genes_input = nrow(count_matrix),
+    n_genes_tested = nrow(y),
+    n_significant = sum(result$significant_primary)
+  )
+}
+```
+
+```{r run-edger-primary}
+edge_metadata <- donor_manifest %>%
+  transmute(
+    donor_key,
+    donor_id,
+    age_group = as.character(final_four_group),
+    Project = as.character(Project),
+    Sex = as.character(Sex),
+    age_numeric
+  )
+
+edger_primary <- run_edger_model(
+  count_matrix = lec_pseudobulk_counts,
+  sample_metadata = edge_metadata,
+  formula = ~ 0 + group,
+  contrast_expression = "groupQ4-groupQ1",
+  model_name = "primary_unadjusted_donor_pseudobulk",
+  output_prefix = file.path(tables_dir, "13_edgeR_primary_LEC_Q4_vs_Q1")
+)
+
+primary_summary <- tibble(
+  model = "primary_unadjusted_donor_pseudobulk",
+  donors_Q1 = sum(edge_metadata$age_group == "Q1"),
+  donors_Q4 = sum(edge_metadata$age_group == "Q4"),
+  genes_input = edger_primary$n_genes_input,
+  genes_tested = edger_primary$n_genes_tested,
+  genes_primary_significant = edger_primary$n_significant
+)
+knitr::kable(primary_summary)
+```
+
+```{r run-edger-adjusted-sensitivity}
+edger_adjusted <- tryCatch(
+  run_edger_model(
+    count_matrix = lec_pseudobulk_counts,
+    sample_metadata = edge_metadata,
+    formula = ~ Project + Sex + group,
+    contrast_expression = "groupQ4",
+    model_name = "Project_Sex_adjusted_sensitivity",
+    output_prefix = file.path(tables_dir, "13_edgeR_sensitivity_Project_Sex_adjusted")
+  ),
+  error = function(e) {
+    writeLines(
+      paste("Adjusted sensitivity not estimable:", conditionMessage(e)),
+      file.path(tables_dir, "13_edgeR_sensitivity_Project_Sex_adjusted_NOT_RUN.txt")
+    )
+    NULL
+  }
+)
+
+shared_project_metadata <- edge_metadata %>% filter(Project == "GSE183852")
+edger_shared_project <- tryCatch(
+  run_edger_model(
+    count_matrix = lec_pseudobulk_counts,
+    sample_metadata = shared_project_metadata,
+    formula = ~ 0 + group,
+    contrast_expression = "groupQ4-groupQ1",
+    model_name = "GSE183852_only_sensitivity",
+    output_prefix = file.path(tables_dir, "13_edgeR_sensitivity_GSE183852_only")
+  ),
+  error = function(e) {
+    writeLines(
+      paste("Shared-project sensitivity not estimable:", conditionMessage(e)),
+      file.path(tables_dir, "13_edgeR_sensitivity_GSE183852_only_NOT_RUN.txt")
+    )
+    NULL
+  }
+)
+```
+
+```{r plot-edger-primary}
+volcano_data <- edger_primary$result %>%
+  mutate(minus_log10_FDR = -log10(pmax(FDR, .Machine$double.xmin)))
+
+volcano_plot <- ggplot(
+  volcano_data,
+  aes(x = logFC, y = minus_log10_FDR, color = direction)
+) +
+  geom_point(alpha = 0.65, size = 1.3) +
+  geom_vline(
+    xintercept = c(-params$min_abs_logfc, params$min_abs_logfc),
+    linetype = "dashed",
+    color = "grey45"
+  ) +
+  geom_hline(
+    yintercept = -log10(params$fdr_threshold),
+    linetype = "dashed",
+    color = "grey45"
+  ) +
+  scale_color_manual(values = c(
+    higher_in_Q4 = "#D7191C",
+    lower_in_Q4 = "#2C7BB6",
+    not_primary_significant = "grey75"
+  )) +
+  labs(
+    title = "Final CellTypist LEC donor-pseudobulk edgeR",
+    subtitle = "Q4 minus Q1; each donor is one replicate",
+    x = "log2 fold-change",
+    y = "-log10(BH FDR)",
+    color = NULL
+  ) +
+  theme_classic(base_size = 12)
+
+ggsave(
+  file.path(figures_dir, "13_edgeR_primary_LEC_Q4_vs_Q1_volcano.png"),
+  volcano_plot,
+  width = 8,
+  height = 6,
+  dpi = 300
+)
+volcano_plot
+```
+
+# Prepare donor-by-cell-type input for MultiNicheNet
+
+Sender cell types are retained only if at least the configured number of donors
+in both Q1 and Q4 pass MultiNicheNet's `min_cells` rule. The audit uses
+`n_cells > min_cells`, matching the package workflow. With the default cutoff
+of 10, a qualifying donor-cell-type profile therefore has at least 11 cells.
+The exact CellTypist LEC receiver must have at least 25 cells in every donor.
+Non-final LEC candidates identified by either the author LEC label or the
+Step05 all-cell `EC8_ln` majority vote are excluded. All other senders use the
+Step05 all-cell CellTypist majority vote. Donors are not discarded or
+cell-downsampled merely to make the group sizes numerically equal.
+
+```{r prepare-multinichenet-celltypes}
+mnn_cell_metadata <- cell_metadata %>%
+  filter(!excluded_nonfinal_lec_candidate) %>%
+  mutate(
+    analysis_celltype = ifelse(
+      is.na(analysis_celltype) | !nzchar(analysis_celltype),
+      "Unknown",
+      analysis_celltype
+    )
+  )
+
+celltype_abundance <- mnn_cell_metadata %>%
+  count(donor_key, age_group, analysis_celltype, name = "n_cells") %>%
+  complete(
+    donor_key = donor_manifest$donor_key,
+    analysis_celltype,
+    fill = list(n_cells = 0)
+  ) %>%
+  left_join(
+    donor_manifest %>%
+      transmute(donor_key, age_group_manifest = as.character(final_four_group)),
+    by = "donor_key"
+  ) %>%
+  mutate(age_group = coalesce(age_group, age_group_manifest)) %>%
+  select(-age_group_manifest)
+
+if (anyNA(celltype_abundance$age_group)) {
+  stop("At least one donor-by-cell-type abundance row has no age-group label.")
+}
+
+n_q1_donors <- sum(donor_manifest$final_four_group == "Q1")
+n_q4_donors <- sum(donor_manifest$final_four_group == "Q4")
+
+celltype_group_balance <- celltype_abundance %>%
+  group_by(analysis_celltype, age_group) %>%
+  summarise(
+    n_donors = n(),
+    donors_with_any_cells = sum(n_cells > 0),
+    qualifying_sender_donors =
+      sum(n_cells > params$min_sender_cells_per_donor),
+    qualifying_receiver_donors =
+      sum(n_cells >= params$min_receiver_cells_per_donor),
+    minimum_cells = min(n_cells),
+    median_cells = median(n_cells),
+    maximum_cells = max(n_cells),
+    total_cells = sum(n_cells),
+    .groups = "drop"
+  )
+
+celltype_eligibility <- celltype_group_balance %>%
+  pivot_wider(
+    names_from = age_group,
+    values_from = c(
+      n_donors, donors_with_any_cells, qualifying_sender_donors,
+      qualifying_receiver_donors, minimum_cells, median_cells,
+      maximum_cells, total_cells
+    ),
+    values_fill = 0
+  ) %>%
+  mutate(
+    eligible = case_when(
+      analysis_celltype == "Unknown" ~ FALSE,
+      analysis_celltype == "LEC_EC8_ln" ~
+        qualifying_receiver_donors_Q1 == n_q1_donors &
+        qualifying_receiver_donors_Q4 == n_q4_donors,
+      TRUE ~
+        qualifying_sender_donors_Q1 >= params$min_donors_per_group &
+        qualifying_sender_donors_Q4 >= params$min_donors_per_group
+    ),
+    role = case_when(
+      analysis_celltype == "LEC_EC8_ln" ~ "receiver",
+      eligible ~ "sender",
+      TRUE ~ "excluded"
+    ),
+    eligibility_rule = case_when(
+      analysis_celltype == "LEC_EC8_ln" ~
+        paste0("all ", n_q1_donors + n_q4_donors, " donors >= ",
+               params$min_receiver_cells_per_donor, " cells"),
+      analysis_celltype == "Unknown" ~ "Unknown is never an eligible sender",
+      TRUE ~ paste0(
+        "> ", params$min_sender_cells_per_donor, " cells in >= ",
+        params$min_donors_per_group, " donors per group"
+      )
+    ),
+    exclusion_reason = case_when(
+      eligible ~ "",
+      analysis_celltype == "Unknown" ~ "uninterpretable cell-type label",
+      analysis_celltype == "LEC_EC8_ln" ~
+        "receiver is not sufficiently represented in every donor",
+      TRUE ~ "insufficient qualifying donor-cell-type profiles in Q1 or Q4"
+    )
+  ) %>%
+  arrange(desc(eligible), role, analysis_celltype)
+
+receiver_row <- celltype_eligibility %>% filter(analysis_celltype == "LEC_EC8_ln")
+if (nrow(receiver_row) != 1L || !receiver_row$eligible) {
+  stop("The exact LEC_EC8_ln receiver failed donor-level abundance requirements.")
+}
+
+eligible_celltypes <- celltype_eligibility %>%
+  filter(eligible) %>%
+  pull(analysis_celltype)
+sender_celltypes <- setdiff(eligible_celltypes, "LEC_EC8_ln")
+if (!length(sender_celltypes)) {
+  stop("No sender cell type passed the donor-level abundance requirement.")
+}
+
+celltype_name_map <- tibble(
+  analysis_celltype = eligible_celltypes,
+  celltype_mnn = make.names(eligible_celltypes)
+)
+if (anyDuplicated(celltype_name_map$celltype_mnn)) {
+  collision <- celltype_name_map %>%
+    group_by(celltype_mnn) %>%
+    filter(n() > 1) %>%
+    ungroup()
+  stop(
+    "Different analysis cell types collapse to the same syntactic name: ",
+    paste(collision$analysis_celltype, collapse = ", ")
+  )
+}
+
+write_csv_safe(celltype_abundance, file.path(tables_dir, "13_celltype_by_donor_abundance.csv"))
+write_csv_safe(
+  celltype_group_balance,
+  file.path(tables_dir, "13_MultiNicheNet_celltype_group_balance.csv")
+)
+write_csv_safe(celltype_eligibility, file.path(tables_dir, "13_MultiNicheNet_celltype_eligibility.csv"))
+write_csv_safe(
+  celltype_name_map,
+  file.path(tables_dir, "13_MultiNicheNet_celltype_name_map.csv")
+)
+knitr::kable(celltype_eligibility)
+```
+
+```{r construct-multinichenet-sce}
+mnn_keep_cells <- mnn_cell_metadata$cell_id[
+  mnn_cell_metadata$analysis_celltype %in% eligible_celltypes
+]
+mnn_index <- match(mnn_keep_cells, colnames(counts_matrix))
+if (anyNA(mnn_index)) {
+  stop("MultiNicheNet cell metadata failed alignment to the raw-count matrix.")
+}
+
+sample_name_map <- donor_manifest %>%
+  transmute(
+    donor_key,
+    sample_id_mnn = make.names(donor_key, unique = TRUE)
+  )
+
+mnn_meta <- mnn_cell_metadata %>%
+  filter(cell_id %in% mnn_keep_cells) %>%
+  slice(match(mnn_keep_cells, cell_id)) %>%
+  left_join(sample_name_map, by = "donor_key") %>%
+  left_join(celltype_name_map, by = "analysis_celltype") %>%
+  mutate(
+    group_mnn = make.names(age_group),
+    Project_mnn = make.names(Project),
+    Sex_mnn = make.names(Sex)
+  )
+
+if (anyDuplicated(mnn_meta$cell_id) || !identical(mnn_meta$cell_id, mnn_keep_cells)) {
+  stop("MultiNicheNet metadata order is invalid.")
+}
+if (anyNA(mnn_meta[, c("sample_id_mnn", "group_mnn", "celltype_mnn")])) {
+  stop("At least one MultiNicheNet cell failed sample/group/cell-type mapping.")
+}
+sample_group_map <- mnn_meta %>% distinct(sample_id_mnn, group_mnn)
+if (anyDuplicated(sample_group_map$sample_id_mnn)) {
+  stop("At least one sample ID maps to more than one age group.")
+}
+
+mnn_sce <- SingleCellExperiment::SingleCellExperiment(
+  assays = list(counts = counts_matrix[, mnn_index, drop = FALSE]),
+  colData = S4Vectors::DataFrame(mnn_meta, row.names = mnn_meta$cell_id)
+)
+
+if (!identical(colnames(mnn_sce), mnn_meta$cell_id)) {
+  stop("MultiNicheNet SCE counts and metadata are misaligned.")
+}
+
+write_csv_safe(
+  mnn_meta %>% count(sample_id_mnn, group_mnn, celltype_mnn, name = "n_cells"),
+  file.path(tables_dir, "13_MultiNicheNet_input_cell_counts.csv")
+)
+```
+
+# Run MultiNicheNet
+
+MultiNicheNet is the primary communication analysis because it combines
+donor-level sender ligand expression, receiver receptor expression, receiver
+target-gene changes, and ligand activity. It does not prove physical signaling
+or remove the age/project/sex confounding; those limitations remain explicit.
+
+```{r acquire-nichenet-v2-networks}
+download_if_missing <- function(url, destination, expected_min_bytes = 1) {
+  if (file.exists(destination) &&
+      !is.na(file.info(destination)$size) &&
+      file.info(destination)$size >= expected_min_bytes) {
+    return(invisible(destination))
+  }
+  if (file.exists(destination)) {
+    warning("Removing incomplete cached download: ", destination)
+    unlink(destination)
+  }
+  if (!isTRUE(params$allow_network_download)) {
+    stop(
+      "Required NicheNet resource is absent and allow_network_download is FALSE: ",
+      destination
+    )
+  }
+  message("Downloading: ", url)
+  partial_destination <- paste0(destination, ".partial")
+  if (file.exists(partial_destination)) {
+    unlink(partial_destination)
+  }
+  download.file(url, partial_destination, mode = "wb", quiet = FALSE)
+  if (!file.exists(partial_destination) ||
+      is.na(file.info(partial_destination)$size) ||
+      file.info(partial_destination)$size < expected_min_bytes) {
+    unlink(partial_destination)
+    stop("NicheNet resource download failed: ", destination)
+  }
+  if (!file.rename(partial_destination, destination)) {
+    unlink(partial_destination)
+    stop("Could not move completed NicheNet resource into place: ", destination)
+  }
+  invisible(destination)
+}
+
+network_urls <- c(
+  lr_network = paste0(
+    "https://zenodo.org/record/10229222/files/",
+    "lr_network_human_allInfo_30112033.rds"
+  ),
+  ligand_target_matrix = paste0(
+    "https://zenodo.org/record/7074291/files/",
+    "ligand_target_matrix_nsga2r_final.rds"
+  ),
+  weighted_networks = paste0(
+    "https://zenodo.org/record/7074291/files/",
+    "weighted_networks_nsga2r_final.rds"
+  )
+)
+network_paths <- c(
+  lr_network = file.path(resources_dir, basename(network_urls[["lr_network"]])),
+  ligand_target_matrix = file.path(
+    resources_dir,
+    basename(network_urls[["ligand_target_matrix"]])
+  ),
+  weighted_networks = file.path(
+    resources_dir,
+    basename(network_urls[["weighted_networks"]])
+  )
+)
+network_min_bytes <- c(
+  lr_network = 200000,
+  ligand_target_matrix = 250000000,
+  weighted_networks = 70000000
+)
+
+if (isTRUE(params$run_multinichenet)) {
+  for (resource_name in names(network_urls)) {
+    download_if_missing(
+      network_urls[[resource_name]],
+      network_paths[[resource_name]],
+      expected_min_bytes = network_min_bytes[[resource_name]]
+    )
+  }
+}
+
+write_csv_safe(
+  tibble(resource = names(network_urls), url = network_urls, local_path = network_paths),
+  file.path(output_dir, "13_NicheNet_network_manifest.csv")
+)
+```
+
+```{r run-multinichenet, cache=FALSE}
+multinichenet_output <- NULL
+
+if (isTRUE(params$run_multinichenet)) {
+  # Match the official NicheNet v2 preparation: current symbols and syntactic names.
+  mnn_sce_network <- multinichenetr::alias_to_symbol_SCE(mnn_sce, "human") %>%
+    multinichenetr::makenames_SCE()
+
+  lr_network_all <- readRDS(network_paths[["lr_network"]]) %>%
+    mutate(
+      ligand = nichenetr::convert_alias_to_symbols(ligand, organism = "human"),
+      receptor = nichenetr::convert_alias_to_symbols(receptor, organism = "human"),
+      ligand = make.names(ligand),
+      receptor = make.names(receptor)
+    )
+  lr_network <- lr_network_all %>% distinct(ligand, receptor)
+
+  ligand_target_matrix <- readRDS(network_paths[["ligand_target_matrix"]])
+  colnames(ligand_target_matrix) <- make.names(
+    nichenetr::convert_alias_to_symbols(
+      colnames(ligand_target_matrix), organism = "human"
+    )
+  )
+  rownames(ligand_target_matrix) <- make.names(
+    nichenetr::convert_alias_to_symbols(
+      rownames(ligand_target_matrix), organism = "human"
+    )
+  )
+  lr_network <- lr_network %>%
+    filter(ligand %in% colnames(ligand_target_matrix))
+  ligand_target_matrix <- ligand_target_matrix[, unique(lr_network$ligand), drop = FALSE]
+
+  network_overlap_qc <- tibble(
+    metric = c(
+      "input_genes", "ligand_target_background_overlap",
+      "ligands_in_network", "receptors_in_network", "eligible_sender_celltypes"
+    ),
+    value = c(
+      nrow(mnn_sce_network),
+      length(intersect(rownames(mnn_sce_network), rownames(ligand_target_matrix))),
+      length(intersect(rownames(mnn_sce_network), unique(lr_network$ligand))),
+      length(intersect(rownames(mnn_sce_network), unique(lr_network$receptor))),
+      length(sender_celltypes)
+    )
+  )
+  write_csv_safe(network_overlap_qc, file.path(tables_dir, "13_NicheNet_network_overlap_QC.csv"))
+
+  receiver_oi <- celltype_name_map$celltype_mnn[
+    celltype_name_map$analysis_celltype == "LEC_EC8_ln"
+  ]
+  senders_oi <- celltype_name_map$celltype_mnn[
+    celltype_name_map$analysis_celltype %in% sender_celltypes
+  ]
+  mnn_n_cores <- max(1L, min(as.integer(params$n_cores), length(receiver_oi)))
+  contrasts_oi <- "'Q4-Q1','Q1-Q4'"
+  contrast_tbl <- tibble(
+    contrast = c("Q4-Q1", "Q1-Q4"),
+    group = c("Q4", "Q1")
+  )
+
+  # The primary MultiNicheNet fit is unadjusted, matching the primary edgeR
+  # model. Project/Sex and shared-project sensitivity are reported by the
+  # standalone LEC edgeR analysis because the extreme groups are imbalanced.
+  multinichenet_output <- multinichenetr::multi_nichenet_analysis(
+    sce = mnn_sce_network,
+    celltype_id = "celltype_mnn",
+    sample_id = "sample_id_mnn",
+    group_id = "group_mnn",
+    batches = NA,
+    covariates = NA,
+    lr_network = lr_network,
+    ligand_target_matrix = ligand_target_matrix,
+    contrasts_oi = contrasts_oi,
+    contrast_tbl = contrast_tbl,
+    senders_oi = senders_oi,
+    receivers_oi = receiver_oi,
+    # MultiNicheNet 2.1.0 validates these with is.double(), which rejects R
+    # integers even when their numerical values are valid.
+    min_cells = as.double(params$min_sender_cells_per_donor),
+    fraction_cutoff = as.double(params$expressed_cell_fraction),
+    min_sample_prop = as.double(params$expressed_sample_fraction),
+    scenario = "regular",
+    ligand_activity_down = FALSE,
+    logFC_threshold = as.double(params$min_abs_logfc),
+    p_val_threshold = as.double(params$mnn_p_value_threshold),
+    p_val_adj = params$mnn_use_adjusted_p,
+    empirical_pval = FALSE,
+    top_n_target = as.double(params$top_n_targets),
+    n.cores = as.double(mnn_n_cores),
+    verbose = TRUE
+  )
+
+  saveRDS(multinichenet_output, file.path(output_dir, "13_MultiNicheNet_output.rds"))
+
+  write_if_data_frame(
+    multinichenet_output$celltype_info$pb_df,
+    file.path(tables_dir, "13_MultiNicheNet_normalized_pseudobulk_by_sample.csv")
+  )
+  write_if_data_frame(
+    multinichenet_output$celltype_info$pb_df_group,
+    file.path(tables_dir, "13_MultiNicheNet_normalized_pseudobulk_by_group.csv")
+  )
+  write_if_data_frame(
+    multinichenet_output$celltype_de,
+    file.path(tables_dir, "13_MultiNicheNet_celltype_DE.csv")
+  )
+  write_if_data_frame(
+    multinichenet_output$ligand_activities_targets_DEgenes$ligand_activities,
+    file.path(tables_dir, "13_MultiNicheNet_ligand_activities.csv")
+  )
+  write_if_data_frame(
+    multinichenet_output$prioritization_tables$group_prioritization_tbl,
+    file.path(tables_dir, "13_MultiNicheNet_group_prioritization.csv")
+  )
+  write_if_data_frame(
+    multinichenet_output$prioritization_tables$sample_prioritization_tbl,
+    file.path(tables_dir, "13_MultiNicheNet_sample_prioritization.csv")
+  )
+}
+```
+
+# Sydney-equivalent NicheNet figure suite
+
+Sydney's Rmd contains the ten visual types shown in the reference images: two
+ligand-activity heatmaps, two ligand-target heatmaps, two ligand-receptor
+heatmaps, two ligand-target chord diagrams, and two ligand-receptor chord
+diagrams. This section recreates those visual types using this report's final
+CellTypist LEC receiver, namespaced donors, raw-count pseudobulk, and robust
+edgeR result.
+
+For direct visual comparability, this figure-only layer uses Sydney's exploratory
+`FDR <= 0.25`, `abs(logFC) >= 0.25`, and top-50 gene rule. It does **not** change
+the primary `FDR <= 0.05` result or MultiNicheNet prioritization. All figure
+inputs and thresholds are exported with the images.
+
+```{r make-sydney-equivalent-figures, fig.show='hide'}
+if (!is.null(multinichenet_output)) {
+  network_symbol <- function(genes) {
+    converted <- nichenetr::convert_alias_to_symbols(
+      genes,
+      organism = "human",
+      verbose = FALSE
+    )
+    replace <- is.na(converted) | !nzchar(converted)
+    converted[replace] <- genes[replace]
+    make.names(converted)
+  }
+
+  save_empty_figure <- function(path, title, detail, width, height) {
+    empty_plot <- ggplot() +
+      annotate("text", x = 0, y = 0.1, label = title, fontface = "bold", size = 4) +
+      annotate("text", x = 0, y = -0.1, label = detail, size = 3.5) +
+      xlim(-1, 1) +
+      ylim(-0.5, 0.5) +
+      theme_void()
+    ggsave(path, empty_plot, width = width, height = height, dpi = 300)
+  }
+
+  save_tile_heatmap <- function(
+      data,
+      y_order,
+      title,
+      x_name,
+      legend_title,
+      high_color,
+      path,
+      width,
+      height) {
+    if (!nrow(data)) {
+      save_empty_figure(
+        path,
+        title,
+        "No links passed the configured Sydney-equivalent visualization rule.",
+        width,
+        height
+      )
+      return(invisible(NULL))
+    }
+    x_order <- data %>%
+      group_by(x_label) %>%
+      summarise(max_value = max(value, na.rm = TRUE), .groups = "drop") %>%
+      arrange(desc(max_value)) %>%
+      pull(x_label)
+    plot_data <- data %>%
+      mutate(
+        x_label = factor(x_label, levels = x_order),
+        y_label = factor(y_label, levels = rev(y_order))
+      )
+    heatmap_plot <- ggplot(plot_data, aes(x = x_label, y = y_label, fill = value)) +
+      geom_tile(color = "white", linewidth = 0.25) +
+      scale_fill_gradient(low = "whitesmoke", high = high_color) +
+      scale_x_discrete(position = "top", drop = FALSE) +
+      labs(
+        title = title,
+        subtitle = paste0(
+          "Sydney-equivalent exploratory view: donor edgeR FDR <= ",
+          params$sydney_visual_fdr
+        ),
+        x = x_name,
+        y = "Prioritized ligands",
+        fill = legend_title
+      ) +
+      theme_minimal(base_size = 10) +
+      theme(
+        panel.grid = element_blank(),
+        axis.text.x = element_text(angle = 90, hjust = 0, vjust = 0.5, size = 7),
+        axis.text.y = element_text(size = 8),
+        plot.title = element_text(size = 11, face = "bold")
+      )
+    ggsave(path, heatmap_plot, width = width, height = height, dpi = 300)
+  }
+
+  save_chord_figure <- function(
+      links,
+      ligand_sources,
+      title,
+      target_label,
+      target_color,
+      path) {
+    chord_links <- links %>%
+      filter(is.finite(weight), weight > 0) %>%
+      group_by(ligand) %>%
+      slice_max(weight, n = 5, with_ties = FALSE) %>%
+      ungroup()
+    if (nrow(chord_links) > 1L) {
+      chord_cutoff <- as.numeric(stats::quantile(chord_links$weight, 0.40, na.rm = TRUE))
+      chord_links <- chord_links %>% filter(weight >= chord_cutoff)
+    }
+    if (!nrow(chord_links)) {
+      save_empty_figure(
+        path,
+        title,
+        "No links passed the configured Sydney-equivalent visualization rule.",
+        8,
+        8
+      )
+      return(invisible(NULL))
+    }
+
+    source_key <- ligand_sources %>%
+      distinct(ligand, ligand_type) %>%
+      filter(ligand %in% chord_links$ligand)
+    missing_source <- setdiff(unique(chord_links$ligand), source_key$ligand)
+    if (length(missing_source)) {
+      source_key <- bind_rows(
+        source_key,
+        tibble(ligand = missing_source, ligand_type = "General")
+      )
+    }
+    source_levels <- sort(unique(source_key$ligand_type))
+    source_colors <- setNames(
+      grDevices::hcl.colors(max(1L, length(source_levels)), palette = "Dark 3"),
+      source_levels
+    )
+
+    chord_input <- chord_links %>%
+      transmute(
+        from = paste0("Ligand: ", ligand),
+        to = paste0(target_label, ": ", target),
+        value = weight,
+        ligand
+      )
+    ligand_node_colors <- setNames(
+      source_colors[source_key$ligand_type[match(chord_links$ligand, source_key$ligand)]],
+      paste0("Ligand: ", chord_links$ligand)
+    )
+    target_nodes <- unique(chord_input$to)
+    grid_colors <- c(
+      ligand_node_colors[!duplicated(names(ligand_node_colors))],
+      setNames(rep(target_color, length(target_nodes)), target_nodes)
+    )
+
+    png(path, width = 2400, height = 2400, res = 300)
+    tryCatch(
+      {
+        graphics::par(mar = c(1, 1, 6, 1), xpd = NA)
+        circlize::circos.clear()
+        circlize::circos.par(
+          start.degree = 90,
+          track.margin = c(0.01, 0.01),
+          cell.padding = c(0, 0, 0, 0)
+        )
+        circlize::chordDiagram(
+          chord_input[, c("from", "to", "value")],
+          grid.col = grid_colors,
+          transparency = 0.35,
+          annotationTrack = "grid",
+          preAllocateTracks = list(track.height = 0.12)
+        )
+        circlize::circos.trackPlotRegion(
+          track.index = 1,
+          bg.border = NA,
+          panel.fun = function(x, y) {
+            sector <- circlize::get.cell.meta.data("sector.index")
+            label <- sub("^[^:]+: ", "", sector)
+            xlim <- circlize::get.cell.meta.data("xlim")
+            ylim <- circlize::get.cell.meta.data("ylim")
+            circlize::circos.text(
+              mean(xlim),
+              ylim[1],
+              label,
+              facing = "clockwise",
+              niceFacing = TRUE,
+              adj = c(0, 0.5),
+              cex = 0.45
+            )
+          }
+        )
+        legend(
+          "topleft",
+          legend = c(source_levels, target_label),
+          fill = c(unname(source_colors), target_color),
+          border = NA,
+          bty = "n",
+          cex = 0.65
+        )
+        graphics::mtext(title, side = 3, line = 3, cex = 0.85, font = 2)
+      },
+      finally = {
+        circlize::circos.clear()
+        dev.off()
+      }
+    )
+  }
+
+  # Recreate Sydney's donor-edgeR visualization gene rule without changing the
+  # primary FDR threshold used elsewhere in this report.
+  sydney_de <- edger_primary$result %>%
+    mutate(gene_network = network_symbol(gene)) %>%
+    arrange(FDR) %>%
+    distinct(gene_network, .keep_all = TRUE)
+
+  q1_columns <- match(
+    edge_metadata$donor_key[edge_metadata$age_group == "Q1"],
+    colnames(lec_pseudobulk_counts)
+  )
+  q4_columns <- match(
+    edge_metadata$donor_key[edge_metadata$age_group == "Q4"],
+    colnames(lec_pseudobulk_counts)
+  )
+  receiver_detected <-
+    Matrix::rowMeans(lec_pseudobulk_counts[, q1_columns, drop = FALSE] > 0) >=
+      params$expressed_sample_fraction &
+    Matrix::rowMeans(lec_pseudobulk_counts[, q4_columns, drop = FALSE] > 0) >=
+      params$expressed_sample_fraction
+  background_expressed_genes <- intersect(
+    network_symbol(rownames(lec_pseudobulk_counts)[receiver_detected]),
+    rownames(ligand_target_matrix)
+  )
+
+  geneset_up <- sydney_de %>%
+    filter(
+      FDR <= params$sydney_visual_fdr,
+      logFC >= params$min_abs_logfc,
+      gene_network %in% background_expressed_genes
+    ) %>%
+    slice_head(n = as.integer(params$sydney_visual_top_genes)) %>%
+    pull(gene_network)
+  geneset_down <- sydney_de %>%
+    filter(
+      FDR <= params$sydney_visual_fdr,
+      logFC <= -params$min_abs_logfc,
+      gene_network %in% background_expressed_genes
+    ) %>%
+    slice_head(n = as.integer(params$sydney_visual_top_genes)) %>%
+    pull(gene_network)
+
+  group_priorities_all <- as.data.frame(
+    multinichenet_output$prioritization_tables$group_prioritization_tbl
+  )
+  lr_network_sydney <- lr_network %>%
+    transmute(from = ligand, to = receptor) %>%
+    distinct()
+  expressed_receptors <- intersect(
+    unique(lr_network_sydney$to),
+    background_expressed_genes
+  )
+  potential_ligands <- lr_network_sydney %>%
+    filter(
+      to %in% expressed_receptors,
+      from %in% unique(group_priorities_all$ligand),
+      from %in% colnames(ligand_target_matrix)
+    ) %>%
+    pull(from) %>%
+    unique()
+
+  weighted_networks <- readRDS(network_paths[["weighted_networks"]])
+  weighted_networks$lr_sig <- weighted_networks$lr_sig %>%
+    transmute(
+      from = make.names(from),
+      to = make.names(to),
+      weight = as.numeric(weight)
+    )
+
+  run_sydney_direction <- function(geneset) {
+    if (length(geneset) < 2L) {
+      return(list(
+        activities = tibble(),
+        top_ligands = character(),
+        ligand_target_links = tibble(),
+        ligand_receptor_links = tibble()
+      ))
+    }
+    activities <- nichenetr::predict_ligand_activities(
+      geneset = geneset,
+      background_expressed_genes = background_expressed_genes,
+      ligand_target_matrix = ligand_target_matrix,
+      potential_ligands = potential_ligands
+    ) %>%
+      arrange(desc(aupr_corrected))
+    top_ligands <- head(
+      activities$test_ligand,
+      as.integer(params$sydney_visual_top_ligands)
+    )
+    ligand_target_links <- bind_rows(lapply(
+      top_ligands,
+      nichenetr::get_weighted_ligand_target_links,
+      geneset = geneset,
+      ligand_target_matrix = ligand_target_matrix,
+      n = 50
+    )) %>%
+      tidyr::drop_na(ligand, target, weight)
+    ligand_receptor_links <- nichenetr::get_weighted_ligand_receptor_links(
+      top_ligands,
+      expressed_receptors,
+      lr_network_sydney,
+      weighted_networks$lr_sig
+    ) %>%
+      tidyr::drop_na(from, to, weight)
+    list(
+      activities = activities,
+      top_ligands = top_ligands,
+      ligand_target_links = ligand_target_links,
+      ligand_receptor_links = ligand_receptor_links
+    )
+  }
+
+  sydney_up <- run_sydney_direction(geneset_up)
+  sydney_down <- run_sydney_direction(geneset_down)
+
+  get_ligand_sources <- function(ligands) {
+    source_scores <- group_priorities_all %>%
+      filter(ligand %in% ligands) %>%
+      group_by(ligand, sender) %>%
+      summarise(
+        source_score = if (all(is.na(scaled_pb_ligand))) {
+          -Inf
+        } else {
+          max(scaled_pb_ligand, na.rm = TRUE)
+        },
+        .groups = "drop"
+      ) %>%
+      group_by(ligand) %>%
+      slice_max(source_score, n = 1, with_ties = FALSE) %>%
+      ungroup() %>%
+      left_join(
+        celltype_name_map,
+        by = c("sender" = "celltype_mnn")
+      ) %>%
+      transmute(
+        ligand,
+        ligand_type = coalesce(analysis_celltype, sender)
+      )
+    tibble(ligand = ligands) %>%
+      left_join(source_scores, by = "ligand") %>%
+      mutate(ligand_type = coalesce(ligand_type, "General"))
+  }
+
+  up_sources <- get_ligand_sources(sydney_up$top_ligands)
+  down_sources <- get_ligand_sources(sydney_down$top_ligands)
+
+  figure_paths <- c(
+    ligand_activity_up = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_activity_Q4_upregulated.png"
+    ),
+    ligand_activity_down = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_activity_Q4_downregulated.png"
+    ),
+    ligand_target_up = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_target_Q4_upregulated.png"
+    ),
+    ligand_target_down = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_target_Q4_downregulated.png"
+    ),
+    ligand_receptor_up = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_receptor_Q4_upregulated.png"
+    ),
+    ligand_receptor_down = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand_receptor_Q4_downregulated.png"
+    ),
+    ligand_target_chord_up = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand-target_chord_Q4-upregulated.png"
+    ),
+    ligand_target_chord_down = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_ligand-target_chord_Q4-downregulated.png"
+    ),
+    lr_chord_up = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_LR_chord_Q4-upregulated.png"
+    ),
+    lr_chord_down = file.path(
+      sydney_figures_dir,
+      "13_Sydney_equivalent_LR_chord_Q4-downregulated.png"
+    )
+  )
+
+  for (direction_name in c("up", "down")) {
+    result_oi <- if (direction_name == "up") sydney_up else sydney_down
+    direction_title <- if (direction_name == "up") "upregulated" else "downregulated"
+    source_oi <- if (direction_name == "up") up_sources else down_sources
+
+    activity_data <- result_oi$activities %>%
+      filter(test_ligand %in% result_oi$top_ligands) %>%
+      transmute(
+        x_label = "Ligand activity",
+        y_label = test_ligand,
+        value = aupr_corrected
+      )
+    save_tile_heatmap(
+      activity_data,
+      result_oi$top_ligands,
+      paste0("Predicted upstream ligands of Q4-", direction_title, " LEC genes"),
+      "Ligand activity",
+      "AUPR corrected",
+      "darkorange",
+      figure_paths[[paste0("ligand_activity_", direction_name)]],
+      6,
+      6
+    )
+
+    target_heatmap_data <- result_oi$ligand_target_links %>%
+      transmute(x_label = target, y_label = ligand, value = weight)
+    save_tile_heatmap(
+      target_heatmap_data,
+      result_oi$top_ligands,
+      paste0(
+        "Predicted ligand-target regulatory potential for Q4-",
+        direction_title,
+        " genes"
+      ),
+      "Predicted target genes",
+      "Regulatory potential",
+      "purple",
+      figure_paths[[paste0("ligand_target_", direction_name)]],
+      10,
+      6
+    )
+
+    receptor_links <- result_oi$ligand_receptor_links %>%
+      transmute(ligand = from, target = to, weight) %>%
+      distinct(ligand, target, .keep_all = TRUE)
+    receptor_heatmap_data <- receptor_links %>%
+      transmute(x_label = target, y_label = ligand, value = weight)
+    save_tile_heatmap(
+      receptor_heatmap_data,
+      result_oi$top_ligands,
+      paste0(
+        "Predicted ligand-receptor interactions for Q4-",
+        direction_title,
+        " genes"
+      ),
+      "Receptors",
+      "Prior interaction potential",
+      "mediumvioletred",
+      figure_paths[[paste0("ligand_receptor_", direction_name)]],
+      8,
+      6
+    )
+
+    save_chord_figure(
+      result_oi$ligand_target_links,
+      source_oi,
+      paste0(
+        "Predicted cellular sources of signals associated with Q4-",
+        direction_title,
+        " LEC genes"
+      ),
+      "LEC target",
+      "#999999",
+      figure_paths[[paste0("ligand_target_chord_", direction_name)]]
+    )
+    save_chord_figure(
+      receptor_links,
+      source_oi,
+      paste0(
+        "Predicted ligand-receptor interactions associated with Q4-",
+        direction_title,
+        " LEC genes"
+      ),
+      "LEC receptor",
+      "#E41A1C",
+      figure_paths[[paste0("lr_chord_", direction_name)]]
+    )
+  }
+
+  sydney_geneset_export <- bind_rows(
+    tibble(direction = "Q4_upregulated", gene = geneset_up),
+    tibble(direction = "Q4_downregulated", gene = geneset_down)
+  )
+  sydney_activity_export <- bind_rows(
+    sydney_up$activities %>% mutate(direction = "Q4_upregulated"),
+    sydney_down$activities %>% mutate(direction = "Q4_downregulated")
+  )
+  sydney_target_export <- bind_rows(
+    sydney_up$ligand_target_links %>% mutate(direction = "Q4_upregulated"),
+    sydney_down$ligand_target_links %>% mutate(direction = "Q4_downregulated")
+  )
+  sydney_receptor_export <- bind_rows(
+    sydney_up$ligand_receptor_links %>% mutate(direction = "Q4_upregulated"),
+    sydney_down$ligand_receptor_links %>% mutate(direction = "Q4_downregulated")
+  )
+  write_csv_safe(
+    sydney_geneset_export,
+    file.path(tables_dir, "13_Sydney_equivalent_visualization_genesets.csv")
+  )
+  write_csv_safe(
+    sydney_activity_export,
+    file.path(tables_dir, "13_Sydney_equivalent_ligand_activities.csv")
+  )
+  write_csv_safe(
+    sydney_target_export,
+    file.path(tables_dir, "13_Sydney_equivalent_ligand_target_links.csv")
+  )
+  write_csv_safe(
+    sydney_receptor_export,
+    file.path(tables_dir, "13_Sydney_equivalent_ligand_receptor_links.csv")
+  )
+
+  figure_manifest <- tibble(
+    figure_key = names(figure_paths),
+    path = unname(figure_paths),
+    file = basename(unname(figure_paths)),
+    exists = file.exists(unname(figure_paths)),
+    bytes = as.numeric(file.info(unname(figure_paths))$size),
+    receiver = "final_CellTypist_LEC_EC8_ln",
+    source_de_model = "primary_unadjusted_donor_pseudobulk",
+    visualization_fdr = params$sydney_visual_fdr,
+    primary_analysis_fdr = params$fdr_threshold,
+    max_genes_per_direction = as.integer(params$sydney_visual_top_genes),
+    max_ligands_per_direction = as.integer(params$sydney_visual_top_ligands)
+  )
+  write_csv_safe(
+    figure_manifest,
+    file.path(output_dir, "13_Sydney_equivalent_figure_manifest.csv")
+  )
+
+  figure_summary <- tibble(
+    direction = c("Q4_upregulated", "Q4_downregulated"),
+    genes_in_visualization_set = c(length(geneset_up), length(geneset_down)),
+    prioritized_ligands = c(
+      length(sydney_up$top_ligands),
+      length(sydney_down$top_ligands)
+    ),
+    ligand_target_links = c(
+      nrow(sydney_up$ligand_target_links),
+      nrow(sydney_down$ligand_target_links)
+    ),
+    ligand_receptor_links = c(
+      nrow(sydney_up$ligand_receptor_links),
+      nrow(sydney_down$ligand_receptor_links)
+    )
+  )
+  write_csv_safe(
+    figure_summary,
+    file.path(output_dir, "13_Sydney_equivalent_figure_summary.csv")
+  )
+  knitr::kable(figure_summary)
+}
+```
+
+```{r summarize-multinichenet-priorities}
+if (!is.null(multinichenet_output)) {
+  group_priorities <- as.data.frame(
+    multinichenet_output$prioritization_tables$group_prioritization_tbl
+  )
+  expected_priority_columns <- c(
+    "sender", "receiver", "ligand", "receptor", "group",
+    "prioritization_score"
+  )
+  if (all(expected_priority_columns %in% colnames(group_priorities))) {
+    top_priorities <- group_priorities %>%
+      filter(
+        receiver == receiver_oi,
+        is.finite(prioritization_score)
+      ) %>%
+      group_by(group) %>%
+      slice_max(prioritization_score, n = 50, with_ties = FALSE) %>%
+      ungroup() %>%
+      arrange(group, desc(prioritization_score))
+
+    write_csv_safe(
+      top_priorities,
+      file.path(tables_dir, "13_MultiNicheNet_top50_sender_to_LEC_per_group.csv")
+    )
+
+    top_q4 <- top_priorities %>%
+      filter(group == "Q4") %>%
+      slice_max(prioritization_score, n = 20, with_ties = FALSE) %>%
+      mutate(interaction = paste(sender, paste0(ligand, "-", receptor), sep = ": "))
+
+    q4_priority_figure <- file.path(
+      figures_dir,
+      "13_MultiNicheNet_top20_Q4_sender_to_LEC.png"
+    )
+    if (nrow(top_q4)) {
+      priority_plot <- ggplot(
+        top_q4,
+        aes(x = reorder(interaction, prioritization_score), y = prioritization_score)
+      ) +
+        geom_col(fill = "#D7191C") +
+        coord_flip() +
+        labs(
+          title = "Top Q4-prioritized sender-to-LEC interactions",
+          x = NULL,
+          y = "MultiNicheNet prioritization score"
+        ) +
+        theme_classic(base_size = 11)
+
+      ggsave(
+        q4_priority_figure,
+        priority_plot,
+        width = 10,
+        height = 8,
+        dpi = 300
+      )
+      print(priority_plot)
+    } else {
+      save_empty_figure(
+        q4_priority_figure,
+        "No finite Q4 MultiNicheNet prioritization scores",
+        paste0(
+          "No Q4-upregulated receiver targets met adjusted P <= ",
+          params$mnn_p_value_threshold,
+          "; missing scores are not ranked."
+        ),
+        10,
+        8
+      )
+    }
+  } else {
+    warning(
+      "MultiNicheNet group-prioritization columns differ from the expected v2 schema; ",
+      "the full RDS and raw table were saved."
+    )
+  }
+}
+```
+
+# Interpretation rules and provenance
+
+```{r write-method-notes-and-provenance}
+model_summary <- bind_rows(
+  primary_summary,
+  if (!is.null(edger_adjusted)) {
+    tibble(
+      model = "Project_Sex_adjusted_sensitivity",
+      donors_Q1 = sum(edge_metadata$age_group == "Q1"),
+      donors_Q4 = sum(edge_metadata$age_group == "Q4"),
+      genes_input = edger_adjusted$n_genes_input,
+      genes_tested = edger_adjusted$n_genes_tested,
+      genes_primary_significant = edger_adjusted$n_significant
+    )
+  },
+  if (!is.null(edger_shared_project)) {
+    tibble(
+      model = "GSE183852_only_sensitivity",
+      donors_Q1 = sum(shared_project_metadata$age_group == "Q1"),
+      donors_Q4 = sum(shared_project_metadata$age_group == "Q4"),
+      genes_input = edger_shared_project$n_genes_input,
+      genes_tested = edger_shared_project$n_genes_tested,
+      genes_primary_significant = edger_shared_project$n_significant
+    )
+  }
+)
+write_csv_safe(model_summary, file.path(output_dir, "13_run_summary.csv"))
+
+method_notes <- c(
+  "Aging donor-pseudobulk edgeR and MultiNicheNet interpretation notes",
+  "=================================================================",
+  "",
+  "Primary unit",
+  "------------",
+  "Each Project::donor_id is one biological replicate. Cells are summed within donor for edgeR; they are not independent age replicates.",
+  "",
+  "Receiver",
+  "--------",
+  "The receiver is the exact final fresh EC-only CellTypist majority-vote EC8_ln LEC set. Non-final LEC candidates from either author Lymphatic EC or Step05 all-cell EC8_ln labels are excluded.",
+  "All remaining sender identities use the complete Step05 all-cell CellTypist majority-vote labels.",
+  "",
+  "Normalization and existing aging logic",
+  "--------------------------------------",
+  "Original dataset13 integer counts are recovered for exact cell IDs and summed independently within each Project::donor_id.",
+  "For descriptive expression, each donor pseudobulk is transformed as log1p(count / donor raw library size * 1e6), exactly matching aging Step 12.2.",
+  "Q1 and Q4 descriptive means give every donor equal weight. They are exported for interpretation and visualization, not used as P values.",
+  "For edgeR inference, the untransformed donor sums enter DGEList. filterByExpr removes low-information genes and TMM supplies model-specific effective-library-size offsets.",
+  "Per-cell Step03/Step06 log-normalized expression and Harmony coordinates are used for clustering/annotation only and are never treated as edgeR counts.",
+  "See 13_consistency_with_existing_aging_pipeline.csv and tables/13_normalization_output_manifest.csv.",
+  "",
+  "Primary DE",
+  "----------",
+  "The primary edgeR model is Q4 minus Q1 with robust quasi-likelihood fitting after filterByExpr and TMM normalization.",
+  paste0("Primary gene criterion: BH FDR <= ", params$fdr_threshold, " and abs(log2FC) >= ", params$min_abs_logfc, "."),
+  "Project/Sex-adjusted and GSE183852-only models are sensitivity analyses because only 9 donors are available and age is imbalanced with project and sex.",
+  "All-LEC differential expression can reflect both within-LEC expression changes and changes in the proportions of LEC states; it is not automatically a within-state effect.",
+  "",
+  "MultiNicheNet",
+  "-------------",
+  "MultiNicheNet is used for differential communication because it retains donor/sample replication for sender ligand, receiver receptor, and receiver target evidence.",
+  "The primary analysis retains all 4 Q1 and 5 Q4 donors. It does not force 4-versus-4 balance or downsample cells; each donor remains one sample-level pseudobulk replicate.",
+  paste0("Sender cell types require more than ", params$min_sender_cells_per_donor, " cells in at least ", params$min_donors_per_group, " donors in each group. The LEC receiver requires at least ", params$min_receiver_cells_per_donor, " cells in every donor."),
+  "See tables/13_donor_group_balance_summary.csv, tables/13_donor_Project_Sex_cross_tab.csv, tables/13_celltype_by_donor_abundance.csv, and tables/13_MultiNicheNet_celltype_group_balance.csv.",
+  "Prioritized interactions are hypotheses, not proof of physical signaling, direction of protein activity, or causality.",
+  "The primary MultiNicheNet fit is unadjusted; interpret interactions alongside the adjusted and shared-project LEC edgeR sensitivities.",
+  "",
+  "Sydney-equivalent figures",
+  "-------------------------",
+  "Sydney's ten ligand-activity, ligand-target, ligand-receptor, and chord-diagram visual types are recreated under figures/Sydney_equivalent.",
+  paste0("For visual comparability only, these figures use donor-edgeR FDR <= ", params$sydney_visual_fdr, ", abs(log2FC) >= ", params$min_abs_logfc, ", and at most ", params$sydney_visual_top_genes, " genes per direction, matching Sydney's exploratory rule."),
+  paste0("The primary inferential threshold remains FDR <= ", params$fdr_threshold, "; the Sydney-equivalent figures must not be reported as primary-significant findings."),
+  "See 13_Sydney_equivalent_figure_manifest.csv and 13_Sydney_equivalent_figure_summary.csv.",
+  "",
+  "Feature-space limitation",
+  "------------------------",
+  paste0("The available raw source contains ", nrow(counts_matrix), " genes. Full-transcriptome raw counts are preferred if they become available."),
+  "",
+  "Difference from Sydney's Rmd",
+  "-----------------------------",
+  "See 13_changes_vs_Agingv2_by_Sydney.csv. The original Rmd was not modified and is not required to execute this report.",
+  "",
+  "Revision record",
+  "---------------",
+  "See 13_revision_and_work_log.csv for what was implemented and why."
+)
+writeLines(method_notes, file.path(output_dir, "13_method_and_interpretation_notes.txt"))
+
+run_config <- list(
+  script = normalizePath(knitr::current_input(), winslash = "/", mustWork = FALSE),
+  created = as.character(Sys.time()),
+  project_root = project_root,
+  output_dir = output_dir,
+  comparison = "Q4_minus_Q1",
+  receiver = "LEC_EC8_ln",
+  donor_key = "Project::donor_id",
+  selected_donors = donor_manifest$donor_key,
+  n_Q1_donors = sum(donor_manifest$final_four_group == "Q1"),
+  n_Q4_donors = sum(donor_manifest$final_four_group == "Q4"),
+  n_selected_cells = nrow(cell_metadata),
+  n_final_receiver_cells = sum(cell_metadata$is_final_celltypist_lec),
+  n_input_genes = nrow(counts_matrix),
+  descriptive_normalization = "log1p(raw_donor_pseudobulk / raw_donor_library_size * 1e6)",
+  descriptive_group_weighting = "unweighted_mean_across_donor_profiles",
+  edger_input_scale = "raw_integer_donor_pseudobulk_counts",
+  edger_normalization = "filterByExpr_then_TMM_effective_library_size_offsets",
+  donor_balance_strategy = "retain_all_4_Q1_and_5_Q4_donors_one_sample_each_no_cell_downsampling",
+  multinichenet_sender_eligibility = paste0(
+    "n_cells>", params$min_sender_cells_per_donor,
+    "_in_at_least_", params$min_donors_per_group, "_donors_per_group"
+  ),
+  multinichenet_receiver_eligibility = paste0(
+    "n_cells>=", params$min_receiver_cells_per_donor, "_in_every_donor"
+  ),
+  sydney_equivalent_visualization = list(
+    fdr = params$sydney_visual_fdr,
+    abs_logfc = params$min_abs_logfc,
+    max_genes_per_direction = params$sydney_visual_top_genes,
+    max_ligands_per_direction = params$sydney_visual_top_ligands,
+    changes_primary_inference = FALSE
+  ),
+  parameters = as.list(params),
+  multinichenet_ran = !is.null(multinichenet_output),
+  multinichenet_effective_cores = if (!is.null(multinichenet_output)) {
+    mnn_n_cores
+  } else {
+    0L
+  }
+)
+jsonlite::write_json(
+  run_config,
+  file.path(output_dir, "13_run_config.json"),
+  pretty = TRUE,
+  auto_unbox = TRUE,
+  null = "null"
+)
+
+capture.output(sessionInfo(), file = file.path(output_dir, "13_sessionInfo.txt"))
+knitr::kable(model_summary)
+```
+
+# Required interpretation
+
+1. A positive primary edgeR logFC means higher final-LEC expression in Q4.
+2. A small cell-level P value from an earlier marker test is not donor-level
+   evidence for aging.
+3. MultiNicheNet priorities must be checked against the donor-level expression
+   tables and the adjusted/shared-project sensitivities.
+4. No interaction should be described as proven signaling or causal without
+   orthogonal validation.
+5. The restricted gene universe can omit ligands, receptors, and targets; rerun
+   with full-transcriptome integer raw counts if those become available.
+6. Because the receiver contains all final LEC states, an expression difference
+   can reflect either a within-state change or a change in LEC-state composition.
+7. Four Q1 versus five Q4 donors is acceptable for the primary sample-level
+   analysis. Exact numerical balance is not created by discarding a donor;
+   inspect the exported donor and donor-by-cell-type balance tables instead.

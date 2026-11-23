@@ -1,0 +1,24 @@
+{
+  "existing_heatmap_render_identical": true,
+  "state_assignment_unchanged": true,
+  "selected_cells": [
+    "P3__H1N1-None__Image04__Object0018",
+    "P9__H1N1-None__Image05__Object0131",
+    "P3__H1N1-None__Image01__Object0021"
+  ],
+  "selected_states": [
+    0,
+    1,
+    2
+  ],
+  "raw_crops_hash_verified": 3,
+  "all_twelve_candidates_raw_pixel_identity_confirmed": true,
+  "new_clustering_or_statistical_tests": false,
+  "segmentation_masks_available": false,
+  "selection_is_illustrative_not_state_validation": true,
+  "source_channel_annotation_unresolved": true,
+  "packaging_validation_date": "2026-11-21",
+  "all_primary_candidate_rankings_match_existing": true,
+  "selected_cells_match_existing": true,
+  "execution_scope": "Copied current code; original ND2 read-only; outputs isolated"
+}

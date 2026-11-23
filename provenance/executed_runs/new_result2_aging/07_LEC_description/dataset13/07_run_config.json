@@ -1,0 +1,18 @@
+{
+  "script_version": "07_dataset13_NF_LEC_description_2026_08_06",
+  "dataset": "dataset13",
+  "disease": "NF",
+  "quartiles": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+  ],
+  "allcell_root": "${REPOSITORY_ROOT}\\new_result2_aging\\03\\dataset13",
+  "ec_root": "${REPOSITORY_ROOT}\\new_result2_aging\\06_EC_recluster\\dataset13",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\07_LEC_description\\dataset13",
+  "LEC_definition": "fresh EC-only CellTypist majority vote EC8_ln",
+  "all_cell_denominator": "Step 03 NF QC-passed cells",
+  "EC_denominator": "Step 06 EC-reclustered cells",
+  "figures_enabled": true
+}

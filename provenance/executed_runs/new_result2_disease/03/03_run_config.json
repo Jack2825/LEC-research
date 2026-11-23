@@ -1,0 +1,126 @@
+{
+  "script_version": "03_selected_disease_exclude_dataset02_dataset06_dataset12_2026_08_11",
+  "created_at": "2026-08-11T10:59:07.100981-04:00",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\03",
+  "implementation": "standalone_memory_conscious_CSR_row_reader",
+  "covid_policy": "Exclude dataset10 RV-only and dataset12 COVID",
+  "all_genes_retained": true,
+  "figures_created": false,
+  "arguments": {
+    "output_root": "new_result2_disease/03",
+    "dataset_ids": "all",
+    "condition_labels": "",
+    "validate_only": false,
+    "force": false,
+    "min_genes": 150,
+    "min_counts": 150,
+    "max_mito_percent": 5.0,
+    "min_cells_per_condition": 200,
+    "iqr_multiplier": 1.5,
+    "use_mean_iqr_qc": false,
+    "two_sided_all_qc_outliers": false,
+    "compute_entropy": false,
+    "n_top_hvg": 2000,
+    "min_hvg_for_clustering": 20,
+    "allow_all_genes_if_few_hvg": true,
+    "n_pcs": 100,
+    "n_pcs_neighbors": 100,
+    "n_neighbors": 15,
+    "neighbor_metric": "cosine",
+    "umap_min_dist": 0.2,
+    "leiden_resolution": 0.6,
+    "random_seed": 0,
+    "use_harmony": true,
+    "inverse_count_integer_tolerance": 0.01,
+    "h5_max_gap_rows": 32,
+    "h5_max_window_rows": 20000,
+    "h5ad_compression": "lzf",
+    "keep_counts_layer": false
+  },
+  "dataset_specs": [
+    {
+      "dataset_folder": "dataset01",
+      "dataset_id": "dataset_01_DCM_HCM",
+      "input_h5ad": "Data/converted/human_dcm_hcm_scportal_03.17.2022.h5ad",
+      "count_h5_path": "/layers/cellranger_raw",
+      "condition_col": "disease",
+      "condition_map": {
+        "DCM": "DCM",
+        "HCM": "HCM",
+        "NF": "NF"
+      },
+      "condition_order": [
+        "DCM",
+        "HCM",
+        "NF"
+      ],
+      "donor_col": "donor_id",
+      "sample_col": "biosample_id",
+      "region_col": "",
+      "region_map": null,
+      "documented_region": "LV",
+      "region_filter_basis": "dataset_level_documented_left_ventricle",
+      "region_policy": "AP_LV_standard",
+      "has_within_dataset_nf": true,
+      "comparison_limitation": "",
+      "count_transform": "none",
+      "count_total_col": "",
+      "count_normalization_target": 10000.0
+    },
+    {
+      "dataset_folder": "dataset08",
+      "dataset_id": "dataset_08_DoxCMP",
+      "input_h5ad": "Data/converted/dataset_08_DoxCMP_standardized.h5ad",
+      "count_h5_path": "/X",
+      "condition_col": "disease",
+      "condition_map": {
+        "DoxCM": "DoxCM",
+        "NF": "NF"
+      },
+      "condition_order": [
+        "DoxCM",
+        "NF"
+      ],
+      "donor_col": "donor_id",
+      "sample_col": "biosample_id",
+      "region_col": "",
+      "region_map": null,
+      "documented_region": "LV",
+      "region_filter_basis": "dataset_level_documented_left_ventricular_myocardium",
+      "region_policy": "AP_LV_standard",
+      "has_within_dataset_nf": true,
+      "comparison_limitation": "NICM is intentionally excluded; retain only DoxCM and its within-dataset NF controls.",
+      "count_transform": "none",
+      "count_total_col": "",
+      "count_normalization_target": 10000.0
+    },
+    {
+      "dataset_folder": "dataset11",
+      "dataset_id": "dataset_11_HFpEF_SCP3342",
+      "input_h5ad": "Data/converted/dataset_11_HFpEF_SCP3342_standardized.h5ad",
+      "count_h5_path": "/X",
+      "condition_col": "disease",
+      "condition_map": {
+        "HFpEF": "HFpEF",
+        "NF": "NF"
+      },
+      "condition_order": [
+        "HFpEF",
+        "NF"
+      ],
+      "donor_col": "donor_id",
+      "sample_col": "biosample_id",
+      "region_col": "",
+      "region_map": null,
+      "documented_region": "S",
+      "region_filter_basis": "cell_level_organ_label_interventricular_septum",
+      "region_policy": "approved_HFpEF_septum_exception",
+      "has_within_dataset_nf": true,
+      "comparison_limitation": "",
+      "count_transform": "inverse_log1p_normalization_using_cell_total",
+      "count_total_col": "n_counts",
+      "count_normalization_target": 10000.0
+    }
+  ]
+}

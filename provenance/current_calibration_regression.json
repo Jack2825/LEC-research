@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-21",
+  "calibration": {
+    "source_nd2": "Data/vivo/2025.2.11 Mice FLU LE cellpainting P3/20250211_172951_030/WellA02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0000.nd2",
+    "source_sha256": "52a0312919405730ef77a1169af177f44fb76004f80024ad56fa81b9a38f0dcf",
+    "cellprofiler_project_sha256": "bd17de63a2d4d566cb0a56d19147490029fff1a49250146ddcdf8432adf0c4a4",
+    "cellprofiler_image_number": 2,
+    "field_index_zero_based": 1,
+    "field_ordinal": 2,
+    "acquisition_size_px": [
+      2048,
+      2048
+    ],
+    "um_per_pixel": 0.324081161957359,
+    "full_field_width_um": 663.7182196886712,
+    "bar_length_um": 100,
+    "bar_length_original_pixels": 308.5646798969374,
+    "comparison_fields": 180,
+    "top_two_matches": [
+      {
+        "path": "Data/vivo/2025.2.11 Mice FLU LE cellpainting P3/20250211_172951_030/WellA02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0000.nd2",
+        "position_index": 1,
+        "nuclear_correlation": 0.9988103333116134
+      },
+      {
+        "path": "Data/vivo/2025.2.11 Mice FLU LE cellpainting P3/20250211_172951_030/WellD04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0017.nd2",
+        "position_index": 2,
+        "nuclear_correlation": 0.0843887583318199
+      }
+    ],
+    "channels": [
+      {
+        "channel": "CY5",
+        "local_correlation_median": 0.9965904552225227,
+        "corrected_tiff_sha256": "c9d2661359fc5bca7c77160fba56365aaba19bdf614625db504377e6eb38006b",
+        "display_tiff_sha256": "febcb1ef9fa9c74a00c34b5dc3095797772e436a6a7f581050dfbccc46de23f3"
+      },
+      {
+        "channel": "TRITC",
+        "local_correlation_median": 0.9999353083360734,
+        "corrected_tiff_sha256": "3131bdad28150d3045e467f1bc6c494669cb57edfc4bec1bf0fc8368026eb15b",
+        "display_tiff_sha256": "2051058634697f49aefffc83372b8dff6bc88f6dbb7d45640b56f42262e0e5db"
+      },
+      {
+        "channel": "FITC",
+        "local_correlation_median": 0.9993529024288584,
+        "corrected_tiff_sha256": "07554afbed7c952025883dba57c6e46a01caf8ba61523547a4543cae5b7efa00",
+        "display_tiff_sha256": "82b50513abb077baeb19ff450a46a13755009696a90c1ca9bdc4ac45690d292d"
+      },
+      {
+        "channel": "DAPI",
+        "local_correlation_median": 0.9998329969509577,
+        "corrected_tiff_sha256": "9d26e13522c08cccfd8a1e72b9f944d9d10f72578bb88e88fbf0de8f96441fde",
+        "display_tiff_sha256": "5b98d7670e8d396a58bc376936c9f5a7f6929680c0d849527379da4f536a0dd9"
+      }
+    ],
+    "calibrated_axes": [
+      [
+        true,
+        true,
+        false
+      ],
+      [
+        true,
+        true,
+        false
+      ],
+      [
+        true,
+        true,
+        false
+      ],
+      [
+        true,
+        true,
+        false
+      ]
+    ],
+    "method": "CP index plus pixel-pattern matching; original ND2 physical calibration"
+  },
+  "bar_pixel_audit": {
+    "file": "Fig04B.pdf",
+    "checked_pixels": 1264079,
+    "changed_pixels_outside_edit_regions": 0,
+    "page_geometry_unchanged": true,
+    "original_text_retained": true,
+    "cell_painting_image_payloads_unchanged": true,
+    "quantification_and_other_panels_unchanged": true
+  },
+  "rendered_panel_matches_existing_November_5_and_9_panel": true,
+  "scope": "Current extracted functions; original acquisitions read-only; outputs in isolated scratch folder"
+}

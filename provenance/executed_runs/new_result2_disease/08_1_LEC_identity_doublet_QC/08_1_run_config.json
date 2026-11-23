@@ -1,0 +1,125 @@
+{
+  "script_version": "08_1_disease_final_Step08_LECs_only_identity_doublet_QC_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "step08_h5ad": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\08_1_LEC_identity_doublet_QC",
+  "cell_scope": "exact_current_Step08_final_LECs_only",
+  "n_final_LEC_cells": 6291,
+  "n_final_LEC_positive_donors": 95,
+  "non_LEC_cells_used": 0,
+  "zero_LEC_donors_used": 0,
+  "states": [
+    "state0",
+    "state1",
+    "state2",
+    "state3",
+    "state4",
+    "state5",
+    "state6",
+    "state7",
+    "state8"
+  ],
+  "focus_states": [
+    "state4",
+    "state5",
+    "state6",
+    "state7",
+    "state8"
+  ],
+  "focus_donors": [
+    "dataset01::P1430",
+    "dataset01::P1508"
+  ],
+  "datasets": [
+    "dataset01",
+    "dataset08",
+    "dataset11"
+  ],
+  "conditions": [
+    "DCM",
+    "DoxCM",
+    "HCM",
+    "HFpEF",
+    "NF"
+  ],
+  "regions_by_dataset": {
+    "dataset01": "LV",
+    "dataset08": "LV",
+    "dataset11": "S"
+  },
+  "doublet_percentile_scope": "final_LECs_only_matching_sample_with_LEC_only_fallback",
+  "minimum_sample_LECs_for_percentile": 20,
+  "cardiac_signature_scope": "relative_among_final_LECs_within_dataset",
+  "cardiac_LEC_quantile": 0.99,
+  "minimum_cardiac_genes": 3,
+  "neighbors": 15,
+  "neighborhood_scope": "Step08_final_LEC_graph_only",
+  "marker_panels": {
+    "LEC_specific": [
+      "PROX1",
+      "PDPN",
+      "FLT4",
+      "CCL21",
+      "LYVE1",
+      "NRP2",
+      "RELN",
+      "FOXC2"
+    ],
+    "pan_endothelial": [
+      "PECAM1",
+      "CDH5",
+      "CLDN5",
+      "VWF",
+      "KDR",
+      "ERG",
+      "ESAM",
+      "EMCN",
+      "PLVAP"
+    ],
+    "cardiomyocyte": [
+      "TTN",
+      "RYR2",
+      "SLC8A1",
+      "DMD",
+      "SORBS2",
+      "MYH7",
+      "MYH6",
+      "MYL2",
+      "MYL3",
+      "TNNI3",
+      "TNNT2",
+      "ACTC1",
+      "CKM",
+      "PLN",
+      "MYBPC3",
+      "TCAP"
+    ],
+    "fibroblast": [
+      "COL1A1",
+      "COL1A2",
+      "COL3A1",
+      "DCN",
+      "LUM",
+      "COL6A1"
+    ],
+    "pericyte_smc": [
+      "RGS5",
+      "PDGFRB",
+      "CSPG4",
+      "ACTA2",
+      "MCAM",
+      "MYH11",
+      "TAGLN"
+    ],
+    "immune": [
+      "PTPRC",
+      "LST1",
+      "TYROBP",
+      "FCER1G",
+      "CD3D",
+      "CD79A",
+      "MS4A1"
+    ]
+  },
+  "mutation_policy": "read_only_no_cell_removal_no_h5ad_write"
+}

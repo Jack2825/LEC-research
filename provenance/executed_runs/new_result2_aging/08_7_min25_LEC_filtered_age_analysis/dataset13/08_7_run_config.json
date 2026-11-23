@@ -1,0 +1,26 @@
+{
+  "script_version": "08_7_dataset13_min25_LEC_preserved_and_merged_age_analysis_2026_08_10",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\08_7_min25_LEC_filtered_age_analysis\\dataset13",
+  "minimum_total_LECs_per_donor": 25,
+  "preserved_group_key": "age_quartile_equal_LEC_donors",
+  "four_group_counts": {
+    "Q1": 4,
+    "Q2": 1,
+    "Q3": 3,
+    "Q4": 5
+  },
+  "merged_group_counts": {
+    "Q1": 4,
+    "Q2+Q3": 4,
+    "Q4": 5
+  },
+  "n_retained_donor_entries": 13,
+  "n_retained_LEC_cells": 818,
+  "n_states": 11,
+  "primary_unit": "donor entry",
+  "primary_test": "Kruskal-Wallis donor-level state percentage with BH FDR across states",
+  "cell_level_test": "Pearson chi-square state-versus-other-cells with BH FDR across states",
+  "cell_level_independence_warning": "cells nested within donors; sensitivity only",
+  "source_modified": false
+}

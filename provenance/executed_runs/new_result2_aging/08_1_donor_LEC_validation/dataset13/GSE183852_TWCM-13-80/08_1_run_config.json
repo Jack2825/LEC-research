@@ -1,0 +1,159 @@
+{
+  "script_version": "08_1_dataset13_specific_donor_LEC_validation_resolution_aware_2026_08_07",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "donor_key": "GSE183852::TWCM-13-80",
+  "sample": "GSM5572789",
+  "focus_state": "state3",
+  "age_quartile": "Q1",
+  "full_counts_h5ad": "${REPOSITORY_ROOT}\\Data\\converted\\dataset_13_Age_full_30plus_age10yr_standardized.h5ad",
+  "step08_metadata": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_LEC_cell_metadata.csv.gz",
+  "step08_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_final_LEC_reclustered.h5ad",
+  "step08_source_info": {
+    "script_version": "08_dataset13_NF_combined_LEC_states_res0p3_2026_08_07",
+    "leiden_resolution": 0.3,
+    "states": [
+      "state0",
+      "state1",
+      "state2",
+      "state3",
+      "state4",
+      "state5",
+      "state6",
+      "state7",
+      "state8",
+      "state9",
+      "state10"
+    ]
+  },
+  "step03_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\03\\dataset13\\Q1\\dataset13_Q1_clustered.h5ad",
+  "output_dir": "${REPOSITORY_ROOT}\\new_result2_aging\\08_1_donor_LEC_validation\\dataset13\\GSE183852_TWCM-13-80",
+  "count_matrix_QC": {
+    "n_cells": 4921,
+    "n_genes": 5000,
+    "integer_fraction_checked_subset": 1.0,
+    "matrix_sparse": true
+  },
+  "marker_panels_requested": {
+    "LEC_specific": [
+      "PROX1",
+      "PDPN",
+      "FLT4",
+      "CCL21",
+      "LYVE1",
+      "NRP2",
+      "RELN"
+    ],
+    "pan_endothelial": [
+      "PECAM1",
+      "CDH5",
+      "CLDN5",
+      "VWF",
+      "KDR",
+      "ERG",
+      "ESAM",
+      "EMCN"
+    ],
+    "cardiomyocyte": [
+      "MYH6",
+      "MYH7",
+      "MYL2",
+      "MYL3",
+      "TNNI3",
+      "TNNT2",
+      "ACTC1",
+      "CKM",
+      "RYR2",
+      "TTN",
+      "TCAP"
+    ],
+    "fibroblast": [
+      "COL1A1",
+      "COL1A2",
+      "DCN",
+      "LUM",
+      "COL3A1"
+    ],
+    "pericyte_smc": [
+      "RGS5",
+      "PDGFRB",
+      "CSPG4",
+      "ACTA2",
+      "MCAM"
+    ],
+    "immune": [
+      "PTPRC",
+      "LST1",
+      "TYROBP",
+      "FCER1G",
+      "CD3D"
+    ]
+  },
+  "marker_panels_used": {
+    "LEC_specific": [
+      "PROX1",
+      "PDPN",
+      "FLT4",
+      "CCL21",
+      "LYVE1",
+      "NRP2",
+      "RELN"
+    ],
+    "pan_endothelial": [
+      "PECAM1",
+      "CDH5",
+      "CLDN5",
+      "VWF",
+      "KDR",
+      "ERG",
+      "ESAM",
+      "EMCN"
+    ],
+    "cardiomyocyte": [
+      "MYH6",
+      "MYH7",
+      "MYL2",
+      "MYL3",
+      "TNNI3",
+      "TNNT2",
+      "ACTC1",
+      "CKM",
+      "RYR2",
+      "TTN",
+      "TCAP"
+    ],
+    "fibroblast": [
+      "COL1A1",
+      "COL1A2",
+      "DCN",
+      "LUM",
+      "COL3A1"
+    ],
+    "pericyte_smc": [
+      "RGS5",
+      "PDGFRB",
+      "ACTA2",
+      "MCAM"
+    ],
+    "immune": [
+      "PTPRC",
+      "LST1",
+      "TYROBP",
+      "FCER1G",
+      "CD3D"
+    ]
+  },
+  "scrublet_seeds": [
+    0,
+    1,
+    2
+  ],
+  "expected_doublet_rate": 0.06,
+  "scrublet_n_pcs": 30,
+  "scrublet_high_threshold": 0.15,
+  "scrublet_strict_threshold": 0.25,
+  "scrublet_top_fraction": 0.06,
+  "neighbor_n": 15,
+  "doublets_run": true,
+  "neighborhood_run": true,
+  "figures_run": true
+}

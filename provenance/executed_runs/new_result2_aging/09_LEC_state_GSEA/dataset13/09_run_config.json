@@ -1,0 +1,55 @@
+{
+  "script_version": "09_dataset13_NF_combined_LEC_state_GSEA_resolution_aware_2026_08_07",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_final_LEC_reclustered.h5ad",
+  "ranking_csv": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_state_marker_ranking_all_genes.csv.gz",
+  "state_qc_csv": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_state_donor_project_QC.csv",
+  "state_palette_csv": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_state_color_mapping.csv",
+  "gene_sets_dir": "${REPOSITORY_ROOT}\\resources\\gene_sets",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\09_LEC_state_GSEA\\dataset13",
+  "state_key": "LEC_state",
+  "states": [
+    "state0",
+    "state1",
+    "state2",
+    "state3",
+    "state4",
+    "state5",
+    "state6",
+    "state7",
+    "state8",
+    "state9",
+    "state10"
+  ],
+  "collections": [
+    "Hallmark",
+    "GO_BP",
+    "KEGG_Medicus",
+    "Reactome"
+  ],
+  "ranking_metric": "scores",
+  "rank_method": "Step08_cell_level_Wilcoxon_state_vs_rest",
+  "min_size": 10,
+  "max_size": 500,
+  "permutation_num": 1000,
+  "threads": 4,
+  "seed": 0,
+  "fdr_threshold": 0.05,
+  "top_per_direction": 10,
+  "top_pathways_figure": 18,
+  "figures_enabled": true,
+  "input_info": {
+    "n_cells": 1119,
+    "n_genes_X": 5000,
+    "raw_present": true,
+    "n_genes_raw": 5000,
+    "n_states": 11,
+    "step08_script_version": "08_dataset13_NF_combined_LEC_states_res0p3_2026_08_07",
+    "leiden_resolution": 0.3,
+    "step08_excluded_donors": [],
+    "regions": [
+      "AP",
+      "LV"
+    ]
+  }
+}

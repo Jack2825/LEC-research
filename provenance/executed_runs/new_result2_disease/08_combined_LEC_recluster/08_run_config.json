@@ -1,0 +1,50 @@
+{
+  "script_version": "08_disease_all_conditions_dataset_harmony_res0p3_h5ad_fix_2026_08_11",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "step03_root": "${REPOSITORY_ROOT}\\new_result2_disease\\03",
+  "step06_root": "${REPOSITORY_ROOT}\\new_result2_disease\\06_EC_recluster",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster",
+  "expected_cohorts": [
+    [
+      "dataset01",
+      "DCM"
+    ],
+    [
+      "dataset01",
+      "HCM"
+    ],
+    [
+      "dataset01",
+      "NF"
+    ],
+    [
+      "dataset08",
+      "DoxCM"
+    ],
+    [
+      "dataset08",
+      "NF"
+    ],
+    [
+      "dataset11",
+      "HFpEF"
+    ],
+    [
+      "dataset11",
+      "NF"
+    ]
+  ],
+  "merge_scope": "all_final_LECs_all_active_disease_conditions",
+  "expression_source": "Step03_raw_log_normalized",
+  "gene_join": "outer",
+  "n_top_hvg": 2000,
+  "n_pcs": 30,
+  "n_neighbors": 15,
+  "resolution": 0.6,
+  "random_state": 0,
+  "harmony_enabled": true,
+  "harmony_batch_key": "dataset_folder",
+  "top_n_markers": 25,
+  "marker_method": "wilcoxon",
+  "figures_enabled": true
+}

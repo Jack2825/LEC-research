@@ -1,0 +1,227 @@
+[
+  {
+    "script": "new_script2_aging/06_recluster_EC_by_age_quartiles.py",
+    "config": "new_result2_aging/06_EC_recluster/dataset13/06_run_config.json",
+    "parameter": "step05_root",
+    "script_default": "new_result2_aging/05_marker_celltypist/dataset13",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\05_marker_celltypist\\dataset13"
+  },
+  {
+    "script": "new_script2_aging/06_recluster_EC_by_age_quartiles.py",
+    "config": "new_result2_aging/06_EC_recluster/dataset13/06_run_config.json",
+    "parameter": "step05_summary",
+    "script_default": "new_result2_aging/05_marker_celltypist/dataset13/05_all_quartiles_cluster_annotation_summary.csv",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\05_marker_celltypist\\dataset13\\05_all_quartiles_cluster_annotation_summary.csv"
+  },
+  {
+    "script": "new_script2_aging/06_recluster_EC_by_age_quartiles.py",
+    "config": "new_result2_aging/06_EC_recluster/dataset13/06_run_config.json",
+    "parameter": "celltypist_model",
+    "script_default": "resources/celltypist/Healthy_Adult_Heart.pkl",
+    "executed_value": "${REPOSITORY_ROOT}\\resources\\celltypist\\Healthy_Adult_Heart.pkl"
+  },
+  {
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "config": "new_result2_aging/08_1_donor_LEC_validation/dataset13/GSE183852_TWCM-13-80/08_1_run_config.json",
+    "parameter": "sample",
+    "script_default": "",
+    "executed_value": "GSM5572789"
+  },
+  {
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "config": "new_result2_aging/08_1_donor_LEC_validation/dataset13/GSE183852_TWCM-13-80/08_1_run_config.json",
+    "parameter": "focus_state",
+    "script_default": "",
+    "executed_value": "state3"
+  },
+  {
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "config": "new_result2_aging/08_1_donor_LEC_validation/dataset13/GSE183852_TWCM-13-80/08_1_run_config.json",
+    "parameter": "full_counts_h5ad",
+    "script_default": "Data/converted/dataset_13_Age_full_30plus_age10yr_standardized.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\Data\\converted\\dataset_13_Age_full_30plus_age10yr_standardized.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "config": "new_result2_aging/08_1_donor_LEC_validation/dataset13/GSE183852_TWCM-13-80/08_1_run_config.json",
+    "parameter": "step08_metadata",
+    "script_default": "new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_LEC_cell_metadata.csv.gz",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_LEC_cell_metadata.csv.gz"
+  },
+  {
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "config": "new_result2_aging/08_1_donor_LEC_validation/dataset13/GSE183852_TWCM-13-80/08_1_run_config.json",
+    "parameter": "step08_h5ad",
+    "script_default": "new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_3_make_equal_LEC_donor_age_quartiles.py",
+    "config": "new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_4_donor_level_LEC_state_age_analysis.py",
+    "config": "new_result2_aging/08_4_donor_level_LEC_state_age_analysis/dataset13/08_4_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_5_merge_Q2_Q3_donor_level_analysis.py",
+    "config": "new_result2_aging/08_5_merge_Q2_Q3_donor_level_analysis/dataset13/08_5_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_6_donor_LEC_minimum_reliability.py",
+    "config": "new_result2_aging/08_6_donor_LEC_minimum_reliability/dataset13/08_6_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad"
+  },
+  {
+    "script": "new_script2_aging/08_7_min25_LEC_filtered_age_analysis.py",
+    "config": "new_result2_aging/08_7_min25_LEC_filtered_age_analysis/dataset13/08_7_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad"
+  },
+  {
+    "script": "new_script2_aging/09_GSEA_combined_LEC_states.py",
+    "config": "new_result2_aging/09_LEC_state_GSEA/dataset13/09_run_config.json",
+    "parameter": "gene_sets_dir",
+    "script_default": "resources/gene_sets",
+    "executed_value": "${REPOSITORY_ROOT}\\resources\\gene_sets"
+  },
+  {
+    "script": "new_script2_aging/11_analyze_SCENIC_combined_LEC_states.py",
+    "config": "new_result2_aging/11_SCENIC_analysis/dataset13/11_run_config.json",
+    "parameter": "h5ad",
+    "script_default": "new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_aging\\08_combined_LEC_recluster\\dataset13\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/07_describe_LEC_selected_disease.py",
+    "config": "new_result2_disease/07_LEC_description/07_run_config.json",
+    "parameter": "cohorts",
+    "script_default": "all",
+    "executed_value": [
+      "dataset01 | DCM",
+      "dataset01 | HCM",
+      "dataset01 | NF",
+      "dataset08 | DoxCM",
+      "dataset08 | NF",
+      "dataset11 | HFpEF",
+      "dataset11 | NF"
+    ]
+  },
+  {
+    "script": "new_script2_disease/08_1_validate_LEC_identity_doublets.py",
+    "config": "new_result2_disease/08_1_LEC_identity_doublet_QC/08_1_run_config.json",
+    "parameter": "step08_h5ad",
+    "script_default": "new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/08_2_assess_donor_state_reliability.py",
+    "config": "new_result2_disease/08_2_donor_state_reliability/08_2_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/08_3_min25_LEC_filtered_disease_analysis.py",
+    "config": "new_result2_disease/08_3_min25_LEC_filtered_analysis/08_3_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/08_3_min25_LEC_filtered_disease_analysis.py",
+    "config": "new_result2_disease/08_3_min25_LEC_filtered_analysis/08_3_run_config.json",
+    "parameter": "threshold_summary",
+    "script_default": "new_result2_disease/08_2_donor_state_reliability/08_2_run_summary.csv",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_2_donor_state_reliability\\08_2_run_summary.csv"
+  },
+  {
+    "script": "new_script2_disease/08_4_donor_level_LEC_state_disease_analysis.py",
+    "config": "new_result2_disease/08_4_donor_level_LEC_state_disease_analysis/08_4_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/08_4_donor_level_LEC_state_disease_analysis.py",
+    "config": "new_result2_disease/08_4_donor_level_LEC_state_disease_analysis/08_4_run_config.json",
+    "parameter": "filter_root",
+    "script_default": "new_result2_disease/08_3_min25_LEC_filtered_analysis",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_3_min25_LEC_filtered_analysis"
+  },
+  {
+    "script": "new_script2_disease/09_GSEA_combined_LEC_states.py",
+    "config": "new_result2_disease/09_LEC_state_GSEA/09_run_config.json",
+    "parameter": "gene_sets_dir",
+    "script_default": "resources/gene_sets",
+    "executed_value": "${REPOSITORY_ROOT}\\resources\\gene_sets"
+  },
+  {
+    "script": "new_script2_disease/11_analyze_SCENIC_combined_LEC_states.py",
+    "config": "new_result2_disease/11_SCENIC_analysis/11_run_config.json",
+    "parameter": "h5ad",
+    "script_default": "new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad"
+  },
+  {
+    "script": "new_script2_disease/11_analyze_SCENIC_combined_LEC_states.py",
+    "config": "new_result2_disease/11_SCENIC_analysis/11_run_config.json",
+    "parameter": "identity_qc_csv",
+    "script_default": "new_result2_disease/09_LEC_state_GSEA/09_state_identity_marker_QC.csv",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_disease\\09_LEC_state_GSEA\\09_state_identity_marker_QC.csv"
+  },
+  {
+    "script": "new_script2_disease/13_2_define_GeoMx_LEC_enrichment.py",
+    "config": "new_result2_spatial_disease/13_2_disease_LEC_reference/13_2_run_config.json",
+    "parameter": "target_detection",
+    "script_default": "new_result2_spatial_disease/13_1_spatial_disease_QC/13_1_mentor_target_detection_by_AOI.csv.gz",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_mentor_target_detection_by_AOI.csv.gz"
+  },
+  {
+    "script": "new_script2_disease/13_2_define_GeoMx_LEC_enrichment.py",
+    "config": "new_result2_spatial_disease/13_2_disease_LEC_reference/13_2_run_config.json",
+    "parameter": "target_registry",
+    "script_default": "new_result2_spatial_disease/13_1_spatial_disease_QC/13_1_DCM_target_registry.csv",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_DCM_target_registry.csv"
+  },
+  {
+    "script": "new_script2_disease/13_3_score_prespecified_DCM_programs.py",
+    "config": "new_result2_spatial_disease/13_3_prespecified_DCM_program_validation/13_3_run_config.json",
+    "parameter": "input_h5ad",
+    "script_default": "new_result2_spatial_disease/13_2_disease_LEC_reference/13_2_GSE271676_two_of_five_LEC_selected.h5ad",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_2_disease_LEC_reference\\13_2_GSE271676_two_of_five_LEC_selected.h5ad"
+  },
+  {
+    "script": "new_script2_disease/13_3_score_prespecified_DCM_programs.py",
+    "config": "new_result2_spatial_disease/13_3_prespecified_DCM_program_validation/13_3_run_config.json",
+    "parameter": "target_registry",
+    "script_default": "new_result2_spatial_disease/13_1_spatial_disease_QC/13_1_DCM_target_registry.csv",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_DCM_target_registry.csv"
+  },
+  {
+    "script": "new_script2_disease/13_4_finalize_DCM_spatial_validation.py",
+    "config": "new_result2_spatial_disease/13_4_final_DCM_spatial_validation/13_4_run_config.json",
+    "parameter": "step13_2_root",
+    "script_default": "new_result2_spatial_disease/13_2_disease_LEC_reference",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_2_disease_LEC_reference"
+  },
+  {
+    "script": "new_script2_disease/13_4_finalize_DCM_spatial_validation.py",
+    "config": "new_result2_spatial_disease/13_4_final_DCM_spatial_validation/13_4_run_config.json",
+    "parameter": "step13_3_root",
+    "script_default": "new_result2_spatial_disease/13_3_prespecified_DCM_program_validation",
+    "executed_value": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_3_prespecified_DCM_program_validation"
+  }
+]

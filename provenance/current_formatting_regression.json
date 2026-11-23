@@ -1,0 +1,1733 @@
+{
+  "date": "2026-11-21",
+  "artwork_pages_checked": 107,
+  "all_checks_passed": true,
+  "calibrated_S7_records_sha256": "321dda3c25305a4b144c2e4ec3adf9c84f2bde27751b1c0670eafd73081a05d8",
+  "native_ND2_reverification_in_formatting_run": false,
+  "graphical_abstract": {
+    "width_mm": 180,
+    "height_mm": 110,
+    "min_font_pt": 8,
+    "max_font_pt": 9.5,
+    "exact_original_nonwhitespace_character_inventory_retained": true,
+    "existing_cards_retained": 8,
+    "existing_stage_labels_retained": 4,
+    "no_rewording": true,
+    "cards": [
+      {
+        "order": 1,
+        "box": [
+          106.0,
+          44.0,
+          295.0,
+          91.0
+        ],
+        "title": "Aging-associated extracellular signals",
+        "body": "Altered inflammatory, lymphangiogenic and matrix-related inputs\nExamples: VEGFC–NRP2 • ANGPT2–TEK • VCAN–CD44",
+        "badge": ""
+      },
+      {
+        "order": 2,
+        "box": [
+          305.0,
+          44.0,
+          504.236220472441,
+          91.0
+        ],
+        "title": "Disease-associated microenvironmental\ncues",
+        "body": "Disease-specific inflammatory, stromal and growth-factor signaling\nPrioritized pathways include BMP/TGF-β/activin, PDGF,\nVEGF, ANGPT, Notch and WNT",
+        "badge": ""
+      },
+      {
+        "order": 3,
+        "box": [
+          106.0,
+          96.0,
+          295.0,
+          143.0
+        ],
+        "title": "State-associated transcriptional regulators",
+        "body": "Distinct regulon programs across aging-sensitive LEC states\nSCENIC: EPAS1 / TP63 / MEIS2 / TEAD1;\nKLF2 / NFATC4 / FOXC1",
+        "badge": ""
+      },
+      {
+        "order": 4,
+        "box": [
+          305.0,
+          96.0,
+          504.236220472441,
+          143.0
+        ],
+        "title": "Disease-associated transcriptional programs",
+        "body": "Regulon programs across DCM, HCM, DoxCM and HFpEF\nSCENIC supports disease-specific transcriptional regulation",
+        "badge": ""
+      },
+      {
+        "order": 5,
+        "box": [
+          106.0,
+          148.0,
+          295.0,
+          203.2
+        ],
+        "title": "Aging-associated LEC state redistribution",
+        "body": "State 0 ↑\nState 4 cytokine-responsive / immune ↓\nState 5 matrix-interactive / structural ↓",
+        "badge": ""
+      },
+      {
+        "order": 6,
+        "box": [
+          305.0,
+          148.0,
+          504.236220472441,
+          203.2
+        ],
+        "title": "Shared and disease-specific LEC state\nremodeling",
+        "body": "Cardiovascular diseases do not produce one uniform\npathological LEC state\nShared remodeling + disease-specific state changes",
+        "badge": ""
+      },
+      {
+        "order": 7,
+        "box": [
+          106.0,
+          208.2,
+          295.0,
+          263.4
+        ],
+        "title": "Altered adaptive inflammatory\nresponsiveness",
+        "body": "Influenza challenge: divergent functional and\norganelle responses in young versus aged LECs",
+        "badge": "IN VITRO"
+      },
+      {
+        "order": 8,
+        "box": [
+          305.0,
+          208.2,
+          504.236220472441,
+          263.4
+        ],
+        "title": "Lymphatic and cardiac remodeling",
+        "body": "Functional support: endothelial Acvr2a deletion in CMP models\nImproved cardiac function • increased open lymphatic\nvessels • no change in blood vessels",
+        "badge": "IN VIVO"
+      }
+    ],
+    "text": [
+      {
+        "text": "GRAPHIC ABSTRACT",
+        "size": 8,
+        "x": 8,
+        "y": 10
+      },
+      {
+        "text": "Integrated model of cardiac LEC remodeling in aging and cardiovascular disease",
+        "size": 9.5,
+        "x": 8,
+        "y": 23
+      },
+      {
+        "text": "PHYSIOLOGICAL AGING",
+        "size": 8.5,
+        "x": 150.20556640625,
+        "y": 34
+      },
+      {
+        "text": "CARDIOVASCULAR DISEASE",
+        "size": 8.5,
+        "x": 344.4042430487205,
+        "y": 34
+      },
+      {
+        "text": "MICROENVIRONMENTAL",
+        "size": 8,
+        "x": 2.55859375,
+        "y": 65.9
+      },
+      {
+        "text": "CUES",
+        "size": 8,
+        "x": 76.7734375,
+        "y": 74.1
+      },
+      {
+        "text": "Aging-associated extracellular signals",
+        "size": 8,
+        "x": 114,
+        "y": 52
+      },
+      {
+        "text": "Altered inflammatory, lymphangiogenic and",
+        "size": 8,
+        "x": 114,
+        "y": 62.2
+      },
+      {
+        "text": "matrix-related inputs",
+        "size": 8,
+        "x": 114,
+        "y": 70.4
+      },
+      {
+        "text": "Examples: VEGFC–NRP2 • ANGPT2–TEK •",
+        "size": 8,
+        "x": 114,
+        "y": 78.60000000000001
+      },
+      {
+        "text": "VCAN–CD44",
+        "size": 8,
+        "x": 114,
+        "y": 86.80000000000001
+      },
+      {
+        "text": "Disease-associated microenvironmental cues",
+        "size": 8,
+        "x": 313,
+        "y": 52
+      },
+      {
+        "text": "Disease-specific inflammatory, stromal and",
+        "size": 8,
+        "x": 313,
+        "y": 62.2
+      },
+      {
+        "text": "growth-factor signaling",
+        "size": 8,
+        "x": 313,
+        "y": 70.4
+      },
+      {
+        "text": "Prioritized pathways include BMP/TGF-β/activin,",
+        "size": 8,
+        "x": 313,
+        "y": 78.60000000000001
+      },
+      {
+        "text": "PDGF, VEGF, ANGPT, Notch and WNT",
+        "size": 8,
+        "x": 313,
+        "y": 86.80000000000001
+      },
+      {
+        "text": "TRANSCRIPTIONAL",
+        "size": 8,
+        "x": 22.55859375,
+        "y": 117.9
+      },
+      {
+        "text": "REGULATION",
+        "size": 8,
+        "x": 46.11328125,
+        "y": 126.1
+      },
+      {
+        "text": "State-associated transcriptional regulators",
+        "size": 8,
+        "x": 114,
+        "y": 104.0
+      },
+      {
+        "text": "Distinct regulon programs across aging-sensitive",
+        "size": 8,
+        "x": 114,
+        "y": 114.2
+      },
+      {
+        "text": "LEC states",
+        "size": 8,
+        "x": 114,
+        "y": 122.4
+      },
+      {
+        "text": "SCENIC: EPAS1 / TP63 / MEIS2 / TEAD1; KLF2",
+        "size": 8,
+        "x": 114,
+        "y": 130.6
+      },
+      {
+        "text": "/ NFATC4 / FOXC1",
+        "size": 8,
+        "x": 114,
+        "y": 138.79999999999998
+      },
+      {
+        "text": "Disease-associated transcriptional programs",
+        "size": 8,
+        "x": 313,
+        "y": 104.0
+      },
+      {
+        "text": "Regulon programs across DCM, HCM, DoxCM and",
+        "size": 8,
+        "x": 313,
+        "y": 114.2
+      },
+      {
+        "text": "HFpEF",
+        "size": 8,
+        "x": 313,
+        "y": 122.4
+      },
+      {
+        "text": "SCENIC supports disease-specific transcriptional",
+        "size": 8,
+        "x": 313,
+        "y": 130.6
+      },
+      {
+        "text": "regulation",
+        "size": 8,
+        "x": 313,
+        "y": 138.79999999999998
+      },
+      {
+        "text": "LEC STATE",
+        "size": 8,
+        "x": 54.5546875,
+        "y": 174.0
+      },
+      {
+        "text": "REMODELING",
+        "size": 8,
+        "x": 44.77734375,
+        "y": 182.2
+      },
+      {
+        "text": "Aging-associated LEC state redistribution",
+        "size": 8,
+        "x": 114,
+        "y": 156.0
+      },
+      {
+        "text": "State 0 ↑",
+        "size": 8,
+        "x": 114,
+        "y": 166.2
+      },
+      {
+        "text": "State 4 cytokine-responsive / immune ↓",
+        "size": 8,
+        "x": 114,
+        "y": 174.39999999999998
+      },
+      {
+        "text": "State 5 matrix-interactive / structural ↓",
+        "size": 8,
+        "x": 114,
+        "y": 182.59999999999997
+      },
+      {
+        "text": "Shared and disease-specific LEC state",
+        "size": 8,
+        "x": 313,
+        "y": 156.0
+      },
+      {
+        "text": "remodeling",
+        "size": 8,
+        "x": 313,
+        "y": 164.2
+      },
+      {
+        "text": "Cardiovascular diseases do not produce one",
+        "size": 8,
+        "x": 313,
+        "y": 174.4
+      },
+      {
+        "text": "uniform pathological LEC state",
+        "size": 8,
+        "x": 313,
+        "y": 182.6
+      },
+      {
+        "text": "Shared remodeling + disease-specific state",
+        "size": 8,
+        "x": 313,
+        "y": 190.79999999999998
+      },
+      {
+        "text": "changes",
+        "size": 8,
+        "x": 313,
+        "y": 198.99999999999997
+      },
+      {
+        "text": "FUNCTIONAL",
+        "size": 8,
+        "x": 47.0078125,
+        "y": 234.2
+      },
+      {
+        "text": "CONSEQUENCES",
+        "size": 8,
+        "x": 30.98828125,
+        "y": 242.39999999999998
+      },
+      {
+        "text": "Altered adaptive inflammatory",
+        "size": 8,
+        "x": 114,
+        "y": 216.2
+      },
+      {
+        "text": "responsiveness",
+        "size": 8,
+        "x": 114,
+        "y": 224.39999999999998
+      },
+      {
+        "text": "Influenza challenge: divergent functional and",
+        "size": 8,
+        "x": 114,
+        "y": 234.6
+      },
+      {
+        "text": "organelle responses in young versus aged LECs",
+        "size": 8,
+        "x": 114,
+        "y": 242.79999999999998
+      },
+      {
+        "text": "IN VITRO",
+        "size": 8,
+        "x": 254.166015625,
+        "y": 221.2
+      },
+      {
+        "text": "Lymphatic and cardiac remodeling",
+        "size": 8,
+        "x": 313,
+        "y": 216.2
+      },
+      {
+        "text": "Functional support: endothelial Acvr2a deletion in",
+        "size": 8,
+        "x": 313,
+        "y": 234.6
+      },
+      {
+        "text": "CMP models",
+        "size": 8,
+        "x": 313,
+        "y": 242.79999999999998
+      },
+      {
+        "text": "Improved cardiac function • increased open",
+        "size": 8,
+        "x": 313,
+        "y": 250.99999999999997
+      },
+      {
+        "text": "lymphatic vessels • no change in blood vessels",
+        "size": 8,
+        "x": 313,
+        "y": 259.2
+      },
+      {
+        "text": "IN VIVO",
+        "size": 8,
+        "x": 466.066298597441,
+        "y": 221.2
+      },
+      {
+        "text": "Independent spatial transcriptomics provides tissue-level support for selected disease-associated",
+        "size": 8,
+        "x": 118.3915477362205,
+        "y": 278.4
+      },
+      {
+        "text": "LEC programs",
+        "size": 8,
+        "x": 277.5575633612205,
+        "y": 286.59999999999997
+      }
+    ]
+  },
+  "checks": [
+    {
+      "figure": "Figure 1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 765463,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 799.4647827148438,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1273270,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1329.7847900390625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1421239,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1485.9251708984375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1978928,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 2069.62939453125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1319470,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1377.28515625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1726617,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1805.4947509765625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 986126,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1032.785888671875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1357273,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1239.0338134765625,
+      "source_height_pt": 1097.03955078125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1580411,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1205.0374755859375,
+      "source_height_pt": 1313.365234375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1985349,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1241.1676025390625,
+      "source_height_pt": 1601.03955078125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 2959759,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1316.295654296875,
+      "source_height_pt": 2251.91943359375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 4207768,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1395.7939453125,
+      "source_height_pt": 3017.791259765625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 2938699,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1497.5999755859375,
+      "source_height_pt": 1965.5999755859375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 4843264,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 2592.0,
+      "source_height_pt": 1872.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 1518314,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1605.6629638671875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 2,
+      "checked_pixels_outside_overlays": 661210,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 689.3841552734375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 3,
+      "checked_pixels_outside_overlays": 661210,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 689.3841552734375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 4,
+      "checked_pixels_outside_overlays": 661210,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 689.3841552734375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 5,
+      "checked_pixels_outside_overlays": 1693245,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 1764.418212890625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 6,
+      "checked_pixels_outside_overlays": 958880,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 999.3963623046875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 7,
+      "checked_pixels_outside_overlays": 450935,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 470.8868408203125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 8,
+      "checked_pixels_outside_overlays": 450970,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 470.8868408203125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 9,
+      "checked_pixels_outside_overlays": 481045,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 501.6527099609375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 10,
+      "checked_pixels_outside_overlays": 940710,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 980.5614624023438,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 11,
+      "checked_pixels_outside_overlays": 940570,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 980.5614624023438,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 12,
+      "checked_pixels_outside_overlays": 940640,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 960.0,
+      "source_height_pt": 980.5614624023438,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 3998639,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1200.0,
+      "source_height_pt": 3352.951171875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 608817,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1008.0,
+      "source_height_pt": 604.7999877929688,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 467303,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 705.5999755859375,
+      "source_height_pt": 662.4000244140625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 587392,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 907.2000122070312,
+      "source_height_pt": 648.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 193722,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 583.7363891601562,
+      "source_height_pt": 332.4960021972656,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 453135,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1123.199951171875,
+      "source_height_pt": 403.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 2591100,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1836.0,
+      "source_height_pt": 1411.199951171875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 401756,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 979.2000122070312,
+      "source_height_pt": 410.3999938964844,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 295577,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 598.7357788085938,
+      "source_height_pt": 494.9280090332031,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 204015,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 579.8880004882812,
+      "source_height_pt": 352.35028076171875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 257937,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 885.723876953125,
+      "source_height_pt": 291.0231018066406,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 338088,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 691.2000122070312,
+      "source_height_pt": 489.6000061035156,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 430885,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 820.7999877929688,
+      "source_height_pt": 525.5999755859375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 574712,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1080.0,
+      "source_height_pt": 532.7999877929688,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 290638,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 878.4000244140625,
+      "source_height_pt": 331.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 290804,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 878.4000244140625,
+      "source_height_pt": 331.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 290672,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 878.4000244140625,
+      "source_height_pt": 331.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 303111,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 878.4000244140625,
+      "source_height_pt": 345.6000061035156,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 456478,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1040.0,
+      "source_height_pt": 439.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 318113,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 921.5999755859375,
+      "source_height_pt": 345.6000061035156,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 367607,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 964.7999877929688,
+      "source_height_pt": 381.6000061035156,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 285459,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 648.3167724609375,
+      "source_height_pt": 440.3304138183594,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 570218,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1238.4000244140625,
+      "source_height_pt": 460.79998779296875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 2591100,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1836.0,
+      "source_height_pt": 1411.199951171875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 506424,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1065.5999755859375,
+      "source_height_pt": 475.20001220703125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 307914,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 613.0516967773438,
+      "source_height_pt": 502.2143859863281,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 220683,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 591.6700439453125,
+      "source_height_pt": 373.10400390625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 436250,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1134.14404296875,
+      "source_height_pt": 384.3841552734375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 660904,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1044.0,
+      "source_height_pt": 633.5999755859375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 385705,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 777.5999755859375,
+      "source_height_pt": 496.79998779296875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 385736,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 777.5999755859375,
+      "source_height_pt": 496.79998779296875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 385643,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 777.5999755859375,
+      "source_height_pt": 496.79998779296875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 385674,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 777.5999755859375,
+      "source_height_pt": 496.79998779296875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 78521,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 412.068603515625,
+      "source_height_pt": 191.4593963623047,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 173948,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 416.0350036621094,
+      "source_height_pt": 418.8173522949219,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 97154,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 402.4490051269531,
+      "source_height_pt": 242.5670928955078,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 214728,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 878.0,
+      "source_height_pt": 246.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure 7",
+      "page": 1,
+      "checked_pixels_outside_overlays": 101546,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 417.0,
+      "source_height_pt": 246.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 393066,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 823.420166015625,
+      "source_height_pt": 477.8377990722656,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 272610,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 571.395263671875,
+      "source_height_pt": 477.8807373046875,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 299704,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 794.6123657226562,
+      "source_height_pt": 377.0499572753906,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 201802,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 535.4214477539062,
+      "source_height_pt": 377.03839111328125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S1",
+      "page": 1,
+      "checked_pixels_outside_overlays": 546544,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1007.2450561523438,
+      "source_height_pt": 542.6622314453125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 320851,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 866.6176147460938,
+      "source_height_pt": 370.1824645996094,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 282697,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 780.2247924804688,
+      "source_height_pt": 362.66058349609375,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 210892,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 618.7131958007812,
+      "source_height_pt": 341.0624694824219,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 254064,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 661.337158203125,
+      "source_height_pt": 384.2627868652344,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S2",
+      "page": 1,
+      "checked_pixels_outside_overlays": 440617,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1125.838134765625,
+      "source_height_pt": 391.7563781738281,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 241924,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 557.1709594726562,
+      "source_height_pt": 434.6432189941406,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 245404,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 565.6842651367188,
+      "source_height_pt": 434.63995361328125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 354126,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 996.2354736328125,
+      "source_height_pt": 355.4345397949219,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 575662,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1205.168701171875,
+      "source_height_pt": 477.8425598144531,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S3",
+      "page": 1,
+      "checked_pixels_outside_overlays": 332551,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 820.1474609375,
+      "source_height_pt": 405.8448181152344,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 619163,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 991.8792724609375,
+      "source_height_pt": 624.718994140625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 390814,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 640.7616577148438,
+      "source_height_pt": 610.3191528320312,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 232663,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 499.10577392578125,
+      "source_height_pt": 466.31915283203125,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 411697,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 941.5194702148438,
+      "source_height_pt": 437.5068054199219,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 229084,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 581.7178955078125,
+      "source_height_pt": 394.3126525878906,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 404569,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 955.925537109375,
+      "source_height_pt": 423.1092834472656,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S4",
+      "page": 1,
+      "checked_pixels_outside_overlays": 366740,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 866.277587890625,
+      "source_height_pt": 423.0901794433594,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 435243,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 919.9096069335938,
+      "source_height_pt": 473.4900817871094,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 405165,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 941.4764404296875,
+      "source_height_pt": 430.3471374511719,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 637479,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1042.318115234375,
+      "source_height_pt": 611.1067504882812,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 755952,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1206.56005859375,
+      "source_height_pt": 626.912353515625,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 292444,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 574.5299072265625,
+      "source_height_pt": 509.5409240722656,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S5",
+      "page": 1,
+      "checked_pixels_outside_overlays": 607541,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 1243.00341796875,
+      "source_height_pt": 488.9167175292969,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 387711,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 540.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 387711,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 540.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 465471,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 648.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 465471,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 648.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 517376,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 720.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S6",
+      "page": 1,
+      "checked_pixels_outside_overlays": 517440,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 720.0,
+      "source_height_pt": 720.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496608,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496608,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496608,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496608,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496672,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 621120,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 720.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496576,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496608,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    },
+    {
+      "figure": "Figure S8",
+      "page": 1,
+      "checked_pixels_outside_overlays": 496832,
+      "changed_pixels_above_3_levels_outside_overlays": 0,
+      "image_payloads_and_dimensions_unchanged": true,
+      "source_text_retained": true,
+      "source_width_pt": 864.0,
+      "source_height_pt": 576.0,
+      "page_shift_pt": 32,
+      "panel_letter_size_pt": 18
+    }
+  ]
+}

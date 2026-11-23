@@ -1,0 +1,280 @@
+excluded_script,reason
+CVR_Data_S10_Table_S8_verified_20261008/script/collect_original_and_corrected.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_audit_20260930/script/audit_figures.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig01.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig02.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig03.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig04.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig05.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig06.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Fig07.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/Graphic_Abstract.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/archive_20260930/panel_A_tube_update.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/archive_20260930/prepare_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/archive_20260930/tube_revision_consistency.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/assemble_main.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/assemble_supplement.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/finalize_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/image_revision_documentation.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/organize_tables_data.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/panel_A_tube_update.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/panel_E_representative_images.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/prepare_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/prepare_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/prepare_revision_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/prepare_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/render_panel_A_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/revision_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/revision_paths.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/run_all.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/run_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/run_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/tube_revision_consistency.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/original_1004_code/update_current_build_code.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/package.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_figure_revision_20261103/script/run_all.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/recheck_20261004/script/recheck.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/recheck_20261004/script/validate_recheck.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/check_figures.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/figure_audit_engine.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/inspect_documents.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/make_final_report.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/make_review_contact_sheets.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/revise_supplement.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+CVR_final_submission_review_20261004/script/verify_data_and_methods.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/make_panel_A.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_B.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_C_pca.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_C_preprocessing.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_D_response_analysis.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_E_copy_existing_sources.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_E_state_visualization.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_F_visualization.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_G_exploratory.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/_before_panel_folders_20260920/panel_G_visualization.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+Cell_Painting_LEC_P3_P9_figures/script/make_panel_A.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+Cell_Painting_LEC_P3_P9_figures/script/organize_panel_results.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+FigS07_Cell_Painting_revision_20260923/script/assemble_FigS07.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+FigS07_Cell_Painting_revision_20260924/script/assemble_FigS07.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+cell_painting_LEC_P3_P9/run_analysis.ps1,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/01_import_qc.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/02_multidimensional_analysis.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/03_well_level_statistics.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/04_figures_report.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/05_validate_outputs.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/06_duplicate_source_audit.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/07_audit_original_cellprofiler_exports.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/08_audit_original_nd2_images.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/09_reconcile_duplicate_rows.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9/scripts/analysis_core.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/run_analysis.ps1,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/01_prepare_corrected_csv.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/02_multidimensional_analysis.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/03_well_level_statistics.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/04_figures_report.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/05_validate_outputs.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/06_recheck_P9_source_assignments.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/analysis_core.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_corrected/scripts/corrected_report.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+cell_painting_LEC_P3_P9_expanded_20260916/run_analysis.ps1,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_script2/Fig06_combined_spatial_validation.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_script2/aging/Fig02E_cell_painting.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_script2/aging/Fig02F_tube_formation.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_script2/aging/FigS01_aging_two_step_LEC_selection.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+new_script2/aging/FigS03_aging_states1to6_abundance.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+new_script2/aging/FigS05_aging_min25_LEC_rationale.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+new_script2/aging/FigS07_spatial_aging_validation.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/disease/FigS02_disease_two_step_LEC_selection.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+new_script2/disease/FigS06_disease_min25_LEC_rationale.py,Superseded backup/migration or replaced standalone supplementary generator; not a current dependency
+new_script2/make_final_figures.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_script2/supplementary/FigS07A_section_QC.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07B_LEC_enriched_spot_identification.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07C_canonical_marker_coverage.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07D_enrichment_criteria_sensitivity.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07E_program_score_robustness.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07F_program_gene_sensitivity.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07G_donor_and_section_sensitivity.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07H_detailed_robustness_matrix.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2/supplementary/FigS07_aging_spatial_QC_sensitivity.py,Superseded aging spatial supplement; current S7 is Cell Painting
+new_script2_aging/12_1_spatial_aging_data_audit_and_QC.py,Aging spatial analysis removed from final manuscript revision
+new_script2_aging/12_2_build_spatial_aging_LEC_state_reference.py,Aging spatial analysis removed from final manuscript revision
+new_script2_aging/12_3_score_prespecified_spatial_LEC_programs.py,Aging spatial analysis removed from final manuscript revision
+new_script2_aging/12_4_spatial_aging_LEC_program_robustness_and_evidence_grade.py,Aging spatial analysis removed from final manuscript revision
+new_scripts/03_cluster_each_condition_all_datasets_meanIQR_QC.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/03_cluster_each_condition_all_datasets_meanIQR_QC_AGE_MARKER.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/04_find_top25_cluster_markers_all_clustered_h5ad.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/05_celltypist_HCAv2_annotate_clustered_h5ad.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/06_recluster_manual_EC_by_condition_WITH_MARKERS.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/07_celltypist_reference_EC_reclustered.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/08_add_LEC_percent_among_all_QC.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/09_combine_final_LEC_cells_BATCH_DEFAULT_FIXED.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/10_visualize_combined_LEC_states.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/11_GSEA_each_combined_LEC_state_DEFAULT_GENESETS.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/12_visualize_LEC_state_marker_GSEA_cards_ALL4_TOP8_FILLSTAR.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/13_DISEASE_vs_NF_GSEA_and_visualization.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/14_apply_state_names_export_pyscenic_inputs.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/14_pyscenic_commands_FIXED.ps1,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/15_analyze_visualize_SCENIC_results.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/15_analyze_visualize_SCENIC_results_PRO.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure1/16_visualize_Figure1a_cohort_overview_v6.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure1/17_visualize_three_marker_violin_matrices.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure1/inspect_dataset07_12_original_age_records.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure1/trace_dataset07_12_age_source_to_step03.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure2/18_Figure2_PanelA_separate_A1_A2_A3_v5.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/figure6/34_Figure6_spatial_disease_BMP_ACVR2A.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/30A_inspect_HCA_E-MTAB12975_h5ad.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/30B_prepare_HCA_E-MTAB12975_AX_raw.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/30_prepare_GSE135805_spatial_ALL_SPOTS_GENE_SYMBOL_FIXED.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/31B_validate_EC8_ln_TWO_LAYER_identify_LEC_rich_spots_HCA_AX.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/31_visualize_LEC_marker_evidence_GSE135805_TIERED_ALL_SPOTS.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/32B_map_LEC_states_and_quantify_abundance_HCA_AX.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/32C_depth_matched_sensitivity_HCA_AX_LEC_states.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/32_create_spatial_validation_hypothesis_templates_GSE135805_TOP8_DONOR_BALANCED_TARGET_NF_COVERAGE.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+new_scripts/spatial_transcriptomic/33_score_ALL_spatial_programs_GSE135805_ALL_SPOTS_FIXED_LAYOUT.py,Superseded exploratory/analysis version; no runtime dependency in the selected current pipeline
+publication_figure_revision_20260921/script/Fig01.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig02.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig03.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig04.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig05.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig06.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Fig07.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/Graphic_Abstract.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/assemble_main.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/assemble_supplement.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/finalize_revision.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/organize_tables_data.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/prepare_revision.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/revision_paths.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260921/script/run_all.py,"Superseded figure revision; frozen artwork may be a declared input, never its old code"
+publication_figure_revision_20260922/script/Fig01.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig02.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig03.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig04.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig05.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig06.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Fig07.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/Graphic_Abstract.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/assemble_main.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/assemble_supplement.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/finalize_revision.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/image_revision_documentation.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/organize_tables_data.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/panel_E_representative_images.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/prepare_image_revision.py,"One-time historical migration/copy operation, not scientific reproduction"
+publication_figure_revision_20260922/script/prepare_revision.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/revision_paths.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/run_all.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260922/script/run_image_revision.py,Superseded final assembly or tube artwork; current November code and frozen inputs replace this implementation
+publication_figure_revision_20260930/result/_sources/FigS07_revision_20260924/script/assemble_FigS07.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig01.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig02.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig03.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig04.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig05.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig06.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Fig07.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/Graphic_Abstract.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/assemble_main.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/assemble_supplement.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/finalize_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/image_revision_documentation.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/organize_tables_data.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/panel_A_tube_update.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/panel_E_representative_images.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/prepare_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/prepare_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/prepare_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/revision_paths.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/run_all.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/run_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/run_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/tube_revision_consistency.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20260930/script/update_current_build_code.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/result/_sources/FigS07_revision_20260924/script/assemble_FigS07.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig01.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig02.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig03.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig04.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig05.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig06.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Fig07.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/Graphic_Abstract.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/archive_20260930/panel_A_tube_update.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/archive_20260930/prepare_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/archive_20260930/tube_revision_consistency.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/assemble_supplement.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/finalize_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/organize_tables_data.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/panel_A_tube_update.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/prepare_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/prepare_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/prepare_revision_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/prepare_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/render_panel_A_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/revision_20261004.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/run_all.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/run_image_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/run_tube_revision.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/tube_revision_consistency.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+publication_figure_revision_20261004/script/update_current_build_code.py,"Superseded implementation, copied provenance archive, manuscript review, or one-time collection; not executed by the current release"
+scripts/00_check_environment.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/01_inspect_dataset07_AF_mtx.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/01_inspect_dataset08_DoxCMP_RDS.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/01_inspect_dataset09_CHD_mtx.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/01_inspect_dataset13_Age_5000feature_only.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/01_preview.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/03_qc_normalize_cluster.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/04_cellLevel_find_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/04_find_LEC_cluster.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/04_largeDataset_QC_cellLevel_find_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/04_largeMTX_dataset09_QC_cellLevel_find_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/04_largeRDSMarker_dataset13_Age_QC_cellLevel_find_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/05_dataset13_NF_age_GSEA_test.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/05_universal_candidate_LEC_donor_GSEA.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/05_visualize_GSEA_results.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_01_combine_candidate_LEC_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_02_integrate_cluster_combined_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_03_visualize_integrated_LEC_results.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_04_donor_level_LEC_state_abundance.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_05_state_GSEA_plus_marker_pathway_summary_ONLY.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/06_06_visualize_state_panels_FULL_GSEA_all_collections_NO_TRUNCATION.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/07_01_cell_level_Sargent_marker_filter_HIGHER_THAN_LEC.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/01_create_dataset01_DCM_HCM_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/02_add_dataset02_GSE183852_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/03_add_dataset03_ICM_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/04_add_dataset04_hypertrophy_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/05_add_dataset05_GSE109816_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/06_add_dataset06_DCMACM_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/07_add_dataset07_AF_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/08_add_dataset08_DoxCMP_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/09_add_dataset09_CHD_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/10_add_dataset10_COVID_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/11_add_dataset11_HFpEF_SCP3342_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/12_add_dataset12_COVID_SCP1216_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/cell_level_createMetadata/13_add_dataset13_Age_cell_level_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/check_dataset04_LEC_disease_distribution.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_GSE183852_cells_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_dataset04_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_dataset05_GSE109816_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_dataset07_AF_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_dataset09_CHD_h5ad_STANDARDIZED.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_build_dataset13_Age_h5ad_age10yr_30plus.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_convert_GSE183852_Robj_to_h5ad.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_convert_dataset05_GSE109816_to_export.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_export_dataset04_RDS.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/00_extract_dataset13_Age_candidate_LEC_matrix.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/convert_h5ad/05_build_dataset13_Age_candidate_LEC_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/create_metadata/02_add_dataset02_cells_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/create_metadata/02_add_dataset03_ICM_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/create_metadata/02_add_dataset04_hypertrophy_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/create_metadata/02_create_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_inspect_standard_h5ad.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset03_ICM.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset04_hypertrophy.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset05_GSE109816.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset06_DCMACM.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset07_AF.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset09_CHD_metadata.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset10_COVID.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset12_COVID_SCP1216.py,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"
+scripts/standardization/01_standardize_dataset13_Age_5000feature.R,"Inactive older analysis, inspection, metadata-writing or unused-cohort preprocessing"

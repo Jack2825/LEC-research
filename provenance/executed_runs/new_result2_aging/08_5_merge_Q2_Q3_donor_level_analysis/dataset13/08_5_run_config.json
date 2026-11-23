@@ -1,0 +1,36 @@
+{
+  "script_version": "08_5_dataset13_merge_Q2_Q3_donor_level_analysis_2026_08_10",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_aging\\08_3_equal_LEC_donor_age_quartiles\\dataset13\\08_3_combined_LEC_equal_donor_age_quartiles.h5ad",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\08_5_merge_Q2_Q3_donor_level_analysis\\dataset13",
+  "source_group_key": "age_quartile_equal_LEC_donors",
+  "merged_group_key": "age_group_Q2_Q3_merged",
+  "group_map": {
+    "Q1": "Q1",
+    "Q2": "Q2+Q3",
+    "Q3": "Q2+Q3",
+    "Q4": "Q4"
+  },
+  "group_order": [
+    "Q1",
+    "Q2+Q3",
+    "Q4"
+  ],
+  "group_range_labels": {
+    "Q1": "Q1\n35-48 y\nn=12",
+    "Q2+Q3": "Q2+Q3\n48-62.5 y\nn=24",
+    "Q4": "Q4\n62.5-75 y\nn=12"
+  },
+  "state_key": "LEC_state",
+  "donor_key": "donor_key",
+  "age_key": "age_numeric_resolved",
+  "project_key": "Project",
+  "sex_key": "Sex",
+  "alpha": 0.05,
+  "primary_test": "Kruskal-Wallis with BH FDR",
+  "posthoc": "Dunn-Holm only after omnibus FDR",
+  "min_donor_LECs_sensitivity": 5,
+  "figures_enabled": true,
+  "dpi": 220,
+  "input_h5ad_modified": false
+}

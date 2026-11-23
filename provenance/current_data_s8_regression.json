@@ -1,0 +1,222 @@
+{
+  "status": "PASS",
+  "source": "Data_S8_split_Excel_20261028/inputs/Data_S8_complete_disease_MultiNicheNet_results.xlsx",
+  "source_sha256_before_and_after": "714cba5b0e6c1539c79127fc8120ce5c03aa88bf291aca821ad12bb75286b85e",
+  "source_size_bytes": 596264080,
+  "source_mtime_unchanged": true,
+  "original_worksheets": 188,
+  "data_worksheets": 186,
+  "original_source_tables": 180,
+  "data_rows": 13824109,
+  "all_data_worksheets_present_exactly_once": true,
+  "original_metadata_repeated_and_unchanged": [
+    "README",
+    "Source_Index"
+  ],
+  "all_original_worksheet_xml_hashes_match": true,
+  "all_shared_styles_theme_and_document_properties_unchanged": true,
+  "all_output_zip_entries_crc_checked": true,
+  "all_workbooks_openpyxl_readable": true,
+  "all_source_table_row_totals_match_index": true,
+  "formula_cells": 0,
+  "maximum_allowed_bytes_per_data_workbook": 50000000,
+  "data_workbooks": 19,
+  "total_data_workbook_bytes": 596563499,
+  "smallest_data_workbook_bytes": 795490,
+  "largest_data_workbook_bytes": 44633814,
+  "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "files": [
+    {
+      "file": "Data_S8_01_Overview_all_tables.xlsx",
+      "cohort": "Overview",
+      "category": "all_tables",
+      "data_worksheets": 11,
+      "data_rows": 10529,
+      "bytes": 795490,
+      "MB": 0.795,
+      "sha256": "2648f1d13bfb69f5bd3b4ef6a09df88c9b2d72be81eb7499603644403e536138"
+    },
+    {
+      "file": "Data_S8_02_DCM_results_QC_metadata.xlsx",
+      "cohort": "DCM",
+      "category": "results_QC_metadata",
+      "data_worksheets": 31,
+      "data_rows": 452158,
+      "bytes": 29780101,
+      "MB": 29.78,
+      "sha256": "3df1643dc5131653489c2699b26bbf628c372d1206860ea52bd11f6581e7e629"
+    },
+    {
+      "file": "Data_S8_03_DCM_ligand_activity_part1.xlsx",
+      "cohort": "DCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 1048575,
+      "bytes": 43801182,
+      "MB": 43.801,
+      "sha256": "23a655472de18d4d25f48c42a8a1749ca4da012491d8820cd20b63a039635b39"
+    },
+    {
+      "file": "Data_S8_04_DCM_ligand_activity_part2.xlsx",
+      "cohort": "DCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 819671,
+      "bytes": 34288716,
+      "MB": 34.289,
+      "sha256": "f0330b6767f0fdf74013b63a65bfdbb8e40e43fca71f1e6acb009f39d395423b"
+    },
+    {
+      "file": "Data_S8_05_DCM_expression.xlsx",
+      "cohort": "DCM",
+      "category": "expression",
+      "data_worksheets": 3,
+      "data_rows": 1851120,
+      "bytes": 44633814,
+      "MB": 44.634,
+      "sha256": "3adec491a538e75229114e44c5905efb2e914924023a75676dee4425aa758f0e"
+    },
+    {
+      "file": "Data_S8_06_DCM_sample_priority.xlsx",
+      "cohort": "DCM",
+      "category": "sample_priority",
+      "data_worksheets": 1,
+      "data_rows": 136048,
+      "bytes": 31546677,
+      "MB": 31.547,
+      "sha256": "ab6310f5f06a2d6af4dc6d13b615111e72351e679abbb81d403e75e52189a68c"
+    },
+    {
+      "file": "Data_S8_07_HCM_results_QC_metadata.xlsx",
+      "cohort": "HCM",
+      "category": "results_QC_metadata",
+      "data_worksheets": 31,
+      "data_rows": 510876,
+      "bytes": 35406206,
+      "MB": 35.406,
+      "sha256": "43c63b6199fcd101586883807d39b2a516adb4abb64424c5084cfbd00970a9de"
+    },
+    {
+      "file": "Data_S8_08_HCM_ligand_activity_part1.xlsx",
+      "cohort": "HCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 1048575,
+      "bytes": 43823133,
+      "MB": 43.823,
+      "sha256": "7486f6eb286c59caa54b80a161a26052be7f684a274406dd4f41b88bb71a7b40"
+    },
+    {
+      "file": "Data_S8_09_HCM_ligand_activity_part2.xlsx",
+      "cohort": "HCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 579187,
+      "bytes": 24302068,
+      "MB": 24.302,
+      "sha256": "f9a858f180329f94e4cff5d83ef152ee50f4edfc97a8757a88ab40ea4c8330be"
+    },
+    {
+      "file": "Data_S8_10_HCM_expression_part1.xlsx",
+      "cohort": "HCM",
+      "category": "expression",
+      "data_worksheets": 2,
+      "data_rows": 1201737,
+      "bytes": 30565686,
+      "MB": 30.566,
+      "sha256": "c3251b0c0b0e5b1bdcd66ac355da4a1035b7f694ebc035bda0ca88876e87d20f"
+    },
+    {
+      "file": "Data_S8_11_HCM_expression_part2.xlsx",
+      "cohort": "HCM",
+      "category": "expression",
+      "data_worksheets": 1,
+      "data_rows": 1019112,
+      "bytes": 22775485,
+      "MB": 22.775,
+      "sha256": "87fd66c9412c3608ee838ece04e6fdaf54faed5d426e664cfc18d7aab937177a"
+    },
+    {
+      "file": "Data_S8_12_HCM_sample_priority.xlsx",
+      "cohort": "HCM",
+      "category": "sample_priority",
+      "data_worksheets": 1,
+      "data_rows": 150336,
+      "bytes": 34990797,
+      "MB": 34.991,
+      "sha256": "a4a246776b41566e23f5ec8aef0d3b0dc329f2f91a9bbd828056f77c7ccb11e4"
+    },
+    {
+      "file": "Data_S8_13_DoxCM_results_QC_metadata.xlsx",
+      "cohort": "DoxCM",
+      "category": "results_QC_metadata",
+      "data_worksheets": 29,
+      "data_rows": 338056,
+      "bytes": 19235350,
+      "MB": 19.235,
+      "sha256": "03cff192e45bf71a903df384be568b05186a64b6b555aa5fd58c961f85e8a016"
+    },
+    {
+      "file": "Data_S8_14_DoxCM_ligand_activity_part1.xlsx",
+      "cohort": "DoxCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 1048575,
+      "bytes": 44282659,
+      "MB": 44.283,
+      "sha256": "e631c65cffc7332a94b56c82c3d4daef8e31ddb0a3380a378a283134ebb7ded6"
+    },
+    {
+      "file": "Data_S8_15_DoxCM_ligand_activity_part2.xlsx",
+      "cohort": "DoxCM",
+      "category": "ligand_activity",
+      "data_worksheets": 1,
+      "data_rows": 849841,
+      "bytes": 35465855,
+      "MB": 35.466,
+      "sha256": "aa868a1ba2e69dcbbd312fba15650b157655cffdd5bd3fb92c8a282c942275a5"
+    },
+    {
+      "file": "Data_S8_16_DoxCM_expression.xlsx",
+      "cohort": "DoxCM",
+      "category": "expression",
+      "data_worksheets": 3,
+      "data_rows": 1494570,
+      "bytes": 36144211,
+      "MB": 36.144,
+      "sha256": "43cc4a119fbb5ef06cfb5880ce6f7f4e59a491eb5762c4286aca6b65a3520a74"
+    },
+    {
+      "file": "Data_S8_17_DoxCM_sample_priority.xlsx",
+      "cohort": "DoxCM",
+      "category": "sample_priority",
+      "data_worksheets": 1,
+      "data_rows": 105768,
+      "bytes": 23994513,
+      "MB": 23.995,
+      "sha256": "5afdd9488bc0d61d76c81aaa6fc9a190a54c6335fedf5140b3bc8a607e148545"
+    },
+    {
+      "file": "Data_S8_18_HFpEF10_all_tables.xlsx",
+      "cohort": "HFpEF10",
+      "category": "all_tables",
+      "data_worksheets": 33,
+      "data_rows": 742897,
+      "bytes": 37755325,
+      "MB": 37.755,
+      "sha256": "acdec1ef257e4a2bb6d2766aee596b7926ed5c369fbc95d7b15780dfd67d054e"
+    },
+    {
+      "file": "Data_S8_19_HFpEF15_all_tables.xlsx",
+      "cohort": "HFpEF15",
+      "category": "all_tables",
+      "data_worksheets": 33,
+      "data_rows": 416478,
+      "bytes": 22976231,
+      "MB": 22.976,
+      "sha256": "8c2c0b4f86b5a8cb43c100f72c555e6bb3625977e6363f9fbdc5de62912e0744"
+    }
+  ],
+  "packaging_validation_date": "2026-11-21",
+  "worksheet_mapping_and_hashes_match_existing_October_28_delivery": true
+}

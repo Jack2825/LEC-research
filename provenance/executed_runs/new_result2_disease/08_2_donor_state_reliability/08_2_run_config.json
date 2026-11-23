@@ -1,0 +1,39 @@
+{
+  "script_version": "08_2_disease_final_LEC_donor_state_reliability_2026_08_11",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_disease\\08_combined_LEC_recluster\\08_combined_final_LEC_reclustered.h5ad",
+  "optional_step08_1_cell_qc": "${REPOSITORY_ROOT}\\new_result2_disease\\08_1_LEC_identity_doublet_QC\\tables\\08_1_LEC_cell_identity_doublet_QC.csv.gz",
+  "optional_step08_1_qc_status": "exact_cell_match_loaded",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_disease\\08_2_donor_state_reliability",
+  "reference_min_LECs": 25,
+  "n_values": [
+    3,
+    5,
+    8,
+    10,
+    12,
+    15,
+    20,
+    25
+  ],
+  "retention_thresholds": [
+    1,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30
+  ],
+  "n_resamples_per_reference_donor_per_N": 2000,
+  "seed": 8022026,
+  "target_quantile": "p90",
+  "target_tv_error_pct": 20.0,
+  "descriptive_candidate_minimum_N": 25,
+  "p95_definition": "95th percentile of resampling error; not a confidence interval",
+  "donor_dominance_threshold": 0.5,
+  "dataset_dominance_threshold": 0.9,
+  "cell_scope": "exact_current_Step08_final_LECs_only",
+  "automatic_donor_exclusion": false,
+  "cells_or_donors_removed": false,
+  "h5ad_written": false
+}

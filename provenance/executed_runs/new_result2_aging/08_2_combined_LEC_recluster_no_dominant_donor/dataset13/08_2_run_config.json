@@ -1,0 +1,29 @@
+{
+  "script_version": "08_dataset13_NF_combined_LEC_states_res0p3_2026_08_07",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "allcell_root": "${REPOSITORY_ROOT}\\new_result2_aging\\03\\dataset13",
+  "ec_root": "${REPOSITORY_ROOT}\\new_result2_aging\\06_EC_recluster\\dataset13",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\08_2_combined_LEC_recluster_no_dominant_donor\\dataset13",
+  "quartiles": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+  ],
+  "gene_join": "outer",
+  "expression_source": "Step03 raw",
+  "n_top_hvg": 2000,
+  "n_pcs": 30,
+  "n_neighbors": 15,
+  "resolution": 0.3,
+  "output_prefix": "08_2",
+  "excluded_donors": [
+    "GSE183852::TWCM-13-80"
+  ],
+  "n_excluded_LEC_cells": 82,
+  "random_state": 0,
+  "harmony_batch_key": "Project",
+  "harmony_enabled": true,
+  "top_n_markers": 25,
+  "figures_enabled": true
+}

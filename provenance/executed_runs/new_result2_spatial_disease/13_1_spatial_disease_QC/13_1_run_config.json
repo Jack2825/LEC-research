@@ -1,0 +1,43 @@
+{
+  "script_version": "13_1_GSE271676_two_of_five_LEC_rule_2026_08_28",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "input_root": "${REPOSITORY_ROOT}\\resources\\spatial_transcriptomic\\GSE271676_RAW",
+  "input_files": {
+    "InitialDataset": "${REPOSITORY_ROOT}\\resources\\spatial_transcriptomic\\GSE271676_RAW\\InitialDataset.csv",
+    "Probe_QC_1percfilter": "${REPOSITORY_ROOT}\\resources\\spatial_transcriptomic\\GSE271676_RAW\\Probe_QC_1percfilter.csv",
+    "Spatial_Annotation": "${REPOSITORY_ROOT}\\resources\\spatial_transcriptomic\\GSE271676_RAW\\Spatial_Annotation.csv",
+    "DCC_tar": "${REPOSITORY_ROOT}\\resources\\spatial_transcriptomic\\GSE271676_RAW\\GSE271676_RAW.tar"
+  },
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC",
+  "primary_filter": {
+    "Ventricle": "LV",
+    "Segment.type": "vessel",
+    "Clinical_phenotype_LV": [
+      "Control",
+      "DCMP"
+    ]
+  },
+  "strict_origin_sensitivity": "Origin_Structure == LV",
+  "strict_control_sensitivity": "Clinical_phenotype_path == Control",
+  "pre_LVAD_sensitivity": "After_LVAD != Y",
+  "normalization": "edgeR_style_upper_quartile_CPM",
+  "LOQ": "negative_probe_geomean_times_geometric_SD_squared_scaled_by_target_probe_count",
+  "LEC_selection_markers": [
+    "CCL21",
+    "LYVE1",
+    "PDPN",
+    "FLT4",
+    "PROX1"
+  ],
+  "LEC_selection_rule": "at_least_2_of_5_markers_above_AOI_specific_LOQ",
+  "CCL21_included_in_selection": true,
+  "selection_outcome_overlap_warning": "CCL21_is_also_a_homeostatic_endpoint",
+  "formal_inference_completed": false,
+  "resource_inputs_modified": false,
+  "DCC_validation_skipped": false,
+  "figures_enabled": true,
+  "h5ad_written": true,
+  "h5ad": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_GSE271676_GeoMx_Q3_expression.h5ad",
+  "source_GEO": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE271676",
+  "source_Mendeley": "https://data.mendeley.com/datasets/gmgcdhmmdx/1"
+}

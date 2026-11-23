@@ -1,0 +1,31 @@
+{
+  "script_version": "06_dataset13_NF_age_quartile_EC_recluster_majority_2026_08_06",
+  "project_dir": "${REPOSITORY_ROOT}",
+  "input_root": "${REPOSITORY_ROOT}\\new_result2_aging\\03\\dataset13",
+  "step05_root": "${REPOSITORY_ROOT}\\new_result2_aging\\05_marker_celltypist\\dataset13",
+  "step05_summary": "${REPOSITORY_ROOT}\\new_result2_aging\\05_marker_celltypist\\dataset13\\05_all_quartiles_cluster_annotation_summary.csv",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_aging\\06_EC_recluster\\dataset13",
+  "celltypist_model": "${REPOSITORY_ROOT}\\resources\\celltypist\\Healthy_Adult_Heart.pkl",
+  "fresh_celltypist_majority_voting": true,
+  "fresh_celltypist_over_clustering": "leiden",
+  "min_model_genes_present": 500,
+  "quartiles": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+  ],
+  "selection_rule": "step05_celltypist_label_is_endothelial_true",
+  "expression_source": "auto",
+  "preprocess_mode": "auto",
+  "n_top_hvg": 1500,
+  "n_pcs": 30,
+  "n_neighbors": 15,
+  "resolution": 0.4,
+  "marker_method": "t-test_overestim_var",
+  "marker_n_genes": 500,
+  "top_n_markers": 25,
+  "random_state": 0,
+  "skip_markers": false,
+  "skip_figures": false
+}

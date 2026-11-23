@@ -1,0 +1,18 @@
+{
+  "script_version": "13_4_GSE271676_two_of_five_descriptive_DCM_grade_2026_08_28",
+  "step13_2_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_2_disease_LEC_reference",
+  "step13_3_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_3_prespecified_DCM_program_validation",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_4_final_DCM_spatial_validation",
+  "LEC_selection_markers": [
+    "CCL21",
+    "LYVE1",
+    "PDPN",
+    "FLT4",
+    "PROX1"
+  ],
+  "minimum_markers_above_AOI_LOQ": 2,
+  "minimum_donors_per_group": 3,
+  "formal_inference_performed": false,
+  "CCL21_selection_endpoint_overlap": true,
+  "new_biological_test_performed": false
+}

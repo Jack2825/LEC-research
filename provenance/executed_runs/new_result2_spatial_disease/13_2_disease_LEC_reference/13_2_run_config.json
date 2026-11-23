@@ -1,0 +1,20 @@
+{
+  "script_version": "13_2_GSE271676_two_of_five_LEC_selection_2026_08_28",
+  "input_h5ad": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_GSE271676_GeoMx_Q3_expression.h5ad",
+  "target_detection": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_mentor_target_detection_by_AOI.csv.gz",
+  "target_registry": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_1_spatial_disease_QC\\13_1_DCM_target_registry.csv",
+  "output_root": "${REPOSITORY_ROOT}\\new_result2_spatial_disease\\13_2_disease_LEC_reference",
+  "LEC_selection_markers": [
+    "CCL21",
+    "LYVE1",
+    "PDPN",
+    "FLT4",
+    "PROX1"
+  ],
+  "selection_rule": "at_least_2_of_5_above_AOI_specific_LOQ",
+  "minimum_LEC_markers_above_LOQ": 2,
+  "stringent_LEC_markers_above_LOQ": 3,
+  "CCL21_included_in_selection": true,
+  "minimum_donors_per_group": 3,
+  "normalization": "Q3_CPM_within_all_primary_16_before_selection"
+}

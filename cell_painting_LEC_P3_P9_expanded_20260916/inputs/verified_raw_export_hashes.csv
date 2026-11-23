@@ -1,0 +1,85 @@
+passage,folder,filename,full_path,bytes,sha256
+P3,Flu Well A,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\ERWNuclei.csv,128594,ccaf9b12ed75024be38cc993574260ed15b11fcc1b5be2024bd42080d75a851f
+P3,Flu Well A,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\ERWONuclei.csv,52340,85a49ee6759727d8421af30ddf5088d323e7a2a75e4a21211cd55b1e60bc76e3
+P3,Flu Well A,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\Experiment.csv,14004,0a9ade18a2c5bb57c848b9439d6c218761bf3c2e8995a32c0289fd99ffe80425
+P3,Flu Well A,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\Image.csv,7977,534ff249c4e42d0be411a382d1d688cb7565d30d5c7e009936e6099233d69fca
+P3,Flu Well A,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\mitochondriaWNuclei.csv,6568,33e1cbc225ce9241636b9751b86f76784c1bb104bd6ccf090cad199e37d593b4
+P3,Flu Well A,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\mitochondriaWONuclei.csv,53812,1ba78bf1327c25599bbcc3b05d6120e23828fa7548cbaf9ebf6ba73b13ee55cf
+P3,Flu Well A,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well A\nuclei.csv,175940,de0e99d59758142975b6731e0384e51994c7e471112c244a528722f67516feb7
+P3,Flu Well B,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\ERWNuclei.csv,167943,a74ac4b6aa2799dd9f26710fdf9b76e6c3cbfb97a329a06eb5a2b89241f9486e
+P3,Flu Well B,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\ERWONuclei.csv,68187,32d05b9dc22d33fb40f9fc3c11cf6a16e1cec3684318b6d9b1fdb2ed35b9bf1c
+P3,Flu Well B,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\Experiment.csv,14000,8ebe771f5858e0cdf77b790f2bac2138c55dd9c5abae2e172fa16100c5c51e42
+P3,Flu Well B,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\Image.csv,7877,2b849d71fdc4396cca4b00582fbb6e84d4ecac12ee2fe16551b3c4bf17e691c2
+P3,Flu Well B,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\mitochondriaWNuclei.csv,8569,d8dd4fa0d861ec5e5d59bfddb37686752b815025f25db5544628c268ed818565
+P3,Flu Well B,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\mitochondriaWONuclei.csv,70002,78dd33b42ef18df6ef913275d0c0c8fbd7388f2dd78799fd4b74d841c361a18d
+P3,Flu Well B,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well B\nuclei.csv,228878,234e92a0aeed7a02c3016cd871fac0453fe33edefcccdad010c84a0ae34d9bf0
+P3,Flu Well C,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\ERWNuclei.csv,165708,2aec9308c84ed06a137a75a4cdf0b7d8dbfb797fcd568329a5983114352f4cda
+P3,Flu Well C,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\ERWONuclei.csv,67307,c72ae027a1470ea9bfe3ac78db8730535b41ded399a9ee0e0ba06699c23a3d88
+P3,Flu Well C,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\Experiment.csv,14053,ec9e587354d88b48c894d6ffb59c51cf78c5f949494d7bd7d58eb0fd50eacf9c
+P3,Flu Well C,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\Image.csv,7941,76669afa76a7102dae3f332abcc5580a3e31eb0be8a3b26f24f4fd388796769d
+P3,Flu Well C,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\mitochondriaWNuclei.csv,8455,da3b5178327bd9f43a4948187da789d5b85d63bf885047bbef3f9da5d2390fd6
+P3,Flu Well C,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\mitochondriaWONuclei.csv,69200,3a2d9575280e2c481eb010ff8fab1789cae5ccb18bee1fafa35e28a7a2caed52
+P3,Flu Well C,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well C\nuclei.csv,226026,56a6882989feb4ade8c7265bb2e442ff5f640fb8f422e06e1bae38a9f47eb9a3
+P3,Flu Well D,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\ERWNuclei.csv,154492,4d3670abc99ee273c93c9234221aa77046d761077733df66a1c226261117272d
+P3,Flu Well D,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\ERWONuclei.csv,62806,28d39bbb7df5c7817d05bcce3201e81fd768d45a90bc75eef3084a383d364904
+P3,Flu Well D,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\Experiment.csv,14035,c0a197eb5fb9a7f09648e470846d7456a0e37e2e3ed285cb64805a7721bbb73a
+P3,Flu Well D,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\Image.csv,7952,25e449059a70d1758a963fde0a6583c054d79471a185e52b41e352baf2f43a6f
+P3,Flu Well D,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\mitochondriaWNuclei.csv,7874,1a96d62edbe9e68c23c5bba9f193c6cf82540979c4c16da7b9c53d9c9ba5b041
+P3,Flu Well D,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\mitochondriaWONuclei.csv,64513,dd18fa268c454c140983fc425b17a69426de42790712c33d3f85b3bc4fdbbba7
+P3,Flu Well D,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well D\nuclei.csv,210929,6bdd1eed003f57059dc19c222b66d639ad98735885390c10459294ed9c7db1d1
+P3,Flu Well E,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\ERWNuclei.csv,167862,d36d8a68ad760d9552d8d39e2272ce85845e695f9393c59669bb2ad57821e981
+P3,Flu Well E,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\ERWONuclei.csv,68560,b68c42c06a27e130db71bfc52bb7bfcf23c2b849e7b5905a82e573695fc4ed65
+P3,Flu Well E,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\Experiment.csv,14063,9ba9e7dd0c4e8919e4352a2d0d1ef03e9d4b13a9f19efe203b09a7f0b9b5ad13
+P3,Flu Well E,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\Image.csv,7968,01e1fd9ced449f0b5f70a07220d9aff3a954776967081fc4787370fb6008d5eb
+P3,Flu Well E,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\mitochondriaWNuclei.csv,8587,eb88e2c15a4e788d30288680720fd1283a8df6d8e007093812f9c53da917dc7a
+P3,Flu Well E,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\mitochondriaWONuclei.csv,70094,38622f2bc5fee1a3ee4c2f70be0cf1bbfc9eea36f1860d77f283594e7519fe78
+P3,Flu Well E,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well E\nuclei.csv,229241,fbb5a7925d9d98288e99583b9c6a58c9aa7cfb7a1ba44883909dac26a44c1760
+P3,Flu Well F,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\ERWNuclei.csv,160416,7277087abacffb048a187cde8d27ab41aa9d2917f722a0e3195d85f8f74eee8b
+P3,Flu Well F,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\ERWONuclei.csv,65364,8dc45396db546783600b7cb9fd65004d7d53779223540a6678da1901ab075217
+P3,Flu Well F,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\Experiment.csv,14049,2a965a55d642ca43335e7e9e3676f4c9dea6938a18d45828da33732e65127daa
+P3,Flu Well F,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\Image.csv,7986,8454b1b899458441b1df53d7f84241d6bbac3b79b1e37a1c264b45e4545e242d
+P3,Flu Well F,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\mitochondriaWNuclei.csv,8221,b8ac134b518dd40f42ef4d479f30d525636a14da320ac04795b62b352dbff6c3
+P3,Flu Well F,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\mitochondriaWONuclei.csv,67077,f816c4c6552ff0bfe967b413438b189845f3fb76f586f081806823b1741fef65
+P3,Flu Well F,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P3\Flu Well F\nuclei.csv,219221,350762cb74e4641808a79c1804a15cd41dc74beba0e48b33d24709dc8d6f6e37
+P9,col 3,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\ERWNuclei.csv,823274,66c5a2997c4ff24f47fd36b0c64324f2ce4b09e2a89aae4043f657548bb90cd7
+P9,col 3,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\ERWONuclei.csv,342937,bf99c36db02a666694f7e8e1b259a94f6c648634545aaf359211ef91558e47b8
+P9,col 3,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\Experiment.csv,14764,bd635f69d995663807c18b098ffc63b90d94ae8d26ca08e5dc3328b4997c3523
+P9,col 3,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\Image.csv,8985,a47bd5acdc723c39e6145dbedbfbd92e44e01157c069b1d381b7ecd3f8307134
+P9,col 3,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\mitochondriaWNuclei.csv,42973,6a3f7c2a1ff1de11235f7f9f31e5795be6be7a7e79ba141b89cbd1ba8dd2cc12
+P9,col 3,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\mitochondriaWONuclei.csv,344588,e6e3f450a6318908451fd3b5c6cc2d422db578c97d89ed70a13d1745555d3d30
+P9,col 3,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 3\nuclei.csv,1126702,eb05e16fccae5dbe91babab4dc5e0eb2f8362f71eb912822de1381285fe4efe6
+P9,col 4,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\ERWNuclei.csv,783562,6b6d91e133ef04f653e5c0e2a38d8a11697af019d011af25f73193085bd91266
+P9,col 4,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\ERWONuclei.csv,326638,969e3716e5faef8040cb2b75583d63c690d9c2104a2a471d6716d491698fa6bd
+P9,col 4,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\Experiment.csv,14742,c67069d3b4b6d1745fdc346a5804ac97035f73778728a75c1543bc6b8ebd967f
+P9,col 4,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\Image.csv,8975,8cc35bbdd5ebacee7f32525fef65b6d82c8b1d6407de0141b76027d263527086
+P9,col 4,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\mitochondriaWNuclei.csv,40883,f215b8fe7ab615e5ddf81f5cf4918e6fa6d52db225db56078c45496cfe544955
+P9,col 4,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\mitochondriaWONuclei.csv,328000,8d967c90d978df86cf04900daa9d71a009262540b87ae1677030b65b19cfd41c
+P9,col 4,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 4\nuclei.csv,1072598,68939a272b30f6d68e6433d5b82f5f1db237afe2fc51c30dea0f5fddeef8514b
+P9,col 5,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\ERWNuclei.csv,785955,0e2712e8de0f8aeee713dd00b7458057fadf2a590a81f8db0192b7cbe297e119
+P9,col 5,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\ERWONuclei.csv,327518,c02155b9f913f97e0f32b3cd0360bf9618f22ff881d54b41811a411a8153a73e
+P9,col 5,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\Experiment.csv,14655,feb1eee94e7391af67fce8b38ae74b65c34a923c813c3fdc966a83a1c83028b7
+P9,col 5,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\Image.csv,9040,9fad5d90b4efb6b4e234e4f6f9a88666b07b6b6077a29ac7776e517e3c63e2dd
+P9,col 5,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\mitochondriaWNuclei.csv,41049,c89271704598a0dfa8f3dc71b78f10cac94862257535e9fcc7b5dc1e5c5c7a7e
+P9,col 5,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\mitochondriaWONuclei.csv,329331,e2faab7a2a14ea3c82ef5d3b174899554dd96091fa6480470942a7de0a69455e
+P9,col 5,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 5\nuclei.csv,1076383,30abd7a3a0a89f300c5db1ff9b2a6557e30d08ed6b5e151c27cec958fb1cfdb3
+P9,col 6,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\ERWNuclei.csv,857041,bfb83e6dd88aa0ffd1032e70d33d3fc2eab727815043d0cf830d994a61448ead
+P9,col 6,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\ERWONuclei.csv,356704,bfe6e50bd1e3cca54bfba61484ef7455bee798f3fdc8f4a2e596cf0e0fdcdd03
+P9,col 6,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\Experiment.csv,14633,d2bb78fc2c92095a766f565ab78a1435ac40207ab6a22c6e345d72ed59d2ffe8
+P9,col 6,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\Image.csv,8944,a584f0b8e9cf5724fc44bc4c45da7ad975ea9ffb8a7606cb26af3bdaf88a694f
+P9,col 6,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\mitochondriaWNuclei.csv,44817,249f3736155c903ecaf29b9544fdaea995ae08a6963cb084e94e67237afcc762
+P9,col 6,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\mitochondriaWONuclei.csv,359145,d852a7613de76cc471821182c1e3b42839cf69c4053818ef9be1b04891674d52
+P9,col 6,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 6\nuclei.csv,1172623,6fca2eb831e7c39c28d479289d7b1330c3e2ee4a282dd8ce1017325e95949393
+P9,col 7,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\ERWNuclei.csv,661125,c8a514506a5d9c1fb94d979942ff5fffcb366bad5ddb2d2d7d07944fdb8e7ead
+P9,col 7,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\ERWONuclei.csv,275130,3f5ac5a6ff883b821724fad34b622a8b7369efe1d0e03d769f05d098bc9693fd
+P9,col 7,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\Experiment.csv,14141,905926348fd77444c8372d9b9ab8ad33f6bb50edeafe4c781a9fab05bd345132
+P9,col 7,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\Image.csv,7901,ee22b8f14074010646cba25f8c39b2639ec88838dbb8af1f87eb01715b0f9345
+P9,col 7,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\mitochondriaWNuclei.csv,34459,4190ab86e0ed3ffdc663e4b9b7dee1d07a3180baab08dd4a59ebef52f4b0280f
+P9,col 7,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\mitochondriaWONuclei.csv,277123,2bfd0c0c6be6726d1523429614ad345ad20da3a6625d917f078b35b14faeaf51
+P9,col 7,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 7\nuclei.csv,905461,ee4a657d7659de4d9d476fa7e52428a00f067d82f55960b13874f645ff986313
+P9,col 8,ERWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\ERWNuclei.csv,740298,3fe608f205aaef0e811ce50f1b38683f08657550af56deade408543ecda9132d
+P9,col 8,ERWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\ERWONuclei.csv,307994,f1d815a4c43d622ce93e249e712a8487572248aab19415bd2b7d609e20ab7fc4
+P9,col 8,Experiment.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\Experiment.csv,14731,ee8cfde32919179c98a6d047e0e3716b4dfea8c5e3c830c30f87e8b04f9b937c
+P9,col 8,Image.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\Image.csv,9042,efbe1b99fb82aa8a1d81c88a2dcb95952287493cd8f0b73ea2a75a099a1616ca
+P9,col 8,mitochondriaWNuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\mitochondriaWNuclei.csv,38513,8890a09660a97e55cd91d4bb3ccf803fa9fe9f826346cafb02f9fd9d987527f9
+P9,col 8,mitochondriaWONuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\mitochondriaWONuclei.csv,309976,72ed987f808943d37d97a78b824fabb1b6f9b912893c35b3e4ecfaded7441aa4
+P9,col 8,nuclei.csv,${REPOSITORY_ROOT}\Data\vivo\Flu P9\col 8\nuclei.csv,1013007,03eaf0480c972c0efcbc60a10fea1db9d9d5749a1f2b568c129d5d2cf2e2ded6

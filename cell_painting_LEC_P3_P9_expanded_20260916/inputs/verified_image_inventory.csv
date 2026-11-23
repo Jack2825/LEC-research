@@ -1,0 +1,66 @@
+passage,folder,workbook_sheet,ImageNumber,source_filename,source_well,recorded_image_md5,nucleus_count,processing_status,n_module_errors,selection_rule,token_matches_filename,coordinate_matches_folder,match_in_sequence_number
+P3,Flu Well A,Control-None,1,"WellA02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0000.nd2",A02,5735048503edec4b1d5ccf7a31a104fc,36,Done,0,"and (file does contain ""WellA"")",True,True,False
+P3,Flu Well A,Control-None,2,"WellA03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0001.nd2",A03,9d850b5cc6fa7294bde55c030589b7dc,27,Done,0,"and (file does contain ""WellA"")",True,True,False
+P3,Flu Well A,Control-None,3,"WellA04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0002.nd2",A04,5de8d373797b8c854e80b8606aa23e41,17,Done,0,"and (file does contain ""WellA"")",True,True,False
+P3,Flu Well A,Control-None,4,"WellA05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0003.nd2",A05,26882af7c70ca9623e7744bfa3c8cea9,19,Done,0,"and (file does contain ""WellA"")",True,True,False
+P3,Flu Well A,Control-None,5,"WellA06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0004.nd2",A06,88d41f14f3b87204acf397c927fd73e1,25,Done,0,"and (file does contain ""WellA"")",True,True,False
+P3,Flu Well B,H1N1-None,1,"WellB02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0009.nd2",B02,8967687e529420548418d7882810875c,36,Done,0,"and (file does contain ""WellB"")",True,True,False
+P3,Flu Well B,H1N1-None,2,"WellB03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0008.nd2",B03,910e0015160589a644e0acb17718a527,36,Done,0,"and (file does contain ""WellB"")",True,True,False
+P3,Flu Well B,H1N1-None,3,"WellB04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0007.nd2",B04,f6afcdee55f88cc3e650069d2a1882ae,30,Done,0,"and (file does contain ""WellB"")",True,True,False
+P3,Flu Well B,H1N1-None,4,"WellB05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0006.nd2",B05,78bf06fb38e7a627524fe597717e559d,31,Done,0,"and (file does contain ""WellB"")",True,True,False
+P3,Flu Well B,H1N1-None,5,"WellB06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0005.nd2",B06,d0131d24384d68acdb6d27a6bd7e25dd,29,Done,0,"and (file does contain ""WellB"")",True,True,False
+P3,Flu Well C,Control-UC2288,1,"WellC02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0010.nd2",C02,ccac987b5866a4bfd2a7bc22cab9efe4,30,Done,0,"and (file does contain ""WellC"")",True,True,False
+P3,Flu Well C,Control-UC2288,2,"WellC03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0011.nd2",C03,f17fb56f103f10e1691254d4e10f3d02,29,Done,0,"and (file does contain ""WellC"")",True,True,False
+P3,Flu Well C,Control-UC2288,3,"WellC04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0012.nd2",C04,d8ba34d27c1ba24f2b9b963f7d8f5e18,42,Done,0,"and (file does contain ""WellC"")",True,True,False
+P3,Flu Well C,Control-UC2288,4,"WellC05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0013.nd2",C05,f704051194e283f49fa7432e658936cf,20,Done,0,"and (file does contain ""WellC"")",True,True,False
+P3,Flu Well C,Control-UC2288,5,"WellC06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0014.nd2",C06,a6d923b8f22f9e4767b864c300602027,39,Done,0,"and (file does contain ""WellC"")",True,True,False
+P3,Flu Well D,H1N1-UC2288,1,"WellD02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0019.nd2",D02,e2a36ba1c176f59e69ac20d53fb71cae,20,Done,0,"and (file does contain ""WellD"")",True,True,False
+P3,Flu Well D,H1N1-UC2288,2,"WellD03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0018.nd2",D03,3a5f845856ed40d62f22b1b3fcc87c02,35,Done,0,"and (file does contain ""WellD"")",True,True,False
+P3,Flu Well D,H1N1-UC2288,3,"WellD04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0017.nd2",D04,1bb57daee9d5247a94e3e9b30e5f7391,33,Done,0,"and (file does contain ""WellD"")",True,True,False
+P3,Flu Well D,H1N1-UC2288,4,"WellD05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0016.nd2",D05,c2d64ac208ab5752229b2f8b846fa467,31,Done,0,"and (file does contain ""WellD"")",True,True,False
+P3,Flu Well D,H1N1-UC2288,5,"WellD06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0015.nd2",D06,814341f748e91618288da69d82771bd6,30,Done,0,"and (file does contain ""WellD"")",True,True,False
+P3,Flu Well E,Control-VEGF-C,1,"WellE02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0020.nd2",E02,f999ae8b062a559a4724f3620e84879f,16,Done,0,"and (file does contain ""WellE"")",True,True,False
+P3,Flu Well E,Control-VEGF-C,2,"WellE03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0021.nd2",E03,9f73c27c157ec4e17c2d4003122121a2,24,Done,0,"and (file does contain ""WellE"")",True,True,False
+P3,Flu Well E,Control-VEGF-C,3,"WellE04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0022.nd2",E04,3e2b849c1e804a47b60f8e36ed099cbf,49,Done,0,"and (file does contain ""WellE"")",True,True,False
+P3,Flu Well E,Control-VEGF-C,4,"WellE05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0023.nd2",E05,b28c734d6004849e826dd2571659eef3,37,Done,0,"and (file does contain ""WellE"")",True,True,False
+P3,Flu Well E,Control-VEGF-C,5,"WellE06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0024.nd2",E06,99009bd2c0c6975851aed17836cca8f5,36,Done,0,"and (file does contain ""WellE"")",True,True,False
+P3,Flu Well F,H1N1-VEGF-C,1,"WellF02_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0029.nd2",F02,29830dffb01d0c856d2a3e6c62e0e2dc,24,Done,0,"and (file does contain ""WellF"")",True,True,False
+P3,Flu Well F,H1N1-VEGF-C,2,"WellF03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0028.nd2",F03,aa742384959193edb4b0ea5c56d6eb17,24,Done,0,"and (file does contain ""WellF"")",True,True,False
+P3,Flu Well F,H1N1-VEGF-C,3,"WellF04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0027.nd2",F04,1e041660cf1d1037bf1b878f27465d1e,33,Done,0,"and (file does contain ""WellF"")",True,True,False
+P3,Flu Well F,H1N1-VEGF-C,4,"WellF05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0026.nd2",F05,281c0e3528eceebc1a3e57b298798877,34,Done,0,"and (file does contain ""WellF"")",True,True,False
+P3,Flu Well F,H1N1-VEGF-C,5,"WellF06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0025.nd2",F06,43c6aec29ff112bf37c2b50ed1bfe27a,40,Done,0,"and (file does contain ""WellF"")",True,True,False
+P9,col 3,Control-None,1,"WellB03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0000.nd2",B03,1d2b67d686de0508d9a6e72a073451cd,100,Done,0,"and (file does contain ""03"")",True,True,False
+P9,col 3,Control-None,2,"WellB06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0003.nd2",B06,a9edd144d772f30adfb35218509158a9,109,Done,0,"and (file does contain ""03"")",True,False,True
+P9,col 3,Control-None,3,"WellC03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0011.nd2",C03,1116d64b30c755934234efed6955dcd6,118,Done,0,"and (file does contain ""03"")",True,True,False
+P9,col 3,Control-None,4,"WellD03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0012.nd2",D03,dc63bbb77e139626228866b10171d4b0,144,Done,0,"and (file does contain ""03"")",True,True,False
+P9,col 3,Control-None,5,"WellE03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0023.nd2",E03,d991661c32a16610332b8e83167f77fc,143,Done,0,"and (file does contain ""03"")",True,True,False
+P9,col 3,Control-None,6,"WellF03_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0024.nd2",F03,990df43f95a73e5d9cde869bb93ddad3,188,Done,0,"and (file does contain ""03"")",True,True,False
+P9,col 4,H1N1-None,1,"WellB04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0001.nd2",B04,679a6e716b3b1bb48141fafb13048b22,95,Done,0,"and (file does contain ""04"")",True,True,False
+P9,col 4,H1N1-None,2,"WellB07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0004.nd2",B07,4d4921bd0dd9aed2fcd12f09bfaa0953,116,Done,0,"and (file does contain ""04"")",True,False,True
+P9,col 4,H1N1-None,3,"WellC04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0010.nd2",C04,f9991dcda8a74bdd0185cb47ec2dc186,126,Done,0,"and (file does contain ""04"")",True,True,False
+P9,col 4,H1N1-None,4,"WellD04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0013.nd2",D04,d5dc78c7d103b76d86d3a32942df97d1,142,Done,0,"and (file does contain ""04"")",True,True,False
+P9,col 4,H1N1-None,5,"WellE04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0022.nd2",E04,823c8dc1ab1f02f42934be56ceb7a30a,141,Done,0,"and (file does contain ""04"")",True,True,False
+P9,col 4,H1N1-None,6,"WellF04_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0025.nd2",F04,7633eb48546bebdb5909728addc5af2a,143,Done,0,"and (file does contain ""04"")",True,True,False
+P9,col 5,Control-UC2288,1,"WellB05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0002.nd2",B05,b801d240e222622acc26fd4656ae69ee,101,Done,0,"and (file does contain ""05"")",True,True,False
+P9,col 5,Control-UC2288,2,"WellB08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0005.nd2",B08,97e79062e797cf533dbe1586d584873e,87,Done,0,"and (file does contain ""05"")",True,False,True
+P9,col 5,Control-UC2288,3,"WellC05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0009.nd2",C05,e72afb689cb7f118f12c7024ed447da0,170,Done,0,"and (file does contain ""05"")",True,True,False
+P9,col 5,Control-UC2288,4,"WellD05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0014.nd2",D05,87756a9b2a3e27777fbe0f370045b8c8,136,Done,0,"and (file does contain ""05"")",True,True,False
+P9,col 5,Control-UC2288,5,"WellE05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0021.nd2",E05,51c9b1a5991563285dd67e9a56357db3,134,Done,0,"and (file does contain ""05"")",True,True,False
+P9,col 5,Control-UC2288,6,"WellF05_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0026.nd2",F05,4e88965c717c9eb832ad12a7bc4063d1,138,Done,0,"and (file does contain ""05"")",True,True,False
+P9,col 6,H1N1-UC2288,1,"WellB06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0003.nd2",B06,a9edd144d772f30adfb35218509158a9,109,Done,0,"and (file does contain ""06"")",True,True,False
+P9,col 6,H1N1-UC2288,2,"WellC06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0008.nd2",C06,2c037bca5b1d1aeb7d5c9f010dbd5e22,129,Done,0,"and (file does contain ""06"")",True,True,False
+P9,col 6,H1N1-UC2288,3,"WellC08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0006.nd2",C08,3e4ac1d35b2cfa3dfd9e1ec67624a789,136,Done,0,"and (file does contain ""06"")",True,False,True
+P9,col 6,H1N1-UC2288,4,"WellD06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0015.nd2",D06,a1d2027f2954d6930a320c2ce06e7583,149,Done,0,"and (file does contain ""06"")",True,True,False
+P9,col 6,H1N1-UC2288,5,"WellE06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0020.nd2",E06,3dd3f8c04d6239965890a86d9908dd7b,167,Done,0,"and (file does contain ""06"")",True,True,False
+P9,col 6,H1N1-UC2288,6,"WellF06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0027.nd2",F06,05b6688ccf84675e20db2012eab1bf84,145,Done,0,"and (file does contain ""06"")",True,True,False
+P9,col 7,Control-VEGF-C,1,"WellB07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0004.nd2",B07,4d4921bd0dd9aed2fcd12f09bfaa0953,116,Done,0,"and (file does contain ""07"")",True,True,False
+P9,col 7,Control-VEGF-C,2,"WellC07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0007.nd2",C07,53d67d31e042a35336046aad0b3eec13,134,Done,0,"and (file does contain ""07"")",True,True,True
+P9,col 7,Control-VEGF-C,3,"WellD07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0016.nd2",D07,8674bb3534192775fcfa1daeef85d4ae,130,Done,0,"and (file does contain ""07"")",True,True,False
+P9,col 7,Control-VEGF-C,4,"WellE07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0019.nd2",E07,2d6786f4bd79561240eb616394f27e11,136,Done,0,"and (file does contain ""07"")",True,True,False
+P9,col 7,Control-VEGF-C,5,"WellF07_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0028.nd2",F07,389f73487c2424b93fcbd122e2af21c9,128,Done,0,"and (file does contain ""07"")",True,True,False
+P9,col 8,H1N1-VEGF-C,1,"WellB08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0005.nd2",B08,97e79062e797cf533dbe1586d584873e,87,Done,0,"and (file does contain ""08"")",True,True,False
+P9,col 8,H1N1-VEGF-C,2,"WellC06_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0008.nd2",C06,2c037bca5b1d1aeb7d5c9f010dbd5e22,129,Done,0,"and (file does contain ""08"")",True,False,True
+P9,col 8,H1N1-VEGF-C,3,"WellC08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0006.nd2",C08,3e4ac1d35b2cfa3dfd9e1ec67624a789,136,Done,0,"and (file does contain ""08"")",True,True,False
+P9,col 8,H1N1-VEGF-C,4,"WellD08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0017.nd2",D08,e1bbafe45e2a89999d05873670b14376,116,Done,0,"and (file does contain ""08"")",True,True,False
+P9,col 8,H1N1-VEGF-C,5,"WellE08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0018.nd2",E08,c7b3d9cebb72b6e5dce4bd6a88397ed8,126,Done,0,"and (file does contain ""08"")",True,True,False
+P9,col 8,H1N1-VEGF-C,6,"WellF08_ChannelW1 CY5,W1 TRITC,W1 FITC,W1 DAPI_Seq0029.nd2",F08,df37f6ce90e8f73679e4b560bad5be2d,127,Done,0,"and (file does contain ""08"")",True,True,False

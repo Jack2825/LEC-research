@@ -1,0 +1,83 @@
+[
+  {
+    "content_order": 1,
+    "branch": "Aging",
+    "stage": "Microenvironmental cues",
+    "title": "Aging-associated extracellular signals",
+    "body": "Altered inflammatory, lymphangiogenic and matrix-related inputs\nExamples: VEGFC–NRP2 • ANGPT2–TEK • VCAN–CD44",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 2,
+    "branch": "Disease",
+    "stage": "Microenvironmental cues",
+    "title": "Disease-associated microenvironmental\ncues",
+    "body": "Disease-specific inflammatory, stromal and growth-factor signaling\nPrioritized pathways include BMP/TGF-β/activin, PDGF,\nVEGF, ANGPT, Notch and WNT",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 3,
+    "branch": "Aging",
+    "stage": "Transcriptional regulation",
+    "title": "State-associated transcriptional regulators",
+    "body": "Distinct regulon programs across aging-sensitive LEC states\nSCENIC: EPAS1 / TP63 / MEIS2 / TEAD1;\nKLF2 / NFATC4 / FOXC1",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 4,
+    "branch": "Disease",
+    "stage": "Transcriptional regulation",
+    "title": "Disease-associated transcriptional programs",
+    "body": "Regulon programs across DCM, HCM, DoxCM and HFpEF\nSCENIC supports disease-specific transcriptional regulation",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 5,
+    "branch": "Aging",
+    "stage": "LEC state remodeling",
+    "title": "Aging-associated LEC state redistribution",
+    "body": "State 0 ↑\nState 4 cytokine-responsive / immune ↓\nState 5 matrix-interactive / structural ↓",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 6,
+    "branch": "Disease",
+    "stage": "LEC state remodeling",
+    "title": "Shared and disease-specific LEC state\nremodeling",
+    "body": "Cardiovascular diseases do not produce one uniform\npathological LEC state\nShared remodeling + disease-specific state changes",
+    "badge": "",
+    "evidence_type": "computational synthesis"
+  },
+  {
+    "content_order": 7,
+    "branch": "Aging",
+    "stage": "Functional consequences",
+    "title": "Reduced adaptive inflammatory\nresponsiveness",
+    "body": "Impaired response to systemic inflammatory challenge\nInfluenza–plasma assay: young LECs adapt; aged LECs\nshow reduced tube formation and organelle remodeling",
+    "badge": "IN VITRO",
+    "evidence_type": "experimental manuscript synthesis"
+  },
+  {
+    "content_order": 8,
+    "branch": "Disease",
+    "stage": "Functional consequences",
+    "title": "Lymphatic and cardiac remodeling",
+    "body": "Functional support: endothelial Acvr2a deletion in CMP models\nImproved cardiac function • increased open lymphatic\nvessels • no change in blood vessels",
+    "badge": "IN VIVO",
+    "evidence_type": "experimental manuscript synthesis"
+  },
+  {
+    "content_order": 9,
+    "branch": "Shared",
+    "stage": "Spatial validation",
+    "title": "",
+    "body": "Independent spatial datasets provide tissue-level support for selected aging- and disease-associated LEC programs",
+    "badge": "",
+    "evidence_type": "spatial-validation synthesis"
+  }
+]

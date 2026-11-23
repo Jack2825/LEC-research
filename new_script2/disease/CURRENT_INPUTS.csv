@@ -1,0 +1,29 @@
+category,role,current_file,inference_level,notes
+cohort,Step03 completed cohort summary,new_result2_disease/03/03_master_run_summary.csv,descriptive,Current active run registry
+cohort,inclusion and exclusion policy,new_result2_disease/03/03_dataset_inclusion_exclusion_policy.csv,provenance,Use for cohort flow diagrams
+abundance,donor-level LEC percentages,new_result2_disease/07_LEC_description/07_LEC_percentage_by_donor.csv,descriptive,Within-cohort summaries
+states,combined LEC object,new_result2_disease/08_combined_LEC_recluster/08_combined_final_LEC_reclustered.h5ad,descriptive,Current 6291-cell nine-state object
+states,combined LEC cell metadata,new_result2_disease/08_combined_LEC_recluster/08_combined_LEC_cell_metadata.csv.gz,descriptive,Prefer for plots not needing expression
+states,state color mapping,new_result2_disease/08_combined_LEC_recluster/08_state_color_mapping.csv,display,Preserve across disease figures
+states,state marker ranking,new_result2_disease/08_combined_LEC_recluster/08_state_marker_ranking_all_genes.csv.gz,descriptive,Cell-level state-vs-rest ranking
+filter_min25,retained donor list,new_result2_disease/08_3_min25_LEC_filtered_analysis/tables/08_3_retained_donors_min25.csv,sensitivity,55 donors retained
+disease_tests,donor state values,new_result2_disease/08_4_donor_level_LEC_state_disease_analysis/tables/08_4_donor_state_counts_percentages.csv.gz,primary,Includes zero-count donor-state pairs
+disease_tests,within-dataset state comparisons,new_result2_disease/08_4_donor_level_LEC_state_disease_analysis/tables/08_4_primary_within_dataset_state_comparisons.csv,primary,Mann-Whitney effect sizes bootstrap CIs and FDR
+disease_tests,comparison readiness,new_result2_disease/08_4_donor_level_LEC_state_disease_analysis/tables/08_4_comparison_readiness.csv,primary,HFpEF is not testable at the primary minimum-25 threshold; use the separate minimum-10 exploratory and minimum-15 sensitivity cohorts
+gsea,all state pathway results,new_result2_disease/09_LEC_state_GSEA/09_GSEA_all_pathways_full.csv,descriptive,State-vs-rest not disease inference
+gsea,top state pathways,new_result2_disease/09_LEC_state_GSEA/09_GSEA_top_pathways_per_state.csv,descriptive,Compact plotting input
+scenic,full state-regulon summary,new_result2_disease/11_SCENIC_analysis/tables/11_SCENIC_state_regulon_full_summary.csv,descriptive,Use dataset-donor-balanced fields for primary display
+scenic,top regulons by state,new_result2_disease/11_SCENIC_analysis/tables/11_SCENIC_top_regulons_per_state.csv,descriptive,Dataset-donor-balanced stability summary
+communication,all comparison run summary,new_result2_disease/12_NicheNet_donor_pseudobulk/12_run_summary.csv,primary_and_exploratory,Contains analysis_tier and threshold
+communication,dataset01 DCM edgeR,new_result2_disease/12_NicheNet_donor_pseudobulk/dataset01_DCM_vs_NF/tables/12_edgeR_primary_all_genes.csv.gz,primary,Within-dataset donor pseudobulk
+communication,dataset01 HCM edgeR,new_result2_disease/12_NicheNet_donor_pseudobulk/dataset01_HCM_vs_NF/tables/12_edgeR_primary_all_genes.csv.gz,primary,Within-dataset donor pseudobulk
+communication,dataset08 DoxCM edgeR,new_result2_disease/12_NicheNet_donor_pseudobulk/dataset08_DoxCM_vs_NF/tables/12_edgeR_primary_all_genes.csv.gz,primary,Within-dataset donor pseudobulk
+communication,HFpEF minimum-10 edgeR,new_result2_disease/12_NicheNet_donor_pseudobulk/dataset11_HFpEF_vs_NF_min10/tables/12_edgeR_primary_all_genes.csv.gz,exploratory,Do not label primary
+communication,HFpEF minimum-15 edgeR,new_result2_disease/12_NicheNet_donor_pseudobulk/dataset11_HFpEF_vs_NF_min15/tables/12_edgeR_primary_all_genes.csv.gz,sensitivity,Do not label primary
+spatial,Step 13.1 GSE271676 audit summary,new_result2_spatial_disease/13_1_spatial_disease_QC/13_1_run_summary.csv,QC_and_design,178 GeoMx WTA AOIs from 44 donors; primary Control/DCMP LV vessel cohort has 16 AOIs from 11 donors
+spatial,Step 13.1 processed GeoMx expression object,new_result2_spatial_disease/13_1_spatial_disease_QC/13_1_GSE271676_GeoMx_Q3_expression.h5ad,descriptive,Authors' 12800-gene post-probe-QC counts with LOQ metadata and upper-quartile normalization
+spatial,Step 13.2 two-of-five selected object,new_result2_spatial_disease/13_2_disease_LEC_reference/13_2_GSE271676_two_of_five_LEC_selected.h5ad,descriptive,Seven AOIs from five donors meet at least two of CCL21 LYVE1 PDPN FLT4 PROX1 above AOI LOQ; only two Control donors
+spatial,Step 13.3 selected-cohort program directions,new_result2_spatial_disease/13_3_prespecified_DCM_program_validation/13_3_primary_program_tests.csv,descriptive_only,All four mentor-specified programs point in the expected direction but no formal test is allowed with two Control donors
+spatial,Step 13.4 canonical DCM validation decisions,new_result2_spatial_disease/13_4_final_DCM_spatial_validation/13_4_FINAL_VALIDATION_DECISIONS.csv,locked_reporting,Canonical selected-cohort evidence grades; descriptive expected-direction signals only
+spatial,Figure 6 BMP ACVR2A final conclusion,new_result2/disease/Fig06_spatial_disease_BMP_ACVR2A/Fig06_FINAL_CONCLUSION.txt,primary_plus_descriptive_overlay,All-vessel donor-level family screen plus descriptive two-of-five overlay; ACVR2A unavailable after author probe QC
+spatial,Figure 6 BMP ACVR2A source data,new_result2/disease/Fig06_spatial_disease_BMP_ACVR2A/source_data/Fig06E_pathway_effects.csv,primary_plus_descriptive_overlay,Use with Fig06F sensitivity table and Fig06 assay audit for exact statistics and availability

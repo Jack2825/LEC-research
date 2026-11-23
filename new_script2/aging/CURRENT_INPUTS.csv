@@ -1,0 +1,21 @@
+category,role,current_file,inference_level,notes
+cohort,Step03 completed cohort summary,new_result2_aging/03/03_master_run_summary_age_quartile_QC.csv,descriptive,QC and clustering run registry
+cohort,donor age and quartile assignments,new_result2_aging/03/dataset13/dataset13_age_quartile_donor_assignments.csv,descriptive,Original donor quartiles
+abundance,donor-level LEC percentages,new_result2_aging/07_LEC_description/dataset13/07_LEC_percentage_by_donor.csv,descriptive,Uses Step03 all cells as denominator
+states,combined LEC object,new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_final_LEC_reclustered.h5ad,descriptive,Current 1119-cell 11-state embedding and expression
+states,combined LEC cell metadata,new_result2_aging/08_combined_LEC_recluster/dataset13/08_combined_LEC_cell_metadata.csv.gz,descriptive,Prefer for plots not needing expression
+states,state color mapping,new_result2_aging/08_combined_LEC_recluster/dataset13/08_state_color_mapping.csv,display,Preserve across aging figures
+states,state marker ranking,new_result2_aging/08_combined_LEC_recluster/dataset13/08_state_marker_ranking_all_genes.csv.gz,descriptive,Cell-level state-vs-rest ranking
+age_groups,equal-donor quartile mapping,new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_donor_quartile_mapping.csv,descriptive,12 LEC-positive donors per group
+age_groups,equal-donor LEC metadata,new_result2_aging/08_3_equal_LEC_donor_age_quartiles/dataset13/08_3_combined_LEC_cell_metadata.csv.gz,descriptive,Relabelled only; no reclustering
+age_min25,retained donor list,new_result2_aging/08_7_min25_LEC_filtered_age_analysis/dataset13/08_7_retained_donors_min25.csv,sensitivity,13 donors retained
+age_min25,four-group donor state values,new_result2_aging/08_7_min25_LEC_filtered_age_analysis/dataset13/four_preserved_quartiles/donor_level/08_7_four_groups_donor_state_counts_percentages.csv.gz,not_testable,Q2 has one retained donor
+age_min25,merged-group donor state values,new_result2_aging/08_7_min25_LEC_filtered_age_analysis/dataset13/three_groups_Q2_Q3_merged/donor_level/08_7_Q2_Q3_merged_donor_state_counts_percentages.csv.gz,sensitivity,Groups contain 4 4 and 5 donors
+age_min25,merged-group omnibus tests,new_result2_aging/08_7_min25_LEC_filtered_age_analysis/dataset13/three_groups_Q2_Q3_merged/donor_level/08_7_Q2_Q3_merged_state_omnibus_tests.csv,sensitivity,No state significant by donor-level FDR
+gsea,all state pathway results,new_result2_aging/09_LEC_state_GSEA/dataset13/09_GSEA_all_pathways_full.csv,descriptive,State-vs-rest not aging inference
+gsea,top state pathways,new_result2_aging/09_LEC_state_GSEA/dataset13/09_GSEA_top_pathways_per_state.csv,descriptive,Compact plotting input
+scenic,full state-regulon summary,new_result2_aging/11_SCENIC_analysis/dataset13/tables/11_SCENIC_state_regulon_full_summary.csv,descriptive,Use donor-balanced fields for primary display
+scenic,top regulons by state,new_result2_aging/11_SCENIC_analysis/dataset13/tables/11_SCENIC_top_regulons_per_state.csv,descriptive,Donor-balanced stability summary
+communication,aging run summary,new_result2_aging/13_NicheNet_donor_pseudobulk/dataset13/13_run_summary.csv,primary_and_sensitivity,Q4 versus Q1 donor pseudobulk
+communication,aging primary edgeR,new_result2_aging/13_NicheNet_donor_pseudobulk/dataset13/tables/13_edgeR_primary_LEC_Q4_vs_Q1_all_genes.csv,primary,Donor is replicate
+communication,aging MultiNicheNet prioritization,new_result2_aging/13_NicheNet_donor_pseudobulk/dataset13/tables/13_MultiNicheNet_group_prioritization.csv,descriptive,Consult method notes before filtering

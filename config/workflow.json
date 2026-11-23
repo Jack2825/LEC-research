@@ -1,0 +1,385 @@
+[
+  {
+    "id": "aging_03",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/03_cluster_dataset13_age_quartiles_meanIQR_QC.py",
+    "args": []
+  },
+  {
+    "id": "aging_04",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/04_visualize_dataset13_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_05",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/05_find_markers_and_celltypist_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_06",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/06_recluster_EC_by_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_07",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/07_describe_LEC_percentages_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_08",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_combine_recluster_final_LEC_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.1",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_1_validate_specific_donor_LEC_identity_doublets.py",
+    "args": [
+      "--sample",
+      "GSM5572789",
+      "--focus_state",
+      "state3"
+    ]
+  },
+  {
+    "id": "aging_08.2",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_2_recluster_LECs_without_dominant_donor.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.3",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_3_make_equal_LEC_donor_age_quartiles.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.4",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_4_donor_level_LEC_state_age_analysis.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.5",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_5_merge_Q2_Q3_donor_level_analysis.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.6",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_6_donor_LEC_minimum_reliability.py",
+    "args": []
+  },
+  {
+    "id": "aging_08.7",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/08_7_min25_LEC_filtered_age_analysis.py",
+    "args": []
+  },
+  {
+    "id": "aging_09",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/09_GSEA_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "aging_10_scenic_prepare",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/10_prepare_SCENIC_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "aging_10_scenic_run",
+    "branch": "aging",
+    "engine": "powershell",
+    "script": "new_script2_aging/10_run_pyscenic_combined_LEC_states.ps1",
+    "args": []
+  },
+  {
+    "id": "aging_11",
+    "branch": "aging",
+    "engine": "python",
+    "script": "new_script2_aging/11_analyze_SCENIC_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "aging_13",
+    "branch": "aging",
+    "engine": "Rmd",
+    "script": "new_script2_aging/13_aging_donor_pseudobulk_MultiNicheNet.Rmd",
+    "args": []
+  },
+  {
+    "id": "disease_03",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/03_cluster_selected_disease_datasets_QC.py",
+    "args": []
+  },
+  {
+    "id": "disease_04",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/04_visualize_selected_disease_datasets.py",
+    "args": []
+  },
+  {
+    "id": "disease_05",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/05_find_markers_and_celltypist_selected_disease.py",
+    "args": []
+  },
+  {
+    "id": "disease_06",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/06_recluster_EC_selected_disease.py",
+    "args": []
+  },
+  {
+    "id": "disease_07",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/07_describe_LEC_selected_disease.py",
+    "args": []
+  },
+  {
+    "id": "disease_08",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/08_combine_recluster_final_LEC_disease.py",
+    "args": []
+  },
+  {
+    "id": "disease_08.1",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/08_1_validate_LEC_identity_doublets.py",
+    "args": []
+  },
+  {
+    "id": "disease_08.2",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/08_2_assess_donor_state_reliability.py",
+    "args": []
+  },
+  {
+    "id": "disease_08.3",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/08_3_min25_LEC_filtered_disease_analysis.py",
+    "args": []
+  },
+  {
+    "id": "disease_08.4",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/08_4_donor_level_LEC_state_disease_analysis.py",
+    "args": []
+  },
+  {
+    "id": "disease_09",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/09_GSEA_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "disease_10_scenic_prepare",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/10_prepare_SCENIC_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "disease_10_scenic_run",
+    "branch": "disease",
+    "engine": "powershell",
+    "script": "new_script2_disease/10_run_pyscenic_combined_LEC_states.ps1",
+    "args": []
+  },
+  {
+    "id": "disease_11",
+    "branch": "disease",
+    "engine": "python",
+    "script": "new_script2_disease/11_analyze_SCENIC_combined_LEC_states.py",
+    "args": []
+  },
+  {
+    "id": "disease_12",
+    "branch": "disease",
+    "engine": "Rmd",
+    "script": "new_script2_disease/12_disease_donor_pseudobulk_MultiNicheNet.Rmd",
+    "args": []
+  },
+  {
+    "id": "geomx_13.1",
+    "branch": "geomx",
+    "engine": "python",
+    "script": "new_script2_disease/13_1_spatial_disease_data_audit_and_QC.py",
+    "args": []
+  },
+  {
+    "id": "geomx_13.2",
+    "branch": "geomx",
+    "engine": "python",
+    "script": "new_script2_disease/13_2_define_GeoMx_LEC_enrichment.py",
+    "args": []
+  },
+  {
+    "id": "geomx_13.3",
+    "branch": "geomx",
+    "engine": "python",
+    "script": "new_script2_disease/13_3_score_prespecified_DCM_programs.py",
+    "args": []
+  },
+  {
+    "id": "geomx_13.4",
+    "branch": "geomx",
+    "engine": "python",
+    "script": "new_script2_disease/13_4_finalize_DCM_spatial_validation.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_01",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/01_build_features.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_02",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/02_responses.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_03",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/03_states_embeddings.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_04",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/04_image_review.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_05",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/05_figures_report.py",
+    "args": []
+  },
+  {
+    "id": "cell_painting_06",
+    "branch": "cell_painting",
+    "engine": "python",
+    "script": "cell_painting_LEC_P3_P9_expanded_20260916/scripts/06_validate.py",
+    "args": []
+  },
+  {
+    "id": "panel_C_preprocessing",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_C_preprocessing.py",
+    "args": []
+  },
+  {
+    "id": "panel_C_pca",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_C_pca.py",
+    "args": []
+  },
+  {
+    "id": "panel_D_response_analysis",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_D_response_analysis.py",
+    "args": []
+  },
+  {
+    "id": "panel_E_copy_existing_sources",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_E_copy_existing_sources.py",
+    "args": []
+  },
+  {
+    "id": "panel_E_state_visualization",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_E_state_visualization.py",
+    "args": []
+  },
+  {
+    "id": "panel_F_visualization",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_F_visualization.py",
+    "args": []
+  },
+  {
+    "id": "panel_G_exploratory",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_G_exploratory.py",
+    "args": []
+  },
+  {
+    "id": "panel_G_visualization",
+    "branch": "cell_painting_primary",
+    "engine": "python",
+    "script": "Cell_Painting_LEC_P3_P9_figures/script/panel_G_visualization.py",
+    "args": []
+  },
+  {
+    "id": "publication_figures",
+    "branch": "publication",
+    "engine": "python",
+    "script": "tools/reproduce_final_figures.py",
+    "args": []
+  },
+  {
+    "id": "publication_table_s8_data_s10",
+    "branch": "publication",
+    "engine": "python",
+    "script": "CVR_Data_S10_Table_S8_verified_20261008/script/prepare_verified_package.py",
+    "args": []
+  },
+  {
+    "id": "publication_data_s8_split",
+    "branch": "publication",
+    "engine": "python",
+    "script": "Data_S8_split_Excel_20261028/script/split_data_s8.py",
+    "args": []
+  }
+]
